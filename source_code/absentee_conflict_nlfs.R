@@ -16,9 +16,11 @@ cat("\014")
 
 #Ramesh
 dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict"
+output_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/tables"
 
 #Second User need to specify the shared dropbox path here and comment 1st users path
 #dropbox_path <- "Specify the dropbox path here and uncomment this line"
+#output_path <- "Specify the GitHub path for saving the output tables"
 
 setwd(dropbox_path)
 
@@ -29,7 +31,15 @@ getwd()
 #install.packages(c("haven", "dplyr", "ggplot2", "labelled", 
                  #  "knitr", "kableExtra", "writexl", "stringr", 
                 #   "tidyr", "fixest", "stargazer", "modelsummary"))
+
+#install.packages("tinytex")
+#tinytex::install_tinytex()
+#tinytex::tlmgr_install(c("booktabs", "float", "colortbl", "xcolor"))
+install.packages("webshot2")
 # Load Packages
+library(tinytex)
+library(tinytable)
+library(webshot2)
 library(haven) # This package helps importing data from stata dataset
 library(dplyr) # This package helps to clean the data
 library(ggplot2) # This helps to create graphs and visualization options
@@ -478,9 +488,7 @@ table1_overall <- bind_rows(
 # Replace "NA" strings with empty strings for cleaner display
 table1_overall <- table1_overall %>%
   mutate(across(everything(), ~replace(., . == "NA", "")))
-# View and export
-View(table1_overall)
-write_xlsx(table1_overall, "Results/Table1_Overall_Summary.xlsx")
+
 
 # Create LaTeX version
 latex_table1 <- kable(table1_overall,
@@ -494,10 +502,26 @@ latex_table1 <- kable(table1_overall,
   kable_styling(latex_options = c("hold_position", "scale_down"),
                 font_size = 9)
 
-writeLines(as.character(latex_table1), "Results/Table1_Overall_Summary.tex")
-cat("\n========== TABLE 1: Overall Summary LaTeX ==========\n")
-cat(latex_table1)
-cat("\n====================================================\n\n")
+writeLines(as.character(latex_table1), file.path(output_path, "Table1_Overall_Summary.tex"))
+
+# Create HTML table and save as PNG (for GitHub display)
+html_table1 <- kable(table1_overall,
+                     format = "html",
+                     col.names = c("Variable", "N", "Mean/%", "SD", "Min", "Max"),
+                     align = c("l", "r", "r", "r", "r", "r"),
+                     caption = "Descriptive Statistics: Overall Sample") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE)
+html_table1 %>%
+  save_kable(file.path(output_path, "Table1_Overall_Summary.png"))
+
+# Creating MarkDown version for Github display
+md_table1 <- kable(table1_overall,
+                   format = "markdown",
+                   col.names = c("Variable", "N", "Mean/%", "SD", "Min", "Max"),
+                   align = c("l", "r", "r", "r", "r", "r"))
+writeLines(md_table1, file.path(output_path, "Table1_Overall_Summary.md"))
+
 
 
 
@@ -674,9 +698,7 @@ table2_formatted <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# View and export
-View(table2_formatted)
-write_xlsx(table2_formatted, "Results/Table2_Treatment_vs_Control.xlsx")
+
 
 # LaTeX version
 latex_table2 <- kable(table2_formatted,
@@ -692,12 +714,22 @@ latex_table2 <- kable(table2_formatted,
   footnote(general = "Standard deviations in parentheses.",
            footnote_as_chunk = TRUE)
 
-writeLines(as.character(latex_table2), "Results/Table2_Treatment_vs_Control.tex")
-cat("\n========== TABLE 2: Treatment vs Control LaTeX ==========\n")
-cat(latex_table2)
-cat("\n=========================================================\n\n")
+writeLines(as.character(latex_table2), file.path("Table2_Treatment_vs_Control.tex"))
 
+# HTML table saved as PNG (for GitHub display)
+html_table2 <- kable(table2_formatted,
+                     format = "html",
+                     col.names = c("Variable", "Control Cohort", "Treatment Cohort"),
+                     align = c("l", "r", "r"),
+                     caption = "Summary Statistics by Treatment Status") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(general = "Standard deviations in parentheses.",
+           footnote_as_chunk = TRUE)
+html_table2 %>%
+  save_kable(file.path(output_path, "Table2_Treatment_vs_Control.png"))
 
+stop()
 
 # PART 3: SUMMARY BY ALL COHORTS =================================
 
