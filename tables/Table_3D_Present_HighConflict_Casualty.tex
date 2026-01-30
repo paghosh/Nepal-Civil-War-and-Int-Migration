@@ -1,0 +1,53 @@
+
+\begingroup
+\centering
+\begin{tabular}{lccccc}
+   \tabularnewline \midrule \midrule
+   Dependent Variable: & \multicolumn{5}{c}{present\_ind\_migrant}\\
+                                                           & (1) Basic      & (2) +Demo                      & (3) +Edu                & (4) +Ethnic             & (5) +FE \\   
+   Model:                                                  & (1)            & (2)                            & (3)                     & (4)                     & (5)\\  
+   \midrule
+   \emph{Variables}\\
+   Constant                                                & 0.0194$^{***}$ & 0.1346$^{***}$                 & 0.0981$^{***}$          & 0.1263$^{***}$          &   \\   
+                                                           & (0.0022)       & (0.0202)                       & (0.0271)                & (0.0304)                &   \\   
+   treatment                                               & 0.0587$^{***}$ & 0.0478$^{***}$                 & 0.0485$^{***}$          & 0.0474$^{***}$          & 0.0480$^{***}$\\   
+                                                           & (0.0041)       & (0.0071)                       & (0.0130)                & (0.0131)                & (0.0122)\\   
+   high\_conflict\_casualty\_binary                        & 0.0166$^{***}$ & 0.0196$^{***}$                 & -0.0045                 & -0.0052                 &   \\   
+                                                           & (0.0051)       & (0.0051)                       & (0.0116)                & (0.0120)                &   \\   
+   treatment $\times$ high\_conflict\_casualty\_binary     & -0.0179$^{**}$ & -0.0186$^{***}$                & -0.0017                 & -0.0003                 & -0.0024\\   
+                                                           & (0.0068)       & (0.0064)                       & (0.0131)                & (0.0127)                & (0.0124)\\   
+   sex                                                     &                & -0.1320$^{***}$                & -0.1612$^{***}$         & -0.1636$^{***}$         & -0.1661$^{***}$\\   
+                                                           &                & (0.0075)                       & (0.0102)                & (0.0104)                & (0.0107)\\   
+   age                                                     &                & 0.0063$^{***}$                 & 0.0119$^{***}$          & 0.0118$^{***}$          & 0.0117$^{***}$\\   
+                                                           &                & (0.0009)                       & (0.0015)                & (0.0015)                & (0.0014)\\   
+   I(I(age\^2))                                            &                & $-8.71\times 10^{-5}$$^{***}$  & -0.0002$^{***}$         & -0.0002$^{***}$         & -0.0002$^{***}$\\   
+                                                           &                & ($1.16\times 10^{-5}$)         & ($2.07\times 10^{-5}$)  & ($2.07\times 10^{-5}$)  & ($2\times 10^{-5}$)\\    
+   factor(education\_category)Primary(1-5)                 &                &                                & 0.0133                  & 0.0099                  & 0.0075\\   
+                                                           &                &                                & (0.0111)                & (0.0106)                & (0.0108)\\   
+   factor(education\_category)Secondary(6-12)              &                &                                & 0.0078                  & 0.0041                  & 0.0017\\   
+                                                           &                &                                & (0.0087)                & (0.0092)                & (0.0096)\\   
+   factor(education\_category)Tertiary                     &                &                                & -0.0658$^{***}$         & -0.0711$^{***}$         & -0.0670$^{***}$\\   
+                                                           &                &                                & (0.0120)                & (0.0122)                & (0.0145)\\   
+   factor(Ethnicity)HillHighCaste                          &                &                                &                         & -0.0100                 & -0.0071\\   
+                                                           &                &                                &                         & (0.0090)                & (0.0086)\\   
+   factor(Ethnicity)HillJanajati                           &                &                                &                         & -0.0061                 & 0.0026\\   
+                                                           &                &                                &                         & (0.0091)                & (0.0092)\\   
+   factor(Ethnicity)Muslim                                 &                &                                &                         & -0.0118                 & -0.0195\\   
+                                                           &                &                                &                         & (0.0207)                & (0.0198)\\   
+   factor(Ethnicity)Terai/Madhesi                          &                &                                &                         & -0.0561$^{***}$         & -0.0510$^{***}$\\   
+                                                           &                &                                &                         & (0.0123)                & (0.0137)\\   
+   \midrule
+   \emph{Fixed-effects}\\
+   dist                                                    &                &                                &                         &                         & Yes\\  
+   \midrule
+   \emph{Fit statistics}\\
+   Observations                                            & 29,922         & 29,922                         & 20,051                  & 20,012                  & 20,012\\  
+   R$^2$                                                   & 0.01153        & 0.08722                        & 0.09449                 & 0.09906                 & 0.11197\\  
+   Within R$^2$                                            &                &                                &                         &                         & 0.09978\\  
+   \midrule \midrule
+   \multicolumn{6}{l}{\emph{Clustered (dist) standard-errors in parentheses}}\\
+   \multicolumn{6}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+\end{tabular}
+\par\endgroup
+
+
