@@ -1,0 +1,12 @@
+# Raw / restricted data (do not commit)
+data/raw/
+data_raw/
+*.dta
+*.sav
+*.por
+*.RData
+*.rds
+
+# RStudio / macOS noise
+.Rproj.user/
+.DS_Store
