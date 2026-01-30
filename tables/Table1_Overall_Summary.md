@@ -1,0 +1,42 @@
+|Variable                           |     N| Mean/%|     SD| Min| Max|
+|:----------------------------------|-----:|------:|------:|---:|---:|
+|=== CONTINUOUS VARIABLES ===       |      |       |       |    |    |
+|mwar_own_any                       | 90109|  53.57|     17|   0| 107|
+|mwar_own_fatal                     | 90109|  49.91|  16.76|   0| 103|
+|cas_own_any                        | 90109| 244.64| 175.66|   0| 811|
+|cas_own_fatal                      | 90109| 213.58| 159.08|   0| 774|
+|age                                | 90109|   27.7|  19.43|   0| 105|
+|age_at_conflict_start              | 90109|    6.7|  19.43| -21|  84|
+|grade_comp                         | 61951|   7.43|   4.03|   0|  17|
+|                                   |      |       |       |    |    |
+|=== BINARY VARIABLES (%) ===       |      |       |       |    |    |
+|international_migrant              | 90109|  10.85|     NA|  NA|  NA|
+|international_absentee_only        | 90074|   8.29|     NA|  NA|  NA|
+|present_ind_migrant                | 77638|   3.01|     NA|  NA|  NA|
+|treatment                          | 37174|  73.83|     NA|  NA|  NA|
+|absent                             | 90109|  13.84|     NA|  NA|  NA|
+|                                   |      |       |       |    |    |
+|=== EDUCATION DISTRIBUTION (%) === |      |       |       |    |    |
+|No Education                       |  1654|   2.67|     NA|  NA|  NA|
+|Primary (1-5)                      | 22183|  35.81|     NA|  NA|  NA|
+|Secondary (6-12)                   | 35129|   56.7|     NA|  NA|  NA|
+|Tertiary                           |  2985|   4.82|     NA|  NA|  NA|
+|                                   |      |       |       |    |    |
+|=== ETHNICITY DISTRIBUTION (%) === |      |       |       |    |    |
+|Dalit                              | 13024|  14.48|     NA|  NA|  NA|
+|Hill High Caste                    | 33214|  36.92|     NA|  NA|  NA|
+|Hill Janajati                      | 24690|  27.44|     NA|  NA|  NA|
+|Muslim                             |  3098|   3.44|     NA|  NA|  NA|
+|Terai/Madhesi                      | 15937|  17.72|     NA|  NA|  NA|
+|                                   |      |       |       |    |    |
+|=== COHORT DISTRIBUTION (%) ===    |      |       |       |    |    |
+|Control: Age 26-35 in 1996         |  7089|   7.87|     NA|  NA|  NA|
+|Control: Age 36-40 in 1996         |  2641|   2.93|     NA|  NA|  NA|
+|Excluded: Age 41+ in 1996          |  1958|   2.17|     NA|  NA|  NA|
+|Excluded: Other                    |  6231|   6.91|     NA|  NA|  NA|
+|Excluded: Overlap Age              |  7889|   8.75|     NA|  NA|  NA|
+|Excluded: Too Old in 2017          |  4467|   4.96|     NA|  NA|  NA|
+|Excluded: Too Young in 2017        | 32390|  35.95|     NA|  NA|  NA|
+|Treatment: Age 0-5 in 1996         | 11595|  12.87|     NA|  NA|  NA|
+|Treatment: Age 13-17 in 1996       |  6176|   6.85|     NA|  NA|  NA|
+|Treatment: Age 6-12 in 1996        |  9673|  10.73|     NA|  NA|  NA|
