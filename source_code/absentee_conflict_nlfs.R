@@ -35,7 +35,7 @@ getwd()
 #install.packages("tinytex")
 #tinytex::install_tinytex()
 #tinytex::tlmgr_install(c("booktabs", "float", "colortbl", "xcolor"))
-install.packages("webshot2")
+#install.packages("webshot2")
 # Load Packages
 library(tinytex)
 library(tinytable)
@@ -515,13 +515,6 @@ html_table1 <- kable(table1_overall,
 html_table1 %>%
   save_kable(file.path(output_path, "Table1_Overall_Summary.png"))
 
-# Creating MarkDown version for Github display
-md_table1 <- kable(table1_overall,
-                   format = "markdown",
-                   col.names = c("Variable", "N", "Mean/%", "SD", "Min", "Max"),
-                   align = c("l", "r", "r", "r", "r", "r"))
-writeLines(md_table1, file.path(output_path, "Table1_Overall_Summary.md"))
-
 
 
 
@@ -714,7 +707,8 @@ latex_table2 <- kable(table2_formatted,
   footnote(general = "Standard deviations in parentheses.",
            footnote_as_chunk = TRUE)
 
-writeLines(as.character(latex_table2), file.path("Table2_Treatment_vs_Control.tex"))
+writeLines(as.character(latex_table2), file.path(output_path, "Table2_Treatment_vs_Control.tex"))
+
 
 # HTML table saved as PNG (for GitHub display)
 html_table2 <- kable(table2_formatted,
@@ -729,7 +723,7 @@ html_table2 <- kable(table2_formatted,
 html_table2 %>%
   save_kable(file.path(output_path, "Table2_Treatment_vs_Control.png"))
 
-stop()
+
 
 # PART 3: SUMMARY BY ALL COHORTS =================================
 
@@ -880,11 +874,6 @@ table3_formatted$T3_Age13_17 <- get_cohort_data("Treatment: Age 13-17 in 1996")
 table3_formatted$C2_Age26_35 <- get_cohort_data("Control: Age 26-35 in 1996")
 table3_formatted$C3_Age36_40 <- get_cohort_data("Control: Age 36-40 in 1996")
 
-# View the table
-View(table3_formatted)
-
-# Export to Excel
-write_xlsx(table3_formatted, "Results/Table3_Summary_by_Cohort.xlsx")
 
 # Create LaTeX version
 latex_table3 <- kable(table3_formatted,
@@ -905,11 +894,25 @@ latex_table3 <- kable(table3_formatted,
   footnote(general = "Standard deviations in parentheses. T = Treatment cohort (children during conflict), C = Control cohort (adults during conflict).",
            footnote_as_chunk = TRUE)
 
-writeLines(as.character(latex_table3), "Results/Table3_Summary_by_Cohort.tex")
+writeLines(as.character(latex_table3), file.path(output_path, "Table3_Summary_by_Cohort.tex"))
 
-cat("\n========== TABLE 3: Summary by Cohort LaTeX ==========\n")
-cat(latex_table3)
-cat("\n======================================================\n\n")
+# HTML table saved as PNG (for GitHub display)
+html_table3 <- kable(table3_formatted,
+                     format = "html",
+                     col.names = c("Variable", 
+                                   "T1 (0-5)", 
+                                   "T2 (6-12)", 
+                                   "T3 (13-17)", 
+                                   "C1 (18-25)", 
+                                   "C2 (26-35)"),
+                     align = c("l", "r", "r", "r", "r", "r"),
+                     caption = "Summary Statistics by Cohort") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(general = "Standard deviations in parentheses. T = Treatment cohort (children during conflict), C = Control cohort (adults during conflict).",
+           footnote_as_chunk = TRUE)
+html_table3 %>%
+  save_kable(file.path(output_path, "Table3_Summary_by_Cohort.png"))
 
 
 
@@ -1228,11 +1231,6 @@ table4_formatted <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# View the table
-View(table4_formatted)
-
-# Export to Excel
-write_xlsx(table4_formatted, "Results/Table4_Summary_by_Conflict_Intensity.xlsx")
 
 # Create LaTeX version with grouped headers
 latex_table4 <- kable(table4_formatted,
@@ -1249,11 +1247,21 @@ latex_table4 <- kable(table4_formatted,
   footnote(general = "Standard deviations in parentheses. War-based split uses 75th percentile of months of war. Casualty-based split uses 75th percentile of casualties. Both splits define Low Conflict (at or below Q3) vs High Conflict (above Q3).",
            footnote_as_chunk = TRUE)
 
-writeLines(as.character(latex_table4), "Results/Table4_Summary_by_Conflict_Intensity.tex")
+writeLines(as.character(latex_table4), file.path(output_path, "Table4_Summary_by_Conflict_Intensity.tex"))
 
-cat("\n========== TABLE 4: Summary by Conflict Intensity (Expanded) LaTeX ==========\n")
-cat(latex_table4)
-cat("\n=============================================================================\n\n")
+# HTML table saved as PNG (for GitHub display)
+html_table4 <- kable(table4_formatted,
+                     format = "html",
+                     col.names = c("Variable", "Low", "High", "Low", "High"),
+                     align = c("l", "r", "r", "r", "r"),
+                     caption = "Summary Statistics by Conflict Intensity") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  add_header_above(c(" " = 1, "War-Based Split" = 2, "Casualty-Based Split" = 2)) %>%
+  footnote(general = "Standard deviations in parentheses. War-based split uses 75th percentile of months of war. Casualty-based split uses 75th percentile of casualties. Both splits define Low Conflict (at or below Q3) vs High Conflict (above Q3).",
+           footnote_as_chunk = TRUE)
+html_table4 %>%
+  save_kable(file.path(output_path, "Table4_Summary_by_Conflict_Intensity.png"))
 
 
 
@@ -1578,14 +1586,7 @@ table5_formatted <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# View the table
-View(table5_formatted)
 
-# Export to Excel
-write_xlsx(table5_formatted, "Results/Table5_Balance_Check.xlsx")
-
-# Also export the detailed t-test results (with P-values)
-write_xlsx(balance_tests, "Results/Table5_Balance_Tests_Detailed.xlsx")
 
 # Create LaTeX version (3 columns now)
 latex_table5 <- kable(table5_formatted,
@@ -1601,11 +1602,22 @@ latex_table5 <- kable(table5_formatted,
   footnote(general = "Standard errors in parentheses. *** p<0.01, ** p<0.05, * p<0.10. Difference = Treatment - Control. T-tests for difference in means between treatment and control groups.",
            footnote_as_chunk = TRUE)
 
-writeLines(as.character(latex_table5), "Results/Table5_Balance_Check.tex")
+writeLines(as.character(latex_table5), file.path(output_path, "Table5_Balance_Check.tex"))
 
-cat("\n========== TABLE 5: Balance Check LaTeX ==========\n")
-cat(latex_table5)
-cat("\n==================================================\n\n")
+# HTML table saved as PNG (for GitHub display)
+html_table5 <- kable(table5_formatted,
+                     format = "html",
+                     col.names = c("Variable", "Control", "Treatment", "Difference"),
+                     align = c("l", "r", "r", "r"),
+                     caption = "Balance Check: Treatment vs Control Groups") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(general = "Standard errors in parentheses. *** p<0.01, ** p<0.05, * p<0.10. Difference = Treatment - Control. T-tests for difference in means between treatment and control groups.",
+           footnote_as_chunk = TRUE)
+html_table5 %>%
+  save_kable(file.path(output_path, "Table5_Balance_Check.png"))
+
+
 
 
 # PART 6: DID FRAMEWORK TABLE (2x2) ==========================
@@ -1746,18 +1758,6 @@ table6b_formatted <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# View the tables
-cat("\n========== WAR-BASED DID TABLE ==========\n")
-View(table6a_formatted)
-
-cat("\n========== CASUALTY-BASED DID TABLE ==========\n")
-View(table6b_formatted)
-
-# Export to Excel
-write_xlsx(list(
-  "War_Based" = table6a_formatted,
-  "Casualty_Based" = table6b_formatted
-), "Results/Table6_DID_Framework.xlsx")
 
 # Create LaTeX version - WAR-BASED
 latex_table6a <- kable(table6a_formatted,
@@ -1773,7 +1773,20 @@ latex_table6a <- kable(table6a_formatted,
   footnote(general = "International migrant rates shown as percentages. Sample sizes in parentheses. pp = percentage points. Low Conflict = districts at or below 75th percentile (Q3) of months of war. High Conflict = districts above Q3. DID estimate shows the interaction effect: (Treatment High - Treatment Low) - (Control High - Control Low).",
            footnote_as_chunk = TRUE)
 
-writeLines(as.character(latex_table6a), "Results/Table6a_DID_Framework_War.tex")
+writeLines(as.character(latex_table6a), file.path(output_path, "Table6a_DID_Framework_War.tex"))
+
+# HTML table saved as PNG (for GitHub display)
+html_table6a <- kable(table6a_formatted,
+                      format = "html",
+                      col.names = c("", "Low Conflict", "High Conflict", "Difference (H - L)"),
+                      align = c("l", "r", "r", "r"),
+                      caption = "DID Framework: International Migration by Treatment Status and Conflict Intensity (War-Based)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(general = "International migrant rates shown as percentages. Sample sizes in parentheses. pp = percentage points. Low Conflict = districts at or below 75th percentile (Q3) of months of war. High Conflict = districts above Q3. DID estimate shows the interaction effect: (Treatment High - Treatment Low) - (Control High - Control Low).",
+           footnote_as_chunk = TRUE)
+html_table6a %>%
+  save_kable(file.path(output_path, "Table6a_DID_Framework_War.png"))
 
 # Create LaTeX version - CASUALTY-BASED
 latex_table6b <- kable(table6b_formatted,
@@ -1789,15 +1802,22 @@ latex_table6b <- kable(table6b_formatted,
   footnote(general = "International migrant rates shown as percentages. Sample sizes in parentheses. pp = percentage points. Low Conflict = districts at or below 75th percentile (Q3) of casualties. High Conflict = districts above Q3. DID estimate shows the interaction effect: (Treatment High - Treatment Low) - (Control High - Control Low).",
            footnote_as_chunk = TRUE)
 
-writeLines(as.character(latex_table6b), "Results/Table6b_DID_Framework_Casualty.tex")
+writeLines(as.character(latex_table6b), file.path(output_path, "Table6b_DID_Framework_Casualty.tex"))
 
-cat("\n========== TABLE 6a: DID Framework (War-Based) LaTeX ==========\n")
-cat(latex_table6a)
-cat("\n===============================================================\n\n")
+# HTML table saved as PNG (for GitHub display)
+html_table6b <- kable(table6b_formatted,
+                      format = "html",
+                      col.names = c("", "Low Conflict", "High Conflict", "Difference (H - L)"),
+                      align = c("l", "r", "r", "r"),
+                      caption = "DID Framework: International Migration by Treatment Status and Conflict Intensity (Casualty-Based)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(general = "International migrant rates shown as percentages. Sample sizes in parentheses. pp = percentage points. Low Conflict = districts at or below 75th percentile (Q3) of casualties. High Conflict = districts above Q3. DID estimate shows the interaction effect: (Treatment High - Treatment Low) - (Control High - Control Low).",
+           footnote_as_chunk = TRUE)
+html_table6b %>%
+  save_kable(file.path(output_path, "Table6b_DID_Framework_Casualty.png"))
 
-cat("\n========== TABLE 6b: DID Framework (Casualty-Based) LaTeX ==========\n")
-cat(latex_table6b)
-cat("\n====================================================================\n\n")
+
 
 
 
@@ -1848,16 +1868,21 @@ etable(model_1a, model_1b, model_1c, model_1d, model_1e,
        cluster = ~dist)
 
 # Display LaTeX code in console
-cat("\n========== TABLE 1A-1E: LaTeX Code ==========\n")
+
 latex_1a <- etable(model_1a, model_1b, model_1c, model_1d, model_1e,
                    title = "International Migrant ~ Treatment × Months of War",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_1A_IntMigrant_War.tex",
+                   file = file.path(output_path, "Table_1A_IntMigrant_War.tex"),
                    replace = TRUE)
 
-cat(latex_1a)
-cat("\n=============================================\n\n")
+
+# HTML version (for GitHub display)
+etable(model_1a, model_1b, model_1c, model_1d, model_1e,
+       title = "International Migrant ~ Treatment × Months of War",
+       headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
+       file = file.path(output_path, "Table_1A_IntMigrant_War.html"),
+       replace = TRUE)
 
 
 # ---------- MODELS 1F-1J: HIGH CONFLICT BINARY (WAR) ----------
@@ -1900,15 +1925,15 @@ etable(model_1f, model_1g, model_1h, model_1i, model_1j,
        cluster = ~dist)
 
 # Display LaTeX code in console
-cat("\n========== TABLE 1F-1J: LaTeX Code ==========\n")
+
 latex_1f <- etable(model_1f, model_1g, model_1h, model_1i, model_1j,
                    title = "International Migrant ~ Treatment × High Conflict Binary (War)",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_1C_IntMigrant_HighConflict_War.tex",
+                   file = file.path(output_path, "Table_1C_IntMigrant_HighConflict_War.tex"),
                    replace = TRUE)
-cat(latex_1f)
-cat("\n=============================================\n\n")
+
+
 
 
 # ---------- MODELS 1K-1O: CASUALTIES (CONTINUOUS) ----------
@@ -1950,15 +1975,15 @@ etable(model_1k, model_1l, model_1m, model_1n, model_1o,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 1K-1O: LaTeX Code ==========\n")
+
 latex_1k <- etable(model_1k, model_1l, model_1m, model_1n, model_1o,
                    title = "International Migrant ~ Treatment × Casualties",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_1B_IntMigrant_Casualty.tex",
+                   file = file.path(output_path, "Table_1B_IntMigrant_Casualty.tex"),
                    replace = TRUE)
-cat(latex_1k)
-cat("\n=============================================\n\n")
+
+
 
 
 # ---------- MODELS 1P-1T: HIGH CONFLICT BINARY (CASUALTY) =============
@@ -2000,15 +2025,14 @@ etable(model_1p, model_1q, model_1r, model_1s, model_1t,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 1P-1T: LaTeX Code ==========\n")
+
 latex_1p <- etable(model_1p, model_1q, model_1r, model_1s, model_1t,
                    title = "International Migrant ~ Treatment × High Conflict Binary (Casualty)",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_1D_IntMigrant_HighConflict_Casualty.tex",
+                   file = file.path(output_path, "Table_1D_IntMigrant_HighConflict_Casualty.tex"),
                    replace = TRUE)
-cat(latex_1p)
-cat("\n=============================================\n\n")
+
 
 
 
@@ -2048,15 +2072,15 @@ etable(model_2a, model_2b, model_2c, model_2d, model_2e,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 2A-2E: LaTeX Code ==========\n")
+
 latex_2a <- etable(model_2a, model_2b, model_2c, model_2d, model_2e,
                    title = "Absentee Only ~ Treatment × Months of War",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_2A_Absentee_War.tex",
+                   file = file.path(output_path, "Table_2A_Absentee_War.tex"),
                    replace = TRUE)
-cat(latex_2a)
-cat("\n=============================================\n\n")
+
+
 
 
 # ---------- MODELS 2F-2J: HIGH CONFLICT BINARY (WAR) ----------
@@ -2092,15 +2116,14 @@ etable(model_2f, model_2g, model_2h, model_2i, model_2j,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 2F-2J: LaTeX Code ==========\n")
+
 latex_2f <- etable(model_2f, model_2g, model_2h, model_2i, model_2j,
                    title = "Absentee Only ~ Treatment × High Conflict Binary (War)",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_2C_Absentee_HighConflict_War.tex",
+                   file = file.path(output_path, "Table_2C_Absentee_HighConflict_War.tex"),
                    replace = TRUE)
-cat(latex_2f)
-cat("\n=============================================\n\n")
+
 
 
 # ---------- MODELS 2K-2O: CASUALTIES (CONTINUOUS) ----------
@@ -2136,15 +2159,13 @@ etable(model_2k, model_2l, model_2m, model_2n, model_2o,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 2K-2O: LaTeX Code ==========\n")
+
 latex_2k <- etable(model_2k, model_2l, model_2m, model_2n, model_2o,
                    title = "Absentee Only ~ Treatment × Casualties",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_2B_Absentee_Casualty.tex",
+                   file = file.path(output_path, "Table_2B_Absentee_Casualty.tex"),
                    replace = TRUE)
-cat(latex_2k)
-cat("\n=============================================\n\n")
 
 
 # ---------- MODELS 2P-2T: HIGH CONFLICT BINARY (CASUALTY) ----------
@@ -2180,15 +2201,14 @@ etable(model_2p, model_2q, model_2r, model_2s, model_2t,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 2P-2T: LaTeX Code ==========\n")
+
 latex_2p <- etable(model_2p, model_2q, model_2r, model_2s, model_2t,
                    title = "Absentee Only ~ Treatment × High Conflict Binary (Casualty)",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_2D_Absentee_HighConflict_Casualty.tex",
+                   file = file.path(output_path, "Table_2D_Absentee_HighConflict_Casualty.tex"),
                    replace = TRUE)
-cat(latex_2p)
-cat("\n=============================================\n\n")
+
 
 
 
@@ -2228,15 +2248,14 @@ etable(model_3a, model_3b, model_3c, model_3d, model_3e,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 3A-3E: LaTeX Code ==========\n")
+
 latex_3a <- etable(model_3a, model_3b, model_3c, model_3d, model_3e,
                    title = "Present Migrant ~ Treatment × Months of War",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_3A_Present_War.tex",
+                   file = file.path(output_path, "Table_3A_Present_War.tex"),
                    replace = TRUE)
-cat(latex_3a)
-cat("\n=============================================\n\n")
+
 
 
 # ---------- MODELS 3F-3J: HIGH CONFLICT BINARY (WAR) ----------
@@ -2272,15 +2291,14 @@ etable(model_3f, model_3g, model_3h, model_3i, model_3j,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 3F-3J: LaTeX Code ==========\n")
+
 latex_3f <- etable(model_3f, model_3g, model_3h, model_3i, model_3j,
                    title = "Present Migrant ~ Treatment × High Conflict Binary (War)",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_3C_Present_HighConflict_War.tex",
+                   file = file.path(output_path, "Table_3C_Present_HighConflict_War.tex"),
                    replace = TRUE)
-cat(latex_3f)
-cat("\n=============================================\n\n")
+
 
 
 # ---------- MODELS 3K-3O: CASUALTIES (CONTINUOUS) ----------
@@ -2316,15 +2334,13 @@ etable(model_3k, model_3l, model_3m, model_3n, model_3o,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 3K-3O: LaTeX Code ==========\n")
+
 latex_3k <- etable(model_3k, model_3l, model_3m, model_3n, model_3o,
                    title = "Present Migrant ~ Treatment × Casualties",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_3B_Present_Casualty.tex",
+                   file = file.path(output_path, "Table_3B_Present_Casualty.tex"),
                    replace = TRUE)
-cat(latex_3k)
-cat("\n=============================================\n\n")
 
 
 # ---------- MODELS 3P-3T: HIGH CONFLICT BINARY (CASUALTY) ----------
@@ -2360,15 +2376,14 @@ etable(model_3p, model_3q, model_3r, model_3s, model_3t,
        headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"))
 
 # Display LaTeX code in console
-cat("\n========== TABLE 3P-3T: LaTeX Code ==========\n")
+
 latex_3p <- etable(model_3p, model_3q, model_3r, model_3s, model_3t,
                    title = "Present Migrant ~ Treatment × High Conflict Binary (Casualty)",
                    headers = c("(1) Basic", "(2) +Demo", "(3) +Edu", "(4) +Ethnic", "(5) +FE"),
                    tex = TRUE,
-                   file = "Results/Table_3D_Present_HighConflict_Casualty.tex",
+                   file = file.path(output_path, "Table_3D_Present_HighConflict_Casualty.tex"),
                    replace = TRUE)
-cat(latex_3p)
-cat("\n=============================================\n\n")
+
 
 
 # HETEROGENEITY ANALYSIS =====================================
@@ -2412,10 +2427,10 @@ latex_gender <- etable(model_male, model_female,
        title = "Heterogeneity Analysis by Gender",
        headers = c("Males", "Females"),
        tex = TRUE,
-       file = "Results/Heterogeneity_Gender.tex",
+       file = file.path(output_path, "Heterogeneity_Gender.tex"),
        replace = TRUE)   
 
-cat(latex_gender)
+
 
 
 # Analysis for Ethnic Groups=======================================
@@ -2487,10 +2502,10 @@ latex_ethnic <- etable(model_high_caste, model_janajati, model_terai, model_dali
        headers = c("Hill High Caste", "Hill Janajati", "Terai/Madhesi", "Dalit", "Muslim"),
        order = c("treatment:high_conflict_casualty_binary", "treatment", "high_conflict_casualty_binary"),
        tex = TRUE,
-       file = "Results/Heterogeneity_Ethnicity.tex",
+       file = file.path(output_path, "Heterogeneity_Ethnicity.tex"),
        replace = TRUE)
 
-cat(latex_ethnic)
+
 
 # Analysis for Education =============================================
 
@@ -2589,10 +2604,10 @@ latex_education <- etable(model_no_edu, model_primary, model_secondary, model_te
                                    "factor(Ethnicity)Muslim" = "Muslim",
                                    "factor(Ethnicity)Terai/Madhesi" = "Terai/Madhesi"),
                           tex = TRUE,
-                          file = "Results/Heterogeneity_Education.tex",
+                          file = file.path(output_path, "Heterogeneity_Education.tex"),
                           replace = TRUE)
 
-cat(latex_education)
+
 
 
 # Analysis with different Cohort ==================================
@@ -2713,10 +2728,10 @@ latex_cohort <- etable(model_0_5years, model_6_12years, model_13_17years,
                                    "factor(education_category)Secondary(6-12)" = "Secondary(6-12)",
                                    "factor(education_category)Tertiary" = "Tertiary" ),
                           tex = TRUE,
-                          file = "Results/Heterogeneity_Cohort.tex",
+                          file = file.path(output_path, "Heterogeneity_Cohort.tex"),
                           replace = TRUE)
 
-cat(latex_cohort) 
+
 # ROBUSTNESS CHECK  =====================================
 
   
@@ -2837,10 +2852,10 @@ latex_cutoffs <- etable(model_cutoff_p75, model_cutoff_p80, model_cutoff_p90, mo
                           "%factor(Ethnicity)Terai/Madhesi"
                           ),
                         tex = TRUE,
-                        file = "Results/Robustness_Cutoffs.tex",
+                        file = file.path(output_path, "Robustness_Cutoffs.tex"),
                         replace = TRUE)
 
-cat(latex_cutoffs)
+
 
 # Occupation Channel ===============================================
 # Categorization of the Occupation =================================
@@ -2936,11 +2951,11 @@ latex_occupation_interaction <- etable(
     "%factor(Ethnicity)Terai/Madhesi"
   ),
   tex = TRUE,
-  file = "Results/Table_Occupation_Interaction.tex",
+  file = file.path(output_path, "Table_Occupation_Interaction.tex"),
   replace = TRUE
 )
 
-cat(latex_occupation_interaction)
+
 
 # Education Channel ===========================================
 # Create exclusive education categories 
@@ -3016,11 +3031,11 @@ latex_education <- etable(
     "%factor(Ethnicity)Terai/Madhesi"
   ),
   tex = TRUE,
-  file = "Results/Table_Education.tex",
+  file = file.path(output_path, "Table_Education.tex"),
   replace = TRUE
 )
 
-cat(latex_education)
+
 
  # TEST ==============================
 
