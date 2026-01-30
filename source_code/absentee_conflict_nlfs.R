@@ -12,7 +12,16 @@
 rm(list = ls())
 cat("\014")
 # Set working directory
-setwd("/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict")
+# For working with collaborator using shared Dropbox folder
+
+#Ramesh
+dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict"
+
+#Second User need to specify the shared dropbox path here and comment 1st users path
+#dropbox_path <- "Specify the dropbox path here and uncomment this line"
+
+setwd(dropbox_path)
+
 
 # Check if working directory is set correctly
 getwd()
