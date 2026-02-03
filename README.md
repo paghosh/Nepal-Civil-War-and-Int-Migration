@@ -14,13 +14,11 @@ $$
 $$
 
 $$
-\[
 1(\text{casualty}_{dm})=
 \begin{cases}
 1, & \text{if } \text{casualty}_{dm}>0,\\
 0, & \text{otherwise.}
 \end{cases}
-\]
 $$
 
 Conflict Intensity based on the Months of War
