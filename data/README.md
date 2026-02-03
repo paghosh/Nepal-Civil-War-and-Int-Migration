@@ -11,7 +11,7 @@ Link to the Dropbox folder for data is:
 Please change the path for Data and the Results in the code using Dropbox path.
 
 The dataset 
-> "1_conflict_present_absentee_data.dta" 
+> 1_conflict_present_absentee_data.dta 
 
-has the combined data with casualty from INSEC and Nepal Living Force Survey 2018 (NLFS) 
+has the combined data with casualty from *INSEC* and *Nepal Living Force Survey 2018 (NLFS)* 
 
