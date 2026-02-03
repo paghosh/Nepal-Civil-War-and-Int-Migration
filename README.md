@@ -32,11 +32,10 @@ $$
 
 In addition to above calculation we computed the conflict intensity based on the number of casualties. 
 
-$$
+
 \begin{equation}
 \text{conflict}_{d 1}
-=\text{number_of_casualty}_{d}
+=\text{number of casualty}_{d}
 =\sum_{m=1}^{131} 1(\text{casualty}_{d m}).
 \label{eq:months_of_war}
 \end{equation}
-$$
