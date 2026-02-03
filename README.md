@@ -41,3 +41,14 @@ $$
 
 *Conflict<sub>d2</sub>* is the second measure of intensity based on the number of casualties. It is the sum of casualty number over the conflict period in each district. The intensity of conflict based on this index has the following distribution:
 ![Conflict Intensity based on Number of Casualties](figures/number_of_any_casualty.png)
+
+## Empirical Strategy
+
+We estimate the following model
+
+> $$
+\begin{equation}
+y_{itdc} = \alpha + \beta_{c}\,(Conflict\,Exposure_{d}\times \lambda_{c}) + \lambda_{c} + \delta_t + \eta_{d} + X'_{i} + \varepsilon_{itdc},
+\label{eq:did}
+\end{equation}
+$$
