@@ -1,4 +1,4 @@
-# Nepal-Civil-War-and-Int-Migration
+## Nepal-Civil-War-and-Int-Migration
 
 This repository is related to the investigation into the impact of civil conflict (Maoist revolution) of 1996-2006 in Nepal on the international migration. We try to investigate whether the increasing labor migration from Nepal was a result of exposure to civil conflict during their childhood.
 
@@ -23,3 +23,4 @@ $$
 
 *Conflict<sub>dm</sub>* is the intensity based on month of war. It is the sum of 1 or 0 in each 131 months. *1(casualty<sub>dm</sub>)* takes value 1 if casualty in a district in a month is greater than 0 else *1(casualty<sub>dm</sub>)* takes value 0. The conflict intensity based on this index has the following distribution:
 ![Conflict Intensity based on Months of War](figures/month_of_war_intensity.png)
+
