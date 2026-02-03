@@ -21,4 +21,4 @@ $$
 \end{cases}
 $$
 
-Conflict Intensity based on the Months of War
+*Conflict<sub>dm</sub> is the intensity based on month of war. It is the sum of 1 or 0 in each 131 months*
