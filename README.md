@@ -46,7 +46,7 @@ $$
 
 We estimate the following model
 
-> $$
+$$
 \begin{equation}
 y_{itdc} = \alpha + \beta_{c}(Conflict \quad Exposure_{d}\times \lambda_{c}) + \lambda_{c} + \delta_t + \eta_{d} + X'_{i} + \varepsilon_{itdc},
 \label{eq:did}
