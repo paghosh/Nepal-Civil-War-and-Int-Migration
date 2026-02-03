@@ -21,4 +21,4 @@ $$
 \end{cases}
 $$
 
-*Conflict<sub>dm</sub> is the intensity based on month of war. It is the sum of 1 or 0 in each 131 months*
+*Conflict<sub>dm</sub>* is the intensity based on month of war. It is the sum of 1 or 0 in each 131 months. *1(casualty<sub>dm</sub>)* takes value 1 if casualty in a district in a month is greater than 0 else *1(casualty<sub>dm</sub>)* takes value 0.
