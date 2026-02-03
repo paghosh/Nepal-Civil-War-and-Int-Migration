@@ -11,6 +11,9 @@ $$
 =\sum_{m=1}^{131} 1(\text{casualty}_{d m}).
 \label{eq:months_of_war}
 \end{equation}
+$$
+
+$$
 \[
 1(\text{casualty}_{dm})=
 \begin{cases}
