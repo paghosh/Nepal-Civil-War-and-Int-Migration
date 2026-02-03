@@ -1,11 +1,14 @@
-
+\renewcommand{\arraystretch}{0.75}   % default=1.0 → smaller rows
+\setlength{\aboverulesep}{0pt}       % booktabs: tighten space above rules
+\setlength{\belowrulesep}{0pt} 
 \begingroup
 \centering
 \begin{tabular}{lcccc}
    \tabularnewline \midrule \midrule
-   Dependent Variable: & \multicolumn{4}{c}{international\_absentee\_only}\\
+    & \multicolumn{4}{c}{International Labor Migrant}\\
+    \cmidrule (lr) {2-5}
                                          & P75(Baseline)                  & P80                            & P90                            & P95 \\   
-   Model:                                & (1)                            & (2)                            & (3)                            & (4)\\  
+                                   
    \midrule
    \emph{Variables}\\
    Treatment $\times$ High Conflict P75  & -0.0650$^{***}$                &                                &                                &   \\   
@@ -40,15 +43,15 @@
                                          & (0.0280)                       & (0.0280)                       & (0.0279)                       & (0.0282)\\   
    \midrule
    \emph{Fixed-effects}\\
-   dist                                  & Yes                            & Yes                            & Yes                            & Yes\\  
+   District                                  & Yes                            & Yes                            & Yes                            & Yes\\  
    \midrule
-   \emph{Fit statistics}\\
+   
    Observations                          & 27,240                         & 27,240                         & 27,240                         & 27,240\\  
    R$^2$                                 & 0.18484                        & 0.18485                        & 0.18465                        & 0.18442\\  
-   Within R$^2$                          & 0.16000                        & 0.16001                        & 0.15980                        & 0.15956\\  
+     
    \midrule \midrule
-   \multicolumn{5}{l}{\emph{Clustered (dist) standard-errors in parentheses}}\\
-   \multicolumn{5}{l}{\emph{Signif. Codes: ***: 0.01, **: 0.05, *: 0.1}}\\
+   \multicolumn{5}{l}{\emph{Clustered (district) standard-errors in parentheses}}\\
+   \multicolumn{5}{l}{\emph{ ***: 0.01, **: 0.05, *: 0.1}}\\
 \end{tabular}
 \par\endgroup
 
