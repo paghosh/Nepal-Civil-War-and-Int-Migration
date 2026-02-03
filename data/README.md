@@ -6,7 +6,7 @@ Raw data are stored locally and synced via Dropbox.
 
 Link to the Dropbox folder for data is:
 
-/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Results
+***/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Results***
 
 Please change the path for Data and the Results in the code using Dropbox path.
 
