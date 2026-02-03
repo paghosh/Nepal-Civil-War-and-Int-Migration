@@ -46,11 +46,11 @@ $$
 
 We estimate the following model
 
-> $$
+> ```math
 \begin{equation}
 y_{itdc} = \alpha + \beta_{c}(Conflict Exposure_{d}\times \lambda_{c}) + \lambda_{c} + \delta_t + \eta_{d} + X'_{i} + \varepsilon_{itdc},
 \label{eq:did}
 \end{equation}
-$$
+```
 
 where $y$ is an binary outcome variable for individual $i$ going abroad or not in the year $t$, from district $d$ and cohort $c$, $Conflict \quad Exposure_{d}$ indicates the different measures for exposure to war, $\lambda$ represents the cohort,  $\lambda_{c}$ denotes cohort fixed effect, $\delta_{t}$ is the year fixed effect and $\eta_{d}$ represents district fixed effects. $\varepsilon$ is a random, idiosyncratic error term. The coefficient $\beta$ captures the average treatment effect on the treated. $X^{'}_{i}$ represents the individual level controls including the individual's sex, educational attainment and ethnicity.
