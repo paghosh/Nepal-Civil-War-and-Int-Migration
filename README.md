@@ -13,7 +13,6 @@ $$
 \text{conflict}_{d 1}
 =\text{months of war}_{d}
 =\sum_{m=1}^{131} 1(\text{casualty}_{d m}).
-\label{eq:months_of_war}
 \end{equation}
 $$
 
@@ -37,6 +36,5 @@ $$
 \text{conflict}_{d 1}
 =\text{number of casualty}_{d}
 =\sum_{m=1}^{131} 1(\text{casualty}_{d m}).
-\label{eq:months_of_war}
 \end{equation}
 $$
