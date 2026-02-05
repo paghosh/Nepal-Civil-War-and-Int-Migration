@@ -11,7 +11,7 @@
 
 # USER 1: Ramesh
 dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict"
-output_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/tables"
+output_path <- "/Volumes/Ramesh-Research"
 
 # USER 2: Collaborator (uncomment and modify)
 # dropbox_path <- "Specify the dropbox path here and uncomment this line"
