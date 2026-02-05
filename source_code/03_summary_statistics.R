@@ -16,7 +16,7 @@
 # =============================================================================
 
 # Load helper functions
-source("functions/helper_functions.R")
+source("functions/Helper_functions.R")
 
 
 # =============================================================================
