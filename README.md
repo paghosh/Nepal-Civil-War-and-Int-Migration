@@ -53,3 +53,6 @@ y_{itdc} = \alpha + \beta_{c}(Conflict \quad Exposure_{d}\times \lambda_{c}) + \
 $$
 
 where $y$ is an binary outcome variable for individual $i$ going abroad or not in the year $t$, from district $d$ and cohort $c$, $Conflict \quad Exposure_d$ indicates the different measures for exposure to war in district $d$, $\lambda$ represents the cohort,  $\lambda_{c}$ denotes cohort fixed effect, $\delta_{t}$ is the year fixed effect and $\eta_{d}$ represents district fixed effects. $\varepsilon$ is a random, idiosyncratic error term. The coefficient $\beta$ captures the average treatment effect on the treated. $X^{'}_{i}$ represents the individual level controls including the individual's sex, educational attainment and ethnicity.
+
+# Structure of Code
+The [source_code](/source_code/)contains different code files to clean the data, generate summary, run main regression
