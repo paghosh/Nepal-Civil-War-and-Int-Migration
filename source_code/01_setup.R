@@ -11,7 +11,7 @@
 
 # USER 1: Ramesh
 dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict"
-output_path <- "/Volumes/Ramesh-Research"
+output_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/tables"
 code_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/source_code"
 
 # USER 2: Collaborator (uncomment and modify)

@@ -24,7 +24,7 @@ source(file.path(code_path, "functions/Helper_functions.R"))
 # TABLE 1: OVERALL DESCRIPTIVE STATISTICS
 # =============================================================================
 
-cat("  Creating Table 1: Overall Summary...\n")
+
 
 # Define variable groups
 continuous_vars <- c("mwar_own_any", "mwar_own_fatal", "cas_own_any", "cas_own_fatal", 
