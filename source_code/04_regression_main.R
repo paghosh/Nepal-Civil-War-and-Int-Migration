@@ -22,7 +22,7 @@
 # =============================================================================
 
 # Load helper functions
-source("functions/helper_functions.R")
+source(file.path(code_path, "functions/Helper_functions.R"))
 
 cat("Running main regression analysis...\n")
 

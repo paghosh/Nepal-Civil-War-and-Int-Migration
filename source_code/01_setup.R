@@ -12,10 +12,12 @@
 # USER 1: Ramesh
 dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict"
 output_path <- "/Volumes/Ramesh-Research"
+code_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/source_code"
 
 # USER 2: Collaborator (uncomment and modify)
 # dropbox_path <- "Specify the dropbox path here and uncomment this line"
 # output_path <- "Specify the GitHub path for saving the output tables"
+# code_path <- "Specify the Github path with source code"
 
 # Set working directory
 setwd(dropbox_path)

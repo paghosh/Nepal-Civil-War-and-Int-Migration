@@ -16,7 +16,7 @@
 # =============================================================================
 
 # Load helper functions
-source("functions/helper_functions.R")
+source(file.path(code_path, "functions/helper_functions.R"))
 
 cat("Running mechanism analysis...\n")
 
@@ -217,28 +217,3 @@ cat("    Secondary education interaction:", coef(model_secondary_edu)["treatment
 cat("    Tertiary education interaction:", coef(model_tertiary_edu)["treatment:high_conflict_casualty_binary"], "\n")
 
 
-# =============================================================================
-# 3. SUMMARY TABLE: KEY MECHANISM RESULTS
-# =============================================================================
-
-cat("\n  3. Creating mechanism summary table...\n")
-
-# Combine occupation and education results
-etable(
-  model_high_skill, model_medium_skill, model_low_skill,
-  model_no_edu, model_primary_edu, model_secondary_edu, model_tertiary_edu,
-  title = "Mechanism Analysis: Occupation and Education Channels",
-  headers = c("High Skill", "Med Skill", "Low Skill", 
-              "No Edu", "Primary", "Secondary", "Tertiary"),
-  keep = c("treatment:high_conflict", "treatment"),
-  dict = c(
-    "treatment:high_conflict_casualty_binary" = "Treatment $\\times$ High Conflict",
-    "treatment" = "Treatment"
-  ),
-  tex = TRUE,
-  file = file.path(output_path, "Table_Mechanisms_Summary.tex"),
-  replace = TRUE
-)
-
-
-cat("\n✓ Mechanism analysis complete!\n")

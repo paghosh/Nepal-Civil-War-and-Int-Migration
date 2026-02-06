@@ -15,8 +15,9 @@
 # - Table6_DID_Framework.tex/png
 # =============================================================================
 
+
 # Load helper functions
-source("functions/Helper_functions.R")
+source(file.path(code_path, "functions/Helper_functions.R"))
 
 
 # =============================================================================

@@ -19,7 +19,7 @@
 # =============================================================================
 
 # Load helper functions
-source("functions/helper_functions.R")
+source(file.path(code_path, "functions/Helper_functions.R"))
 
 cat("Running robustness checks...\n")
 
@@ -117,7 +117,7 @@ model_male <- feols(international_migrant ~ treatment * high_conflict_casualty_b
 model_female <- feols(international_migrant ~ treatment * high_conflict_casualty_binary + 
                         age + I(age^2) + factor(education_category) +
                         factor(Ethnicity) | dist, 
-                      data = nlss_conflict_data %>% filter(sex == 0), 
+                      data = nlss_conflict_data %>% filter(sex == 2), 
                       cluster = ~dist)
 
 # Display and export
