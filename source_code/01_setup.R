@@ -10,14 +10,14 @@
 # -----------------------------------------------------------------------------
 
 # USER 1: Ramesh
-dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Modified_Data"
-output_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/tables"
-code_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/source_code"
+#dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Modified_Data"
+#output_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/tables"
+#code_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/source_code"
 
-# USER 2: Collaborator (uncomment and modify)
-# dropbox_path <- "Specify the dropbox path here and uncomment this line"
-# output_path <- "Specify the GitHub path for saving the output tables"
-# code_path <- "Specify the Github path with source code"
+# USER 2: Pallab (uncomment and modify)
+ dropbox_path <- "/Users/pallab.ghosh/Library/CloudStorage/Dropbox/Papers_with_Coauthors/PhD_Students/Ramesh/Nepal Civil Conflict"
+ output_path <- "/Users/pallab.ghosh/Documents/GitHub/Nepal-Civil-War-and-Int-Migration/tables"
+ code_path <- "/Users/pallab.ghosh/Documents/GitHub/Nepal-Civil-War-and-Int-Migration/source_code"
 
 # Set working directory
 setwd(dropbox_path)
@@ -29,27 +29,27 @@ setwd(dropbox_path)
 # PACKAGE INSTALLATION (run once, then comment out)
 # -----------------------------------------------------------------------------
 
-# install.packages(c(
-#   "haven",        # Import Stata files
-#   "dplyr",        # Data manipulation
-#   "tidyr",        # Data reshaping
-#   "ggplot2",      # Visualization
-#   "labelled",     # Variable labels
-#   "stringr",      # String manipulation
-#   "knitr",        # Tables for LaTeX
-#   "kableExtra",   # Enhanced tables
-#   "writexl",      # Export to Excel
-#   "fixest",       # Fixed effects regression
-#   "stargazer",    # Regression tables
-#   "modelsummary", # Model summary tables
-#   "tinytex",      # LaTeX compilation
-#   "tinytable",    # Tables
-#   "webshot2"      # Save HTML as PNG
-# ))
+install.packages(c(
+  "haven",        # Import Stata files
+  "dplyr",        # Data manipulation
+  "tidyr",        # Data reshaping
+  "ggplot2",      # Visualization
+  "labelled",     # Variable labels
+  "stringr",      # String manipulation
+  "knitr",        # Tables for LaTeX
+  "kableExtra",   # Enhanced tables
+  "writexl",      # Export to Excel
+  "fixest",       # Fixed effects regression
+  "stargazer",    # Regression tables
+  "modelsummary", # Model summary tables
+  "tinytex",      # LaTeX compilation
+  "tinytable",    # Tables
+  "webshot2"      # Save HTML as PNG
+))
 
 # For LaTeX packages (run once)
-# tinytex::install_tinytex()
-# tinytex::tlmgr_install(c("booktabs", "float", "colortbl", "xcolor"))
+tinytex::install_tinytex()
+tinytex::tlmgr_install(c("booktabs", "float", "colortbl", "xcolor"))
 
 # -----------------------------------------------------------------------------
 # LOAD PACKAGES
@@ -90,4 +90,3 @@ SURVEY_YEAR <- 2017
 # Conflict period
 CONFLICT_START <- 1996
 CONFLICT_END <- 2006
-
