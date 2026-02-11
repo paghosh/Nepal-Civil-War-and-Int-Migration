@@ -15,4 +15,5 @@ The dataset
 
 has the combined data with casualty from *INSEC* and Labor market variables *Nepal Living Force Survey 2018 (NLFS)* 
 
+make two seprate folders for data
 
