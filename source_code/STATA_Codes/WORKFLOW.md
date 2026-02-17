@@ -1,1 +1,2 @@
 This folder contains the stata and a R code which produces the final dataset for the analysis.
+> The data related to conflict is imported from .xlsx file by the stata code file *Step1_Conflict_Data.do* and it produces the dataset *conflict_data.dta*
