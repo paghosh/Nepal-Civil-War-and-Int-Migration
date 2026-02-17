@@ -10,24 +10,6 @@ capture log close
 ********************************************************************************
 
 
-*==============================================================================*
-*          		        DEFINE THE PATH HERE        		                   *
-*------------------------------------------------------------------------------*
-
-if "`c(username)'" == "rameshdulal" {
-    global workdir "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data"
-    global data    "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Raw_Data"
-    global results "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Modified_Data"
-}
-
-*Please put the stata's username in place of yourname. To finde stata's username type
-* display c(username)
-*in stata. And chnage the directory for workdir, data, results
-if "`c(username)'" == "yourname" {
-    global workdir ""
-    global data    ""
-    global results ""
-}
 * ============================================================
 
 *Importing the .xlsx data from the Raw_Data folder
