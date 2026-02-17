@@ -4,15 +4,20 @@
 user <- Sys.getenv("USER")
 
 if (user == "rameshdulal") {
-  data_path    <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data"
-  results_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Results"
-  code_path    <- "/Users/rameshdulal/Documents/GitHub/nepal-conflict"
+  data_path    <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Raw_Data"
+  nlfs_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Raw_Data/NLFS 3/NLFS_dataset"
+  results_path    <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Modified_Data"
 }
 
-if (user == "advisorusername") {
-  data_path    <- "/Users/advisorusername/Dropbox/Nepal Civil Conflict/Data"
-  results_path <- "/Users/advisorusername/Dropbox/Nepal Civil Conflict/Results"
-  code_path    <- "/Users/advisorusername/Documents/GitHub/nepal-conflict"
+# Please change the directory path in the following lines.
+# To find your username run 
+Sys.getenv("USER")
+# in your R console
+
+if (user == "yourname") {
+  data_path    <- ""
+  results_path <- ""
+  code_path    <- ""
 }
 # ============================================
 
@@ -21,11 +26,6 @@ if (user == "advisorusername") {
 # Clear workspace (like 'clear all' in Stata)
 rm(list = ls())
 
-# Set working directory
-setwd("/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data")
-
-# Check if working directory is set correctly
-getwd()
 
 # Load Packages
 library(haven) # This package helps importing data from stata dataset
@@ -41,7 +41,7 @@ library(stringr)
 # 2. IMPORT MAIN DATASET ========================
 
 # Import dataset from NLFS III
-nlfs_data <- read_dta("modified_datasets/personal_nlfs_data.dta")
+nlfs_data <- read_dta(file.path(results_path, "personal_nlfs_data.dta")
 
 
 # Check the data
@@ -58,7 +58,7 @@ attributes(nlfs_data$dist)$labels
 # 3. USING CONFLICT DATASET =========================
 
 # Import dataset for Conflict Intensity
-conflict_data <- read_dta("conflict_intensity.dta")
+conflict_data <- read_dta(file.path(results_path, "conflict_intensity.dta")
 
 # Check the data
 names(conflict_data) # Variable Names
@@ -214,5 +214,5 @@ nlfs_conflict_data %>%
 # 7. SAVE THE MERGED DATASET =============================
 
 # Save in stata format
-write_dta(nlfs_conflict_data, "../Results/nlfs_conflict_data.dta")
-stop()
+write_dta(nlfs_conflict_data, file.path(results_path, "nlfs_conflict_data.dta"))
+
