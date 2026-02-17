@@ -1,0 +1,1 @@
+This folder contains the stata and a R code which produces the final dataset for the analysis.
