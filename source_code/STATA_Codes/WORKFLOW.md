@@ -3,3 +3,6 @@ Run the STATA code in the *00_Master_File* which will run all the other codes fr
 Then run the R code *05_NLFS_Conflict_data.R* and *06_Final_Data.do* and remember to change the path in the R file.
 > The data related to conflict is imported from .xlsx file by the stata code file *00_Conflict_Data.do* and it produces the dataset *conflict_data.dta* in the following file path in Dropbox:<br>
 **/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Modified_Data** 
+
+<br>
+The stata code file *06_Final_Data.do* defines *international_absentee_only*, *international_migrant*,and *present_ind_migrant*.
