@@ -34,4 +34,6 @@ if "`c(username)'" == "yourname" {
 
 * Run scripts in order
 do "$code/01_Conflict_Data.do"
-do "$code/02_Conflict_Intensity.do"
+do "$code/02_Neighbor_Districts.do"
+do "$code/03_Conflict_Intensity.do"
+do "$code/04_Personal_NLFS.do"

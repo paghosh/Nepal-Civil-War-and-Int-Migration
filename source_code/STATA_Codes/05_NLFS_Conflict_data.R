@@ -11,20 +11,19 @@ if (user == "rameshdulal") {
 
 # Please change the directory path in the following lines.
 # To find your username run 
-Sys.getenv("USER")
+#Sys.getenv("USER")
 # in your R console
 
-if (user == "yourname") {
-  data_path    <- ""
-  results_path <- ""
-  code_path    <- ""
-}
+#if (user == "yourname") {
+ # data_path    <- ""
+  #results_path <- ""
+#  code_path    <- ""
+#}
 # ============================================
 
 # 1. SETUP ====================================
 
-# Clear workspace (like 'clear all' in Stata)
-rm(list = ls())
+
 
 
 # Load Packages
@@ -41,7 +40,7 @@ library(stringr)
 # 2. IMPORT MAIN DATASET ========================
 
 # Import dataset from NLFS III
-nlfs_data <- read_dta(file.path(results_path, "personal_nlfs_data.dta")
+nlfs_data <- read_dta(file.path(results_path, "personal_nlfs_data.dta"))
 
 
 # Check the data
@@ -58,7 +57,7 @@ attributes(nlfs_data$dist)$labels
 # 3. USING CONFLICT DATASET =========================
 
 # Import dataset for Conflict Intensity
-conflict_data <- read_dta(file.path(results_path, "conflict_intensity.dta")
+conflict_data <- read_dta(file.path(results_path, "conflict_intensity.dta"))
 
 # Check the data
 names(conflict_data) # Variable Names
