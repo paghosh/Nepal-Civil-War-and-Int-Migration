@@ -13,7 +13,7 @@
 # 1. IMPORT DATA
 # -----------------------------------------------------------------------------
 
-nlss_conflict_data <- read_dta("Results/1_conflict_present_absentee_data.dta")
+nlss_conflict_data <- read_dta("1_conflict_present_absentee_data.dta")
 
 # -----------------------------------------------------------------------------
 # 2. REORDER VARIABLES FOR CLARITY
