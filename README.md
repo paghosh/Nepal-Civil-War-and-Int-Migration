@@ -57,17 +57,17 @@ where $y$ is an binary outcome variable for individual $i$ going abroad or not i
 ## Definition of Cohorts
 
 This paper is based on categorizing the sample into treatment and control group based on their age in 1996. The Cohorts are defined on the following basis:<br>
-- Treatment1: 0-5 years in 1996; Sample who are included in the following category:<br>
+- **Treatment1**: 0-5 years in 1996; Sample who are included in the following category:<br>
 age at start of conflict $\geq 0$ & age at start of conflict $\leq 5$ and current age $\geq 18$ & current age $\leq 45$
-- Treatment2: 6-12 years in 1996; Sample who are included in the following category: <br>
+- **Treatment2**: 6-12 years in 1996; Sample who are included in the following category: <br>
 age at start of conflict $\geq 6$ & age at start of conflict $\leq 12$ and current age $\geq 18$ & current age $\leq 45$
-- Treatment3: 13-17 years in 1996; Sample who are included in the following category: <br>
+- **Treatment3**: 13-17 years in 1996; Sample who are included in the following category: <br>
 age at start of conflict $\geq 13$ & age at start of conflict $\leq 17$ and current age $\geq 18$ & current age $\leq 45$
-- Control1: 18-25 years in 1996; Sample who are included in the following category: <br>
+- **Control1**: 18-25 years in 1996; Sample who are included in the following category: <br>
 age at start of conflict $\geq 18$ & age at start of conflict $\leq 25$ and current age $\geq 47$ & current age $\leq 65$
-- Control2: 26-35 years in 1996; Sample who are included in the following category: <br>
+- **Control2**: 26-35 years in 1996; Sample who are included in the following category: <br>
 age at start of conflict $\geq 26$ & age at start of conflict $\leq 35$ and current age $\geq 47$ & current age $\leq 65$
-- Control3: 36-40 years in 1996; Sample who are included in the following category: <br>
+- **Control3**: 36-40 years in 1996; Sample who are included in the following category: <br>
 age at start of conflict $\geq 36$ & age at start of conflict $\leq 40$ and current age $\geq 47$ & current age $\leq 65$
 
 
