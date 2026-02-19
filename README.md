@@ -54,6 +54,8 @@ $$
 
 where $y$ is an binary outcome variable for individual $i$ going abroad or not in the year $t$, from district $d$ and cohort $c$, $Conflict \quad Exposure_d$ indicates the different measures for exposure to war in district $d$, $\lambda$ represents the cohort,  $\lambda_{c}$ denotes cohort fixed effect, $\delta_{t}$ is the year fixed effect and $\eta_{d}$ represents district fixed effects. $\varepsilon$ is a random, idiosyncratic error term. The coefficient $\beta$ captures the average treatment effect on the treated. $X^{'}_{i}$ represents the individual level controls including the individual's sex, educational attainment and ethnicity.
 
+## डेफिनेसन अफ कोहर्ट
+
 # Structure of Code
 The folder [Source Code](/source_code/) contains different code files: [Master](/source_code/00_master.R) which runs all the codes in order, [Setup](/source_code/01_setup.R); contains data paths, packages and global settings,  [Data Cleaning](/source_code/02_data_cleaning.R); Import, clean data, create variables, categorises treatment/control cohorts and intensity of conflict,  [Summary](/source_code/03_summary_statistics.R); produces descriptive statistics, balance check and DiD Framework, [Main Regression](/source_code/04_regression_main.R); includes all main DiD regression, [Robustness Check](/source_code/05_robustness.R); contains codes for sensitivity analysis, [Mechanism Analysis](/source_code/06_mechanism_analysis.R); contains codes for analysis of the channels  and [Helper Function](/source_code/Helper_functions.R) contains codes for formatting the tables and coefficient dictionaries.
 
