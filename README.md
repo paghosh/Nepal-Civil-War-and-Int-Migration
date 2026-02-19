@@ -58,7 +58,20 @@ where $y$ is an binary outcome variable for individual $i$ going abroad or not i
 
 This paper is based on categorizing the sample into treatment and control group based on their age in 1996. The Cohorts are defined on the following basis:<br>
 - Treatment1: 0-5 years in 1996; Sample who are included in the following category:<br>
-age at start of conflict $\geq 0$ & age at start of conflict $\geq 5$ and current age $\geq 18$ & current age $\geq 45$
+age at start of conflict $\geq 0$ & age at start of conflict $\leq 5$ and current age $\geq 18$ & current age $\leq 45$
+- Treatment2: 6-12 years in 1996; Sample who are included in the following category: <br>
+age at start of conflict $\geq 6$ & age at start of conflict $\leq 12$ and current age $\geq 18$ & current age $\leq 45$
+- Treatment3: 13-17 years in 1996; Sample who are included in the following category: <br>
+age at start of conflict $\geq 13$ & age at start of conflict $\leq 17$ and current age $\geq 18$ & current age $\leq 45$
+- Control1: 18-25 years in 1996; Sample who are included in the following category: <br>
+age at start of conflict $\geq 18$ & age at start of conflict $\leq 25$ and current age $\geq 47$ & current age $\leq 65$
+- Control2: 26-35 years in 1996; Sample who are included in the following category: <br>
+age at start of conflict $\geq 26$ & age at start of conflict $\leq 35$ and current age $\geq 47$ & current age $\leq 65$
+- Control3: 36-40 years in 1996; Sample who are included in the following category: <br>
+age at start of conflict $\geq 36$ & age at start of conflict $\leq 40$ and current age $\geq 47$ & current age $\leq 65$
+
+
+
 
 # Structure of Code
 The folder [Source Code](/source_code/) contains different code files: [Master](/source_code/00_master.R) which runs all the codes in order, [Setup](/source_code/01_setup.R); contains data paths, packages and global settings,  [Data Cleaning](/source_code/02_data_cleaning.R); Import, clean data, create variables, categorises treatment/control cohorts and intensity of conflict,  [Summary](/source_code/03_summary_statistics.R); produces descriptive statistics, balance check and DiD Framework, [Main Regression](/source_code/04_regression_main.R); includes all main DiD regression, [Robustness Check](/source_code/05_robustness.R); contains codes for sensitivity analysis, [Mechanism Analysis](/source_code/06_mechanism_analysis.R); contains codes for analysis of the channels  and [Helper Function](/source_code/Helper_functions.R) contains codes for formatting the tables and coefficient dictionaries.
