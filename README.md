@@ -56,16 +56,16 @@ where $y$ is an binary outcome variable for individual $i$ going abroad or not i
 
 ## Variables
 
-# Outcome Variables
+### Outcome Variables
 
-- international_absentee_only: This outcome variable is created from Absentee Dataset which includes individuals abroad at the time of survey. 
+- *international_absentee_only*: This outcome variable is created from Absentee Dataset which includes individuals abroad at the time of survey. 
 
-- national: This outcome variable is created from Absentee Dataset which includes only the individuals migrating inside the country at the time of survey.
+- *national*: This outcome variable is created from Absentee Dataset which includes only the individuals migrating inside the country at the time of survey.
 
-- international_migrant: This outcome variable is created from Absentee Dataset which includes individuals abroad at the time of survey and from Individual Dataset which includes individuals who had been abroad ever for at least for 3 months.
+- *international_migrant*: This outcome variable is created from Absentee Dataset which includes individuals abroad at the time of survey and from Individual Dataset which includes individuals who had been abroad ever for at least for 3 months.
 
-- present_ind_migrant: This outcome variable is created from Non-Absentee Dataset (Individual present during survey) which includes the individual who travelled abroad ever for at least for 3 months.
- 
+- *present_ind_migrant*: This outcome variable is created from Non-Absentee Dataset (Individual present during survey) which includes the individual who travelled abroad ever for at least for 3 months.
+
 ## Definition of Cohorts
 
 This paper is based on categorizing the sample into treatment and control group based on their age in 1996. The Cohorts are defined on the following basis:<br>
