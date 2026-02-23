@@ -36,7 +36,7 @@ nlss_conflict_data <- nlss_conflict_data %>%
     sex, age, rel_hhh, caste, marital,
     
     # Migration outcomes
-    international_migrant, international_absentee_only, present_ind_migrant,
+    international_migrant, international_absentee_only, present_ind_migrant, national,
     occupation_types, absent, travelled5, rsn_travel, abs_rsn, 
     abs_nummonth, abs_living, abs_id,
     
