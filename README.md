@@ -66,7 +66,17 @@ where $y$ is an binary outcome variable for individual $i$ going abroad or not i
 
 - *present_ind_migrant*: This outcome variable is created from Non-Absentee Dataset (Individual present during survey) which includes the individual who travelled abroad ever for at least for 3 months.
 
-## Definition of Cohorts
+### Conflict Exposure Variable (Dependent Variable)
+
+- *mwar_own_any*: Months of war.
+
+- *mwar_own_fatal*: Months of war based on all fatal death.
+
+- *cas_own_any*: Number of casualties.
+
+- *cas_own_fatal*: Number of casualties based on fatal death.
+
+### Definition of Cohorts
 
 This paper is based on categorizing the sample into treatment and control group based on their age in 1996. The Cohorts are defined on the following basis:<br>
 - **Treatment1**: 0-5 years in 1996; Sample who are included in the following category:<br>
