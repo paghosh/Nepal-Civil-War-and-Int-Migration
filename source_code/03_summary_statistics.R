@@ -30,7 +30,7 @@ source(file.path(code_path, "functions/Helper_functions.R"))
 continuous_vars <- c("mwar_own_any", "mwar_own_fatal", "cas_own_any", "cas_own_fatal", 
                      "age", "age_at_conflict_start", "grade_comp")
 
-binary_vars <- c("international_migrant", "international_absentee_only", 
+binary_vars <- c("international_migrant", "international_absentee_only", "national", 
                  "present_ind_migrant", "treatment", "absent")
 
 # Continuous variables
@@ -118,6 +118,7 @@ clean_var_names <- function(var) {
     var == "international_migrant" ~ "International Migrant (%)",
     var == "international_absentee_only" ~ "Currently Abroad (%)",
     var == "present_ind_migrant" ~ "Return Migrant (%)",
+    var == "national" ~ "Internal Migrant (%)",
     var == "treatment" ~ "Treatment Cohort (%)",
     var == "absent" ~ "Absent from Household (%)",
     TRUE ~ var
@@ -172,6 +173,7 @@ latex_table1 <- kable(table1_overall,
 
 writeLines(as.character(latex_table1), file.path(output_path, "1.Overall_Summary.tex"))
 
+
 # Export PNG
 html_table1 <- kable(table1_overall,
                      format = "html",
@@ -181,7 +183,7 @@ html_table1 <- kable(table1_overall,
                 full_width = FALSE)
 html_table1 %>% save_kable(file.path(output_path, "1.Overall_Summary.png"))
 
-
+stop()
 # =============================================================================
 # TABLE 2: SUMMARY BY TREATMENT/CONTROL
 # =============================================================================

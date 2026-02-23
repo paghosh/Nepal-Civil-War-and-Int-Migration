@@ -87,6 +87,7 @@ clean_var_names <- function(var) {
     var == "international_migrant" ~ "International Migrant (%)",
     var == "international_absentee_only" ~ "Currently Abroad (%)",
     var == "present_ind_migrant" ~ "Return Migrant (%)",
+    var == "national" ~ "Internal Migrant (%)",
     var == "treatment" ~ "Treatment Cohort (%)",
     var == "absent" ~ "Absent from Household (%)",
     TRUE ~ var
