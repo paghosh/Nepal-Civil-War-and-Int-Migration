@@ -76,6 +76,10 @@ nlss_conflict_data <- nlss_conflict_data %>%
   mutate(caste = first(na.omit(caste))) %>%
   ungroup()
 
+# Create value labels for "absent" variable ----
+
+nlss_conflict_data <- nlss_conflict_data %>%
+  mutate(absent_label = factor(absent_label, levels = c("Non-Absent", "Absent")))
 
 # -----------------------------------------------------------------------------
 # 4. CREATE ETHNICITY CATEGORIES

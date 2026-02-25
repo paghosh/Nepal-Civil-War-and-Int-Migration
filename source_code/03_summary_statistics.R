@@ -241,7 +241,6 @@ html_table1 %>% save_kable(file.path(output_path, "1.Overall_Summary.png"),
 )
 
 
-# ── Additional Table: Migration Outcomes Only ──────────────────────────────
 
 migration_vars <- c("international_migrant", "international_absentee_only", "national", 
                     "present_ind_migrant", "treatment", "absent")
@@ -299,6 +298,51 @@ html_migration %>% save_kable(file.path(output_path, "1.1 Migration_Summary.png"
       vwidth = 500,
       vheight = 400
       )
+
+# Additional Table: Covariates in relation to Absent ----
+
+outcome_vars <- c("mwar_own_any", "mwar_own_fatal", "cas_own_any", "cas_own_fatal" )
+
+table_outcome <- nlss_conflict_data %>%
+  summarise(
+    across(all_of(outcome_vars),
+           list(
+             N = ~sum(!is.na(.)),
+             Percent = ~round(mean(. == 1, na.rm = TRUE)* 100, 2)
+           ),
+           .names = "{.col}_{.fn}")
+  ) %>%
+  pivot_longer(everything(),
+               names_to = c("Variable", ".value"),
+               names_pattern = "(.+)_(N|Percent)") %>%
+  mutate(Variable = clean_var_names(Variable)) %>%
+  rename(`Mean/%` = Percent)
+
+# Export PNG
+html_outcome <- kable(table_outcome,
+                      format    = "html",
+                      col.names = c("Variable", "N", "Mean/%"),
+                      caption   = "Descriptive Statistics: Migration Outcomes") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(
+    general = c(
+      "- International Migrant includes individuals abroad at time of survey and individual who had been abroad ever for at least for 3 months in the past",
+      "- Currently Abroad includes individuals abroad at the time of survey",
+      "- Internal Migrant includes individuals migrating inside the country at the time of survey",
+      "- Return Migrant includes only the individuals who travelled abroad ever for at least for 3 months ",
+      "- Absent from Household includes all the absent individuals at the time of survey."
+    ),
+    general_title = "Notes:",
+    footnote_as_chunk = FALSE
+  )
+
+html_outcome %>% save_kable(file.path(output_path, "1.1 Outcome_Summary.png"),
+                            zoom = 1.5,
+                            vwidth = 500,
+                            vheight = 400
+)
+
 stop()
 # =============================================================================
 # TABLE 2: SUMMARY BY TREATMENT/CONTROL
