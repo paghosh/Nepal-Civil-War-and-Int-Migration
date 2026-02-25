@@ -90,6 +90,8 @@ clean_var_names <- function(var) {
     var == "national" ~ "Internal Migrant (%)",
     var == "treatment" ~ "Treatment Cohort (%)",
     var == "absent" ~ "Absent from Household (%)",
+    var == "marital" ~ "Marital Status",
+    var == "male" ~ "Male (%)",
     TRUE ~ var
   )
 }

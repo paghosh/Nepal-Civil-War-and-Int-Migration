@@ -76,8 +76,20 @@ nlss_conflict_data <- nlss_conflict_data %>%
   mutate(caste = first(na.omit(caste))) %>%
   ungroup()
 
+
 # -----------------------------------------------------------------------------
 # 4. CREATE ETHNICITY CATEGORIES
+# -----------------------------------------------------------------------------
+
+nlss_conflict_data <- nlss_conflict_data %>%
+  mutate(male = case_when(
+    sex == 1 ~ 1,
+    sex == 2 ~ 0,
+    TRUE ~ NA_real_
+  ))
+
+# -----------------------------------------------------------------------------
+# 5. CREATE ETHNICITY CATEGORIES
 # -----------------------------------------------------------------------------
 
 nlss_conflict_data <- nlss_conflict_data %>%
@@ -111,7 +123,24 @@ nlss_conflict_data <- nlss_conflict_data %>%
 
 
 # -----------------------------------------------------------------------------
-# 5. CREATE EDUCATION CATEGORIES
+# 6. CREATE MARITAL STATUS CATEGORIES
+# -----------------------------------------------------------------------------
+
+nlss_conflict_data <- nlss_conflict_data %>%
+  mutate(
+    marital_label = case_when(
+      marital == 1 ~ "Never Married",
+      marital == 2 ~ "Married",
+      marital == 3 ~ "Single",
+      marital == 4 ~ "Separated",
+      marital == 5 ~ "Divorced",
+      TRUE ~ NA_character_
+    )
+  )
+
+
+# -----------------------------------------------------------------------------
+# 7. CREATE EDUCATION CATEGORIES
 # -----------------------------------------------------------------------------
 
 nlss_conflict_data <- nlss_conflict_data %>%
@@ -126,9 +155,33 @@ nlss_conflict_data <- nlss_conflict_data %>%
   )
 
 
-
 # -----------------------------------------------------------------------------
-# 6. CREATE TREATMENT/CONTROL COHORTS
+# 8. CREATE OCCUPATION CATEGORIES
+# -----------------------------------------------------------------------------
+
+nlss_conflict_data <- nlss_conflict_data %>%
+  mutate(occupation_types = as.numeric(occupation_types))
+
+nlss_conflict_data <- nlss_conflict_data %>%
+  mutate(
+    nsco_major = case_when(
+      occupation_types < 1000 ~ floor(occupation_types / 100),
+      occupation_types >= 1000 ~ floor(occupation_types / 1000),
+      TRUE ~ NA_real_
+    ),
+    occupation_category = case_when(
+      occupation_types %in% c(110, 210, 310) ~ "Armed Forces",
+      nsco_major %in% c(1, 2, 3)             ~ "High Skilled",
+      nsco_major %in% c(4, 5)                ~ "Service & Clerical",
+      nsco_major == 6                        ~ "Agriculture",
+      nsco_major %in% c(7, 8)                ~ "Craft & Manufacturing",
+      nsco_major == 9                        ~ "Elementary/Low Skilled",
+      occupation_types == 9999               ~ NA_character_,
+      TRUE ~ NA_character_
+    )
+  )
+# -----------------------------------------------------------------------------
+# 8. CREATE TREATMENT/CONTROL COHORTS
 # -----------------------------------------------------------------------------
 
 nlss_conflict_data <- nlss_conflict_data %>%
@@ -200,7 +253,7 @@ nlss_conflict_data <- nlss_conflict_data %>%
 
 
 # -----------------------------------------------------------------------------
-# 7. CREATE CONFLICT INTENSITY MEASURES
+# 9. CREATE CONFLICT INTENSITY MEASURES
 # -----------------------------------------------------------------------------
 
 # Q3 cutoff for months of war

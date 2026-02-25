@@ -31,7 +31,7 @@ continuous_vars <- c("mwar_own_any", "mwar_own_fatal", "cas_own_any", "cas_own_f
                      "age", "age_at_conflict_start", "grade_comp")
 
 binary_vars <- c("international_migrant", "international_absentee_only", "national", 
-                 "present_ind_migrant", "treatment", "absent")
+                 "present_ind_migrant", "treatment", "absent", "male")
 
 # Continuous variables
 table1_continuous <- nlss_conflict_data %>%
@@ -92,6 +92,34 @@ table1_ethnicity <- nlss_conflict_data %>%
   ) %>%
   select(Variable, N, Mean, SD, Min, Max)
 
+# Marital Status distribution
+
+table1_marital <- nlss_conflict_data %>%
+  filter(!is.na(marital)) %>%
+  count(marital_label) %>%
+  mutate(
+    Variable = paste(" ", marital_label),
+    N = n,
+    Mean = round(n / sum(n)*100, 2),
+    SD = NA, Min = NA, Max = NA
+  ) %>%
+  select(Variable, N, Mean, SD, Min, Max)
+
+# Occupation type distribution
+
+table1_occupation <- nlss_conflict_data %>%
+  filter(!is.na(occupation_category)) %>%
+  count(occupation_category) %>%
+  mutate(
+    Variable = paste(" ", occupation_category),
+    N = n,
+    Mean = round(n / sum(n)*100, 2),
+    SD = NA, Min = NA, Max = NA
+  ) %>%
+  select(Variable, N, Mean, SD, Min, Max)
+  
+
+
 # Cohort Distribution
 table1_cohort <- nlss_conflict_data %>%
   filter(!is.na(cohort_group)) %>%
@@ -121,6 +149,9 @@ clean_var_names <- function(var) {
     var == "national" ~ "Internal Migrant (%)",
     var == "treatment" ~ "Treatment Cohort (%)",
     var == "absent" ~ "Absent from Household (%)",
+    var == "male" ~ "Male (%)",
+    var == "marital" ~ "Marital Status",
+    var == "nsco_major" ~ "Occupation Type",
     TRUE ~ var
   )
 }
@@ -136,6 +167,12 @@ table1_education <- table1_education %>%
   mutate(across(c(N, Mean, SD, Min, Max), as.character))
 
 table1_ethnicity <- table1_ethnicity %>%
+  mutate(across(c(N, Mean, SD, Min, Max), as.character))
+
+table1_marital <- table1_marital %>%
+  mutate(across(c(N, Mean, SD, Min, Max), as.character))
+
+table1_occupation <- table1_occupation %>%
   mutate(across(c(N, Mean, SD, Min, Max), as.character))
 
 table1_cohort <- table1_cohort %>%
@@ -154,6 +191,10 @@ table1_overall <- bind_rows(
   data.frame(Variable = "", N = NA, Mean = NA, SD = NA, Min = NA, Max = NA),
   data.frame(Variable = "Ethnicity Distribution (%)", N = NA, Mean = NA, SD = NA, Min = NA, Max = NA),
   table1_ethnicity,
+  data.frame(Variable = "Marital Status (%)", N = NA, Mean = NA, SD = NA, Min = NA, Max = NA),
+  table1_marital,
+  data.frame(Variable = "Occupation Type (%)", N = NA, Mean = NA, SD = NA, Min = NA, Max = NA),
+  table1_occupation,
   data.frame(Variable = "Cohort Distribution (%)", N = "", Mean = "", SD = "", Min = "", Max = ""),
   table1_cohort
 ) %>%
@@ -180,9 +221,84 @@ html_table1 <- kable(table1_overall,
                      col.names = c("Variable", "N", "Mean/%", "SD", "Min", "Max"),
                      caption = "Descriptive Statistics: Overall Sample") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE)
-html_table1 %>% save_kable(file.path(output_path, "1.Overall_Summary.png"))
+                full_width = FALSE) %>%
+  footnote(
+    general = c(
+      "- International Migrant includes individuals abroad at time of survey and individual who had been abroad ever for at least for 3 months in the past",
+      "- Currently Abroad includes individuals abroad at the time of survey",
+      "- Internal Migrant includes individuals migrating inside the country at the time of survey",
+      "- Return Migrant includes only the individuals who travelled abroad ever for at least for 3 months ",
+      "- Absent from Household includes all the absent individuals at the time of survey."
+    ),
+    general_title = "Notes:",
+    footnote_as_chunk = FALSE
+  )
 
+html_table1 %>% save_kable(file.path(output_path, "1.Overall_Summary.png"),
+                              zoom = 2,
+                              vwidth = 900,
+                              vheight = 600
+)
+
+
+# ── Additional Table: Migration Outcomes Only ──────────────────────────────
+
+migration_vars <- c("international_migrant", "international_absentee_only", "national", 
+                    "present_ind_migrant", "treatment", "absent")
+
+table_migration <- nlss_conflict_data %>%
+  summarise(
+    across(all_of(migration_vars),
+           list(
+             N       = ~sum(!is.na(.)),
+             Percent = ~round(mean(. == 1, na.rm = TRUE) * 100, 2)
+           ),
+           .names = "{.col}_{.fn}")
+  ) %>%
+  pivot_longer(everything(),
+               names_to      = c("Variable", ".value"),
+               names_pattern = "(.+)_(N|Percent)") %>%
+  mutate(Variable = clean_var_names(Variable)) %>%
+  rename(`Mean/%` = Percent)
+
+# Export LaTeX
+latex_migration <- kable(table_migration,
+                         format    = "latex",
+                         booktabs  = TRUE,
+                         caption   = "Descriptive Statistics: Migration Outcomes",
+                         label     = "tab:migration_summary",
+                         col.names = c("Variable", "N", "Mean/\\%"),
+                         escape    = FALSE,
+                         align     = c("l", "r", "r")) %>%
+  kable_styling(latex_options = c("hold_position"),
+                font_size = 10)
+
+writeLines(as.character(latex_migration), file.path(output_path, "1.1.Migration_Summary.tex"))
+
+# Export PNG
+html_migration <- kable(table_migration,
+                        format    = "html",
+                        col.names = c("Variable", "N", "Mean/%"),
+                        caption   = "Descriptive Statistics: Migration Outcomes") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(
+    general = c(
+  "- International Migrant includes individuals abroad at time of survey and individual who had been abroad ever for at least for 3 months in the past",
+  "- Currently Abroad includes individuals abroad at the time of survey",
+  "- Internal Migrant includes individuals migrating inside the country at the time of survey",
+  "- Return Migrant includes only the individuals who travelled abroad ever for at least for 3 months ",
+  "- Absent from Household includes all the absent individuals at the time of survey."
+  ),
+  general_title = "Notes:",
+  footnote_as_chunk = FALSE
+  )
+
+html_migration %>% save_kable(file.path(output_path, "1.1 Migration_Summary.png"),
+      zoom = 1.5,
+      vwidth = 500,
+      vheight = 400
+      )
 stop()
 # =============================================================================
 # TABLE 2: SUMMARY BY TREATMENT/CONTROL
