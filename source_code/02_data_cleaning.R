@@ -79,10 +79,16 @@ nlss_conflict_data <- nlss_conflict_data %>%
 # Create value labels for "absent" variable ----
 
 nlss_conflict_data <- nlss_conflict_data %>%
-  mutate(absent_label = factor(absent_label, levels = c("Non-Absent", "Absent")))
+  mutate(absent_label = factor(ifelse(absent == 1, "Absent", "Non-Absent"),
+                               levels = c("Non-Absent", "Absent")),
+
+# Create Value labels for "Internationa_migrant" variable ----
+
+  migrant_label = factor(ifelse(international_migrant == 1, "Migrant", "Non-Migrant"),
+                               levels = c("Non-Migrant", "Migrant")))
 
 # -----------------------------------------------------------------------------
-# 4. CREATE ETHNICITY CATEGORIES
+# 4. CREATE SEX CATEGORIES
 # -----------------------------------------------------------------------------
 
 nlss_conflict_data <- nlss_conflict_data %>%
