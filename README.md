@@ -66,6 +66,8 @@ where $y$ is an binary outcome variable for individual $i$ going abroad or not i
 
 - *present_ind_migrant*: This outcome variable is created from Non-Absentee Dataset (Individual present during survey) which includes the individual who travelled abroad ever for at least for 3 months.
 
+- *absent*: This outcome variable is derived from the Absentee Dataset and it includes all the absent sample (internal or international) at the time of survey.
+
 ### Conflict Exposure Variable (Dependent Variable)
 
 - *mwar_own_any*: Months of war.
