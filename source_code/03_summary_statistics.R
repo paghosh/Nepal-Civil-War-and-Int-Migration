@@ -410,8 +410,15 @@ html_absent <- kable(table_absent_formatted,
                      caption   = "Covariate Summary by Absent Status") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
                 full_width = FALSE) %>%
-  footnote(general = "Standard deviations in parentheses for continuous variables.",
-           footnote_as_chunk = TRUE)
+  footnote(
+    general = c(
+      "- Standard deviations in parentheses for continuous variables.",
+      "- Absent from Household includes all the absent individuals at the time of survey."
+    ),
+    general_title = "Notes:",
+    footnote_as_chunk = FALSE
+  )
+  
 
 html_absent %>% save_kable(file.path(output_path, "2.Covariate_Summary_Absent.png"),
                            zoom    = 2,
@@ -587,9 +594,15 @@ html_migrant <- kable(table_migrant_formatted,
                       caption   = "Covariate Summary by International Migrant Status") %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
                 full_width = FALSE) %>%
-  footnote(general = "Standard deviations in parentheses for continuous variables.",
-           footnote_as_chunk = TRUE)
-
+  footnote(
+    general = c(
+      "- Standard deviations in parentheses for continuous variables.",
+      "- Migrant includes individuals abroad at time of survey and individual who had been abroad ever at least for 3 months in the past"
+      ),
+    general_title = "Notes:",
+    footnote_as_chunk = FALSE
+  )
+  
 html_migrant %>% save_kable(file.path(output_path, "3.Covariate_Summary_Migrant.png"),
                             zoom    = 2,
                             vwidth  = 700,
