@@ -10,14 +10,14 @@
 # -----------------------------------------------------------------------------
 
 # USER 1: Ramesh
-#dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Modified_Data"
-#output_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/tables"
-#code_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/source_code"
+dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Modified_Data"
+output_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/tables"
+code_path <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/source_code"
 
-# USER 2: Pallab (uncomment and modify)
- dropbox_path <- "/Users/pallab.ghosh/Library/CloudStorage/Dropbox/Papers_with_Coauthors/PhD_Students/Ramesh/Nepal Civil Conflict"
- output_path <- "/Users/pallab.ghosh/Documents/GitHub/Nepal-Civil-War-and-Int-Migration/tables"
- code_path <- "/Users/pallab.ghosh/Documents/GitHub/Nepal-Civil-War-and-Int-Migration/source_code"
+# # USER 2: Pallab (uncomment and modify)
+#  dropbox_path <- "/Users/pallab.ghosh/Library/CloudStorage/Dropbox/Papers_with_Coauthors/PhD_Students/Ramesh/Nepal Civil Conflict"
+#  output_path <- "/Users/pallab.ghosh/Documents/GitHub/Nepal-Civil-War-and-Int-Migration/tables"
+#  code_path <- "/Users/pallab.ghosh/Documents/GitHub/Nepal-Civil-War-and-Int-Migration/source_code"
 
 # Set working directory
 setwd(dropbox_path)
