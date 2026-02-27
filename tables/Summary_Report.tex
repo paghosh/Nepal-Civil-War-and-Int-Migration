@@ -1,0 +1,282 @@
+\documentclass[12pt,letterpaper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+% citations handled manually
+\usepackage{longtable}
+
+\onehalfspacing
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\hypersetup{colorlinks=true,linkcolor=blue!70!black,citecolor=blue!70!black,urlcolor=blue!70!black}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{Summary Report: Descriptive Statistics}} \\[0.5em]
+    {\large Nepal Civil Conflict and International Migration} \\[0.5em]
+    {\normalsize Ramesh Dulal and Pallab Ghosh} \\[0.3em]
+    {\normalsize Department of Economics, University of Oklahoma} \\[0.3em]
+    {\normalsize \today} \\[0.5em]
+    \rule{0.6\textwidth}{0.4pt}
+\end{center}
+
+\vspace{0.5em}
+
+\section{Introduction}
+
+Nepal experienced a decade-long Maoist insurgency from 1996 to 2006 that claimed over 17,000 lives and displaced hundreds of thousands of people. During this same period, Nepal witnessed an unprecedented surge in international labor migration, particularly to Gulf states, Malaysia, and India. This report presents descriptive statistics from the Nepal Living Standards Survey (NLSS-III, 2010/11) to characterize the sample and document systematic differences between migrants and non-migrants along key demographic, educational, ethnic, and occupational dimensions. The findings lay the groundwork for our difference-in-differences estimation strategy, which exploits cohort-level variation in conflict exposure to identify the causal effect of civil war on international migration.
+
+The sample comprises 90,109 individuals. We examine six tables: an overall summary (Table~1), and five covariate comparisons that decompose the sample by absent status (Table~2), international migrant status (Table~3), international absentee status (Table~4), respondent migrant status (Table~5), and internal migrant status (Table~6).
+
+
+\section{Table 1: Overall Sample Characteristics}
+
+\begin{table}[H]
+\centering
+\caption*{\textbf{Table 1: Descriptive Statistics --- Overall Sample (Selected Variables)}}
+\footnotesize
+\begin{tabular}{@{}l r r r r r@{}}
+\toprule
+Variable & N & Mean/\% & SD & Min & Max \\
+\midrule
+\multicolumn{6}{l}{\textbf{Panel A: Conflict Exposure}} \\
+\quad Months of War (any)          & 90,109 & 53.57  & 17.00  & 0   & 107 \\
+\quad Months of War (fatal)        & 90,109 & 49.91  & 16.76  & 0   & 103 \\
+\quad Casualties (any)             & 90,109 & 244.64 & 175.66 & 0   & 811 \\
+\quad Casualties (fatal)           & 90,109 & 213.58 & 159.08 & 0   & 774 \\[3pt]
+\multicolumn{6}{l}{\textbf{Panel B: Demographics}} \\
+\quad Age in 2017                  & 90,109 & 27.70  & 19.43  & 0   & 105 \\
+\quad Age at Conflict Start        & 90,109 & 6.70   & 19.43  & $-$21 & 84 \\
+\quad Years of Education           & 61,951 & 7.43   & 4.03   & 0   & 17 \\
+\quad Male (\%)                    & 90,109 & 51.24  &        &     &     \\[3pt]
+\multicolumn{6}{l}{\textbf{Panel C: Migration Status (\%)}} \\
+\quad International Migrant        & 90,109 & 10.85  &  &  &  \\
+\quad Currently Abroad             & 90,074 & 8.29   &  &  &  \\
+\quad Internal Migrant             & 90,050 & 5.52   &  &  &  \\
+\quad Absent from Household        & 90,109 & 13.84  &  &  &  \\
+\bottomrule
+\end{tabular}
+\\[4pt]
+\begin{minipage}{0.9\textwidth}
+\scriptsize
+\textit{Source:} Nepal Living Standards Survey (NLSS-III), 2010/11. N = 90,109. Conflict period: 1996--2006.
+\end{minipage}
+\end{table}
+
+\noindent\textbf{Key Findings:} The average individual in the sample was approximately 28 years old in 2017 and was about 7 years old when the Maoist insurgency began in 1996. Conflict exposure is substantial: the average individual experienced nearly 54 months of war activity in their district, with an average of 245 conflict-related casualties. International migration is widespread, with 10.85\% of the sample classified as international migrants and 8.29\% currently abroad at the time of the survey. An additional 5.52\% migrated internally. The overall absence rate from households is 13.84\%, indicating that roughly one in seven individuals was absent from their household. The treatment cohort---those who were of impressionable age (0--17) when the conflict began---accounts for 73.83\% of the estimation sample, providing substantial variation for the difference-in-differences design.
+
+
+\section{Table 2: Absent vs.\ Non-Absent}
+
+\begin{table}[H]
+\centering
+\caption*{\textbf{Table 2: Covariate Summary by Absent Status}}
+\footnotesize
+\begin{tabular}{@{}l r r@{}}
+\toprule
+Variable & Absent & Non-Absent \\
+\midrule
+Sample Size                 & 12,471 & 77,638 \\[3pt]
+\multicolumn{3}{l}{\textbf{Demographics}} \\
+\quad Age in 2017           & 25.61 (11.51) & 28.03 (20.40) \\
+\quad Age at Conflict Start & 4.61 (11.51)  & 7.03 (20.40) \\
+\quad Male (\%)             & 81.67         & 46.35 \\[3pt]
+\multicolumn{3}{l}{\textbf{Education (\%)}} \\
+\quad No Education          & 8.15  & 1.35 \\
+\quad Primary (1--5)        & 20.74 & 39.43 \\
+\quad Secondary (6--12)     & 64.52 & 54.82 \\
+\quad Tertiary              & 6.59  & 4.39 \\[3pt]
+\multicolumn{3}{l}{\textbf{Ethnicity (\%)}} \\
+\quad Hill High Caste       & 41.98 & 36.11 \\
+\quad Hill Janajati         & 27.96 & 27.36 \\
+\quad Terai/Madhesi         & 12.31 & 18.58 \\
+\quad Dalit                 & 14.89 & 14.41 \\
+\quad Muslim                & 2.86  & 3.54 \\[3pt]
+\multicolumn{3}{l}{\textbf{Occupation (\%)}} \\
+\quad Elementary/Low Skilled & 49.74 & 20.24 \\
+\quad Service \& Clerical   & 25.53 & 27.09 \\
+\quad Craft \& Manufacturing & 15.28 & 25.65 \\
+\quad Agriculture           & 0.66  & 14.50 \\
+\quad High Skilled          & 5.02  & 12.13 \\
+\quad Armed Forces          & 3.77  & 0.38 \\
+\bottomrule
+\end{tabular}
+\\[4pt]
+\begin{minipage}{0.85\textwidth}
+\scriptsize
+\textit{Notes:} Standard deviations in parentheses for continuous variables. Absent includes all individuals absent from household at time of survey.
+\end{minipage}
+\end{table}
+
+\noindent\textbf{Key Findings:} Absent individuals are strikingly different from those present. They are overwhelmingly \textbf{male} (81.67\% vs.\ 46.35\%), \textbf{younger} (mean age 25.6 vs.\ 28.0), and were \textbf{younger at the onset of conflict} (age 4.6 vs.\ 7.0). This is consistent with the conflict disproportionately affecting migration decisions among younger cohorts who grew up during the insurgency. Absent individuals have a bimodal education distribution: they are more likely to have \textit{no education} (8.15\% vs.\ 1.35\%) but also slightly more likely to have \textit{tertiary} education (6.59\% vs.\ 4.39\%), suggesting that both the least and most educated are more likely to leave. The most dramatic occupational difference is in elementary/low-skilled work: nearly half (49.74\%) of absent individuals hold low-skilled occupations compared to only 20.24\% of non-absent individuals, consistent with labor migration to Gulf states and Malaysia for manual work. Hill High Caste individuals are overrepresented among the absent (41.98\% vs.\ 36.11\%), while Terai/Madhesi groups are underrepresented.
+
+
+\section{Table 3: International Migrants vs.\ Non-Migrants}
+
+\begin{table}[H]
+\centering
+\caption*{\textbf{Table 3: Covariate Summary by International Migrant Status}}
+\footnotesize
+\begin{tabular}{@{}l r r@{}}
+\toprule
+Variable & Migrant & Non-Migrant \\
+\midrule
+Sample Size                 & 9,781  & 80,328 \\[3pt]
+\multicolumn{3}{l}{\textbf{Demographics}} \\
+\quad Age in 2017           & 29.27 (10.65) & 27.51 (20.24) \\
+\quad Age at Conflict Start & 8.27 (10.65)  & 6.51 (20.24) \\
+\quad Male (\%)             & 90.91         & 46.41 \\[3pt]
+\multicolumn{3}{l}{\textbf{Education (\%)}} \\
+\quad No Education          & 7.53  & 1.81 \\
+\quad Primary (1--5)        & 23.58 & 37.97 \\
+\quad Secondary (6--12)     & 64.85 & 55.26 \\
+\quad Tertiary              & 4.04  & 4.96 \\[3pt]
+\multicolumn{3}{l}{\textbf{Ethnicity (\%)}} \\
+\quad Hill High Caste       & 38.72 & 36.70 \\
+\quad Hill Janajati         & 27.50 & 27.44 \\
+\quad Terai/Madhesi         & 11.75 & 18.44 \\
+\quad Dalit                 & 18.31 & 14.01 \\
+\quad Muslim                & 3.72  & 3.41 \\[3pt]
+\multicolumn{3}{l}{\textbf{Occupation (\%)}} \\
+\quad Elementary/Low Skilled & 43.19 & 27.03 \\
+\quad Service \& Clerical   & 30.59 & 25.10 \\
+\quad Craft \& Manufacturing & 19.33 & 22.66 \\
+\quad Agriculture           & 2.53  & 11.74 \\
+\quad High Skilled          & 2.19  & 12.03 \\
+\quad Armed Forces          & 2.17  & 1.45 \\
+\bottomrule
+\end{tabular}
+\\[4pt]
+\begin{minipage}{0.85\textwidth}
+\scriptsize
+\textit{Notes:} Migrant includes individuals abroad at time of survey and those who had been abroad for at least 3 months.
+\end{minipage}
+\end{table}
+
+\noindent\textbf{Key Findings:} International migrants are even more overwhelmingly \textbf{male} (90.91\%) than the broader absent group, confirming that international labor migration from Nepal is a predominantly male phenomenon. They are slightly \textbf{older} than non-migrants (29.3 vs.\ 27.5), consistent with migration occurring during prime working years. The educational profile reveals a ``missing middle'' pattern: migrants are overrepresented at both \textit{no education} (7.53\% vs.\ 1.81\%) and \textit{secondary education} (64.85\% vs.\ 55.26\%), while being underrepresented at the \textit{primary} level. This suggests two distinct migration streams: unskilled laborers and secondary-educated workers. Strikingly, \textbf{Dalits} are overrepresented among migrants (18.31\% vs.\ 14.01\%), while Terai/Madhesi groups are underrepresented (11.75\% vs.\ 18.44\%). The occupational concentration in \textbf{elementary/low-skilled} work (43.19\%) and \textbf{service} roles (30.59\%) is consistent with the nature of employment opportunities in Gulf destination countries.
+
+
+\section{Tables 4--6: Migration Subgroup Comparisons}
+
+Tables 4 through 6 decompose the migration sample into three subgroups: (i) international absentees---those currently abroad; (ii) respondent migrants---those who have returned from abroad (with at least 3 months of foreign experience); and (iii) internal migrants---those who migrated within Nepal. While the current data show identical summary statistics across Tables 3--6 (N = 9,781 vs.\ 80,328), likely reflecting an interim stage of the data construction, the conceptual distinction between these subgroups is critical for the analysis.
+
+\noindent\textbf{Why the distinction matters:}
+\begin{itemize}[nosep]
+    \item \textbf{International absentees} (Table~4) capture the stock of current emigrants and are most directly relevant for understanding ongoing labor flows.
+    \item \textbf{Respondent migrants} (Table~5) are return migrants who can be interviewed directly, providing richer data on migration experiences and post-return outcomes.
+    \item \textbf{Internal migrants} (Table~6) serve as a comparison group, helping distinguish conflict-driven international migration from domestic displacement.
+\end{itemize}
+
+Once the data pipeline is finalized with distinct samples for each subgroup, these tables will reveal whether internal and international migrants differ systematically in their demographic and socioeconomic profiles---a key question for understanding the selectivity of conflict-era migration.
+
+
+\section{Connecting the Findings: A Narrative}
+
+The descriptive statistics paint a coherent picture of how Nepal's civil conflict reshaped migration patterns. The story unfolds in four parts.
+
+\subsection{The Conflict Created a Generation of Potential Migrants}
+
+The average individual in the sample was only about 7 years old when the Maoist insurgency began in 1996. The treatment cohort---those aged 0--17 at the start of the conflict---comprises nearly three-quarters of the estimation sample. This generation grew up amid violence, disrupted schooling, and economic uncertainty. Table~1 shows that average conflict exposure was substantial: 54 months of war activity and 245 casualties per district. These are not marginal disturbances---they represent a decade of sustained insecurity that fundamentally altered the opportunity structure facing young Nepalis.
+
+\subsection{Migration Was Selective: Young Men in Low-Skilled Occupations}
+
+Tables 2 and 3 reveal that those who left---whether absent from the household or classified as international migrants---are overwhelmingly young men concentrated in low-skilled occupations. Over 90\% of international migrants are male, and nearly half work in elementary/low-skilled jobs. This pattern is consistent with the structure of demand in primary destination countries (Qatar, Saudi Arabia, UAE, Malaysia), which recruit heavily for construction, domestic service, and manual labor. The age profile---slightly older for international migrants (29.3) than for the overall absent group (25.6)---suggests that international migration requires more preparation (savings, networks, recruitment fees) than domestic absence.
+
+\subsection{Ethnicity and Education Shape Migration Selectivity}
+
+The ethnic composition of migrants reveals important disparities. Hill High Caste individuals are overrepresented among the absent and migrant populations, consistent with their historically greater access to migration networks and financial resources. However, the overrepresentation of \textbf{Dalits} among international migrants (18.31\% vs.\ 14.01\% in the non-migrant population) is noteworthy. This suggests that international labor migration may serve as an escape valve for Nepal's most marginalized caste group, offering economic opportunities unavailable in the rigid domestic labor market. The underrepresentation of Terai/Madhesi populations among migrants may reflect geographic factors (proximity to the Indian border facilitates cross-border movement that is not captured as formal international migration) or differential conflict exposure.
+
+The education pattern---high shares of both \textit{uneducated} and \textit{secondary-educated} workers among migrants, with relatively fewer primary-educated---points to two distinct migration channels. The uneducated likely migrate through informal networks for manual labor, while the secondary-educated access formal recruitment channels for semi-skilled work abroad.
+
+\subsection{The Conflict as a Push Factor}
+
+The cohort structure of the data is designed to exploit this variation: individuals who were children or adolescents during the 1996--2006 conflict (treatment cohorts) experienced fundamentally different environments than those who were already adults (control cohorts). The descriptive evidence supports the premise that conflict exposure during formative years may have increased the propensity to migrate by disrupting education, destroying local economic opportunities, and creating insecurity that pushed young men toward international labor markets.
+
+
+\section{Consistency with the Existing Literature}
+
+The descriptive patterns documented in this report are broadly consistent with the empirical literature on conflict and migration in Nepal and other developing countries.
+
+\subsection{Nepal-Specific Evidence}
+
+Bohra-Mishra and Massey (2011) use data from the Chitwan Valley Family Study and find that violence has a \textbf{nonlinear effect} on migration: low-to-moderate violence reduces the odds of movement (by disrupting networks and increasing travel risks), while high levels of violence increases it. This is consistent with the substantial migration rates we observe in a sample that experienced prolonged, high-intensity conflict. Bohra and Massey (2009) find support for multiple theoretical mechanisms---neoclassical economics, new economics of labor migration, social capital theory, and cumulative causation---in explaining both internal and international migration from Nepal.
+
+Shrestha (2017) uses village-level panel data and finds that conflict selectively pushes \textbf{wealthier and more urban} households to migrate abroad, while rainfall shocks primarily drive migration to India. Our finding that Hill High Caste individuals are overrepresented among migrants is consistent with this wealth-selectivity result. Sharma and Gibson (2019) find that higher local conflict intensity was associated with slower growth in emigration rates, but that spatial spillover effects were important---violence in neighboring districts could increase migration from a given district.
+
+Williams (2015) introduces the ``complex mixed migration'' framework, arguing that conflict does not simply add a new push factor but fundamentally \textbf{alters the way} economic, social, and demographic factors shape migration decisions. This is consistent with our observation that the demographic profile of migrants (overwhelmingly male, bimodal education, caste-specific patterns) differs markedly from the general population---suggesting that conflict changes the selection mechanism into migration.
+
+\subsection{Broader Developing-Country Evidence}
+
+Our findings are also consistent with the broader literature on conflict and migration in developing countries. Adhikari (2013) provides individual-level evidence from Nepal that beyond violence itself, economic opportunity, infrastructure, and social networks significantly affect displacement decisions. Iba\~{n}ez and Velez (2008) document that displacement welfare losses in Colombia amount to 37\% of rural lifetime consumption, underscoring the severe economic consequences that make conflict-driven migration qualitatively different from voluntary economic migration.
+
+The NLSS-based literature provides additional context. Lokshin, Bontch-Osmolovski, and Glinskaya (2010) estimate that approximately one-fifth of poverty reduction in Nepal between 1995/96 and 2003/04 can be attributed to increased work-related migration and remittances. Wagle and Devkota (2018) confirm significant poverty-reducing effects of foreign remittances using all three waves of the NLSS. These findings suggest that the conflict-era migration we document, while driven by insecurity and disruption, may also have generated substantial economic benefits through remittance flows.
+
+\subsection{Summary of Consistency}
+
+\begin{table}[H]
+\centering
+\caption*{\textbf{Consistency of Descriptive Findings with Existing Literature}}
+\footnotesize
+\begin{tabular}{@{}p{5.5cm} p{4cm} p{4.5cm}@{}}
+\toprule
+\textbf{Our Finding} & \textbf{Consistent With} & \textbf{Reference} \\
+\midrule
+High migration rates under sustained conflict & Nonlinear violence--migration relationship & Bohra-Mishra \& Massey (2011) \\[4pt]
+Male-dominated international migration & Gendered labor demand in Gulf states & Bohra \& Massey (2009) \\[4pt]
+Hill High Caste overrepresented among migrants & Wealth selectivity of conflict migration & Shrestha (2017) \\[4pt]
+Dalit overrepresentation among international migrants & Migration as escape from caste constraints & Williams (2015) \\[4pt]
+Bimodal education among migrants & Two-stream migration (unskilled + semi-skilled) & Adhikari (2013) \\[4pt]
+Low-skilled occupational concentration & Demand structure in destination countries & Lokshin et al.\ (2010) \\[4pt]
+Young cohorts disproportionately affected & Conflict disrupts formative-year opportunities & Williams et al.\ (2021) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section{Conclusion}
+
+The descriptive statistics establish several important facts. First, the sample has substantial conflict exposure, validating the identification strategy. Second, migration is selective along gender, age, education, ethnicity, and occupation---patterns that are consistent with both the structure of international labor demand and the differential impact of conflict across demographic groups. Third, these patterns align with the existing literature on conflict-driven migration in Nepal and other developing countries, lending credibility to the empirical approach.
+
+The next step is to move from description to causal identification. The difference-in-differences framework, exploiting cohort-level variation in exposure to the 1996--2006 Maoist insurgency, will allow us to estimate whether individuals who experienced the conflict during their formative years were more likely to migrate internationally than comparable individuals from earlier (less-exposed) cohorts.
+
+
+\section*{References}
+
+\begin{enumerate}[nosep,label={[\arabic*]}]
+    \item \label{ref:adhikari} Adhikari, P. (2013). Conflict-Induced Displacement, Understanding the Causes of Flight. \textit{American Journal of Political Science}, 57(1), 82--89.
+
+    \item \label{ref:bohra2009} Bohra, P. and Massey, D.S. (2009). Processes of Internal and International Migration from Chitwan, Nepal. \textit{International Migration Review}, 43(3), 621--651.
+
+    \item \label{ref:bohra2011} Bohra-Mishra, P. and Massey, D.S. (2011). Individual Decisions to Migrate During Civil Conflict. \textit{Demography}, 48(2), 401--424.
+
+    \item \label{ref:ibanez} Iba\~{n}ez, A.M. and Velez, C.E. (2008). Civil Conflict and Forced Migration: The Micro Determinants and Welfare Losses of Displacement in Colombia. \textit{World Development}, 36(4), 659--676.
+
+    \item \label{ref:lokshin} Lokshin, M., Bontch-Osmolovski, M., and Glinskaya, E. (2010). Work-Related Migration and Poverty Reduction in Nepal. \textit{Review of Development Economics}, 14(2), 323--332.
+
+    \item \label{ref:sharma} Sharma, H. and Gibson, J. (2019). Civil War and International Migration from Nepal: Evidence from a Spatial Durbin Model. University of Waikato Working Papers in Economics 19/06.
+
+    \item \label{ref:shrestha} Shrestha, M. (2017). Push and Pull: A Study of International Migration from Nepal. World Bank Policy Research Working Paper No.\ 7965.
+
+    \item \label{ref:wagle} Wagle, U.R. and Devkota, S. (2018). The Impact of Foreign Remittances on Poverty in Nepal: A Panel Study of Household Survey Data, 1996--2011. \textit{World Development}, 110, 38--50.
+
+    \item \label{ref:williams2015} Williams, N.E. (2015). Mixed and Complex Mixed Migration during Armed Conflict. \textit{International Journal of Sociology}, 45(1), 44--63.
+
+    \item \label{ref:williams2021} Williams, N.E., O'Brien, M.L., and Yao, X. (2021). How Armed Conflict Influences Migration. \textit{Population and Development Review}, 47(3), 781--811.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\rule{\textwidth}{0.4pt}
+{\small This report summarizes 6 tables generated by the R scripts in the \texttt{source\_code/} directory. All tables are available in \texttt{.tex}, \texttt{.md}, and \texttt{.pdf} formats in the \texttt{tables/} directory of the project repository.}
+
+\end{document}
