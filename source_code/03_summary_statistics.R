@@ -419,7 +419,7 @@ md_absent_full <- c(
 
 writeLines(md_absent_full, file.path(output_path, "2.Covariate_Summary_Absent.md"))
 
-stop()
+
 #===============================================================================
 # TABLE 3: SUMMARY BY INTERNATIONAL MIGRANT STATUS  ---------------------------
 #===============================================================================
@@ -581,27 +581,21 @@ latex_migrant <- kable(table_migrant_formatted,
 
 writeLines(as.character(latex_migrant), file.path(output_path, "3.Covariate_Summary_Migrant.tex"))
 
-# --- Export PNG ---
-html_migrant <- kable(table_migrant_formatted,
-                      format    = "html",
-                      col.names = c("Variable", "Migrant", "Non-Migrant"),
-                      caption   = "Covariate Summary by International Migrant Status") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE) %>%
-  footnote(
-    general = c(
-      "- Standard deviations in parentheses for continuous variables.",
-      "- Migrant includes individuals abroad at time of survey and individual who had been abroad ever at least for 3 months in the past"
-      ),
-    general_title = "Notes:",
-    footnote_as_chunk = FALSE
-  )
-  
-html_migrant %>% save_kable(file.path(output_path, "3.Covariate_Summary_Migrant.png"),
-                            zoom    = 2,
-                            vwidth  = 700,
-                            vheight = 900)
+# --- Export Markdown ---
+md_migrant <- kable(table_migrant_formatted,
+                    format    = "markdown",
+                    col.names = c("Variable", "Migrant", "Non-Migrant"),
+                    caption   = "Covariate Summary by International Migrant Status")
 
+md_migrant_full <- c(
+  md_migrant,
+  "",
+  "*Notes:*",
+  "- Standard deviations in parentheses for continuous variables.",
+  "- Migrant includes individuals abroad at time of survey and individual who had been abroad ever at least for 3 months in the past."
+)
+
+writeLines(md_migrant_full, file.path(output_path, "3.Covariate_Summary_Migrant.md"))
 
 
 #===============================================================================
@@ -765,27 +759,21 @@ latex_migrant <- kable(table_migrant_formatted,
 
 writeLines(as.character(latex_migrant), file.path(output_path, "4.Covariate_Summary_International_Absentee.tex"))
 
-# --- Export PNG ---
-html_migrant <- kable(table_migrant_formatted,
-                      format    = "html",
-                      col.names = c("Variable", "International Absentee", "Non-International Absentee"),
-                      caption   = "Covariate Summary by International Absentee Status") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE) %>%
-  footnote(
-    general = c(
-      "- Standard deviations in parentheses for continuous variables.",
-      "- International Absentee includes individuals abroad at time of survey."
-    ),
-    general_title = "Notes:",
-    footnote_as_chunk = FALSE
-  )
+# --- Export Markdown ---
+md_migrant <- kable(table_migrant_formatted,
+                    format    = "markdown",
+                    col.names = c("Variable", "International Absentee", "Non-International Absentee"),
+                    caption   = "Covariate Summary by International Absentee Status")
 
-html_migrant %>% save_kable(file.path(output_path, "4.Covariate_Summary_International_Absentee.png"),
-                            zoom    = 2,
-                            vwidth  = 700,
-                            vheight = 900)
+md_migrant_full <- c(
+  md_migrant,
+  "",
+  "*Notes:*",
+  "- Standard deviations in parentheses for continuous variables.",
+  "- International Absentee includes individuals abroad at time of survey."
+)
 
+writeLines(md_migrant_full, file.path(output_path, "4.Covariate_Summary_International_Absentee.md"))
 
 #===============================================================================
 # TABLE 5: SUMMARY BY RESPONDENT MIGRANT/RESPONDENT NON-MIGRANT ONLY STATUS  ----
@@ -948,26 +936,21 @@ latex_migrant <- kable(table_migrant_formatted,
 
 writeLines(as.character(latex_migrant), file.path(output_path, "5.Covariate_Summary_Respondent_Migrant.tex"))
 
-# --- Export PNG ---
-html_migrant <- kable(table_migrant_formatted,
-                      format    = "html",
-                      col.names = c("Variable", "Respondent Migrant", "Respondent Non-Migrant"),
-                      caption   = "Covariate Summary by Respondent Migrant Status") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE) %>%
-  footnote(
-    general = c(
-      "- Standard deviations in parentheses for continuous variables.",
-      "- Respondent Migrant includes individuals who travelled abroad previously for at least 3 months."
-    ),
-    general_title = "Notes:",
-    footnote_as_chunk = FALSE
-  )
+# --- Export Markdown ---
+md_migrant <- kable(table_migrant_formatted,
+                    format    = "markdown",
+                    col.names = c("Variable", "Respondent Migrant", "Respondent Non-Migrant"),
+                    caption   = "Covariate Summary by Respondent Migrant Status")
 
-html_migrant %>% save_kable(file.path(output_path, "5.Covariate_Summary_Respondent_Migrant.png"),
-                            zoom    = 2,
-                            vwidth  = 700,
-                            vheight = 900)
+md_migrant_full <- c(
+  md_migrant,
+  "",
+  "*Notes:*",
+  "- Standard deviations in parentheses for continuous variables.",
+  "- Respondent Migrant includes individuals who travelled abroad previously for at least 3 months."
+)
+
+writeLines(md_migrant_full, file.path(output_path, "5.Covariate_Summary_Respondent_Migrant.md"))
 
 
 #===============================================================================
@@ -1131,26 +1114,21 @@ latex_migrant <- kable(table_migrant_formatted,
 
 writeLines(as.character(latex_migrant), file.path(output_path, "6.Covariate_Summary_Internal_Migrant.tex"))
 
-# --- Export PNG ---
-html_migrant <- kable(table_migrant_formatted,
-                      format    = "html",
-                      col.names = c("Variable", "Internal Migrant", "Non-Internal Migrant"),
-                      caption   = "Covariate Summary by Internal Migrant Status") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE) %>%
-  footnote(
-    general = c(
-      "- Standard deviations in parentheses for continuous variables.",
-      "- Internal Migrant includes individuals who migrated within the country."
-    ),
-    general_title = "Notes:",
-    footnote_as_chunk = FALSE
-  )
+# --- Export Markdown ---
+md_migrant <- kable(table_migrant_formatted,
+                    format    = "markdown",
+                    col.names = c("Variable", "Internal Migrant", "Non-Internal Migrant"),
+                    caption   = "Covariate Summary by Internal Migrant Status")
 
-html_migrant %>% save_kable(file.path(output_path, "6.Covariate_Summary_Internal_Migrant.png"),
-                            zoom    = 2,
-                            vwidth  = 700,
-                            vheight = 900)
+md_migrant_full <- c(
+  md_migrant,
+  "",
+  "*Notes:*",
+  "- Standard deviations in parentheses for continuous variables.",
+  "- Internal Migrant includes individuals who migrated within the country."
+)
+
+writeLines(md_migrant_full, file.path(output_path, "6.Covariate_Summary_Internal_Migrant.md"))
 
 stop()
 # =============================================================================
