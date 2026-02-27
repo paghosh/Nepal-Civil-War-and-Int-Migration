@@ -403,29 +403,23 @@ latex_absent <- kable(table_absent_formatted,
 
 writeLines(as.character(latex_absent), file.path(output_path, "2.Covariate_Summary_Absent.tex"))
 
-# --- Export PNG ---
-html_absent <- kable(table_absent_formatted,
-                     format    = "html",
-                     col.names = c("Variable", "Absent", "Non-Absent"),
-                     caption   = "Covariate Summary by Absent Status") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
-                full_width = FALSE) %>%
-  footnote(
-    general = c(
-      "- Standard deviations in parentheses for continuous variables.",
-      "- Absent from Household includes all the absent individuals at the time of survey."
-    ),
-    general_title = "Notes:",
-    footnote_as_chunk = FALSE
-  )
-  
+# --- Export Markdown ---
+md_absent <- kable(table_absent_formatted,
+                   format    = "markdown",
+                   col.names = c("Variable", "Absent", "Non-Absent"),
+                   caption   = "Covariate Summary by Absent Status")
 
-html_absent %>% save_kable(file.path(output_path, "2.Covariate_Summary_Absent.png"),
-                           zoom    = 2,
-                           vwidth  = 700,
-                           vheight = 900)
+md_absent_full <- c(
+  md_absent,
+  "",
+  "*Notes:*",
+  "- Standard deviations in parentheses for continuous variables.",
+  "- Absent from Household includes all the absent individuals at the time of survey."
+)
 
+writeLines(md_absent_full, file.path(output_path, "2.Covariate_Summary_Absent.md"))
 
+stop()
 #===============================================================================
 # TABLE 3: SUMMARY BY INTERNATIONAL MIGRANT STATUS  ---------------------------
 #===============================================================================
