@@ -82,10 +82,26 @@ nlss_conflict_data <- nlss_conflict_data %>%
   mutate(absent_label = factor(ifelse(absent == 1, "Absent", "Non-Absent"),
                                levels = c("Non-Absent", "Absent")),
 
-# Create Value labels for "Internationa_migrant" variable ----
+# Create Value labels for "International_migrant" variable ----
 
   migrant_label = factor(ifelse(international_migrant == 1, "Migrant", "Non-Migrant"),
-                               levels = c("Non-Migrant", "Migrant")))
+                               levels = c("Non-Migrant", "Migrant")),
+
+# Create Value labels for "International_absentee_only" variable -----
+  
+  international_absentee_only_label = factor(ifelse(international_absentee_only == 1, "International Absentee", "Non-International Absentee"),
+                                             levels = c("Non-International Absentee", "International Absentee")),
+
+# Create Value labels for "present_ind_migrant" (from present sample) variable ------
+
+  present_ind_migrant_label = factor(ifelse(present_ind_migrant == 1, "Respondent Migrant", "Respondent Non-Migrant"),
+                                     levels = c("Respondent Non-Migrant", "Respondent Migrant")),  
+
+# Create Value labels for "national" (Internal Migrant) Variable ------
+
+  national_migrant_label = factor(ifelse(national == 1, "Internal Migrant", "Non-Internal Migrant"),
+                                  levels = c("Non-Internal Migrant", "Internal Migrant"))
+)
 
 # -----------------------------------------------------------------------------
 # 4. CREATE SEX CATEGORIES

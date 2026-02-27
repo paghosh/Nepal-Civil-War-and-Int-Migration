@@ -608,6 +608,556 @@ html_migrant %>% save_kable(file.path(output_path, "3.Covariate_Summary_Migrant.
                             vwidth  = 700,
                             vheight = 900)
 
+
+
+#===============================================================================
+# TABLE 4: SUMMARY BY INTERNATIONAL ABSENTEE ONLY STATUS  ----------------------
+#===============================================================================
+
+table_internation_absentee_data <- nlss_conflict_data %>%
+  group_by(international_absentee_only_label) %>%
+  summarise(
+    N = n(),
+    
+    # Age
+    Age_Mean = round(mean(age, na.rm = TRUE), 2),
+    Age_SD   = round(sd(age, na.rm = TRUE), 2),
+    
+    Age_Conflict_Mean = round(mean(age_at_conflict_start, na.rm = TRUE), 2),
+    Age_Conflict_SD   = round(sd(age_at_conflict_start, na.rm = TRUE), 2),
+    
+    # Sex
+    Male_Pct = round(mean(sex == 1, na.rm = TRUE) * 100, 2),
+    
+    # Education
+    No_Edu_Pct    = round(mean(education_category == "No Education",     na.rm = TRUE) * 100, 2),
+    Primary_Pct   = round(mean(education_category == "Primary (1-5)",    na.rm = TRUE) * 100, 2),
+    Secondary_Pct = round(mean(education_category == "Secondary (6-12)", na.rm = TRUE) * 100, 2),
+    Tertiary_Pct  = round(mean(education_category == "Tertiary",         na.rm = TRUE) * 100, 2),
+    
+    # Ethnicity
+    High_Caste_Pct = round(mean(Ethnicity == "Hill High Caste", na.rm = TRUE) * 100, 2),
+    Janajati_Pct   = round(mean(Ethnicity == "Hill Janajati",   na.rm = TRUE) * 100, 2),
+    Terai_Pct      = round(mean(Ethnicity == "Terai/Madhesi",   na.rm = TRUE) * 100, 2),
+    Dalit_Pct      = round(mean(Ethnicity == "Dalit",           na.rm = TRUE) * 100, 2),
+    Muslim_Pct     = round(mean(Ethnicity == "Muslim",          na.rm = TRUE) * 100, 2),
+    
+    # Occupation
+    Agri_Pct       = round(mean(occupation_category == "Agriculture",            na.rm = TRUE) * 100, 2),
+    HighSkill_Pct  = round(mean(occupation_category == "High Skilled",           na.rm = TRUE) * 100, 2),
+    Service_Pct    = round(mean(occupation_category == "Service & Clerical",     na.rm = TRUE) * 100, 2),
+    Craft_Pct      = round(mean(occupation_category == "Craft & Manufacturing",  na.rm = TRUE) * 100, 2),
+    Elementary_Pct = round(mean(occupation_category == "Elementary/Low Skilled", na.rm = TRUE) * 100, 2),
+    Armed_Pct      = round(mean(occupation_category == "Armed Forces",           na.rm = TRUE) * 100, 2),
+    
+    .groups = "drop"
+  )
+
+# Shortcut helpers
+internationla_absentee_val    <- function(col) table_internation_absentee_data[[col]][table_internation_absentee_data$international_absentee_only_label == "International Absentee"]
+non_international_absentee_val <- function(col) table_internation_absentee_data[[col]][table_internation_absentee_data$international_absentee_only_label == "Non-International Absentee"]
+
+table_migrant_formatted <- data.frame(
+  Variable = c(
+    "Sample Size",
+    "",
+    "Age:",
+    "  Age in 2017",
+    "",
+    "  Age at Conflict Start",
+    "",
+    "  Male (%)",
+    "",
+    "Education Distribution (%):",
+    "  No Education",
+    "  Primary (1-5)",
+    "  Secondary (6-12)",
+    "  Tertiary",
+    "",
+    "Ethnicity Distribution (%):",
+    "  Hill High Caste",
+    "  Hill Janajati",
+    "  Terai/Madhesi",
+    "  Dalit",
+    "  Muslim",
+    "",
+    "Occupation Type (%):",
+    "  Agriculture",
+    "  High Skilled",
+    "  Service & Clerical",
+    "  Craft & Manufacturing",
+    "  Elementary/Low Skilled",
+    "  Armed Forces"
+  ),
+  
+  Migrant = c(
+    as.character(migrant_val("N")),
+    "",
+    "",
+    format_mean_sd(migrant_val("Age_Mean"), migrant_val("Age_SD")),
+    "",
+    format_mean_sd(migrant_val("Age_Conflict_Mean"), migrant_val("Age_Conflict_SD")),
+    "",
+    as.character(migrant_val("Male_Pct")),
+    "",
+    "",
+    as.character(migrant_val("No_Edu_Pct")),
+    as.character(migrant_val("Primary_Pct")),
+    as.character(migrant_val("Secondary_Pct")),
+    as.character(migrant_val("Tertiary_Pct")),
+    "",
+    "",
+    as.character(migrant_val("High_Caste_Pct")),
+    as.character(migrant_val("Janajati_Pct")),
+    as.character(migrant_val("Terai_Pct")),
+    as.character(migrant_val("Dalit_Pct")),
+    as.character(migrant_val("Muslim_Pct")),
+    "",
+    "",
+    as.character(migrant_val("Agri_Pct")),
+    as.character(migrant_val("HighSkill_Pct")),
+    as.character(migrant_val("Service_Pct")),
+    as.character(migrant_val("Craft_Pct")),
+    as.character(migrant_val("Elementary_Pct")),
+    as.character(migrant_val("Armed_Pct"))
+  ),
+  
+  Non_Migrant = c(
+    as.character(nonmigrant_val("N")),
+    "",
+    "",
+    format_mean_sd(nonmigrant_val("Age_Mean"), nonmigrant_val("Age_SD")),
+    "",
+    format_mean_sd(nonmigrant_val("Age_Conflict_Mean"), nonmigrant_val("Age_Conflict_SD")),
+    "",
+    as.character(nonmigrant_val("Male_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("No_Edu_Pct")),
+    as.character(nonmigrant_val("Primary_Pct")),
+    as.character(nonmigrant_val("Secondary_Pct")),
+    as.character(nonmigrant_val("Tertiary_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("High_Caste_Pct")),
+    as.character(nonmigrant_val("Janajati_Pct")),
+    as.character(nonmigrant_val("Terai_Pct")),
+    as.character(nonmigrant_val("Dalit_Pct")),
+    as.character(nonmigrant_val("Muslim_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("Agri_Pct")),
+    as.character(nonmigrant_val("HighSkill_Pct")),
+    as.character(nonmigrant_val("Service_Pct")),
+    as.character(nonmigrant_val("Craft_Pct")),
+    as.character(nonmigrant_val("Elementary_Pct")),
+    as.character(nonmigrant_val("Armed_Pct"))
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+# --- Export LaTeX ---
+latex_migrant <- kable(table_migrant_formatted,
+                       format    = "latex",
+                       booktabs  = TRUE,
+                       caption   = "Covariate Summary by International Absentee Status",
+                       label     = "tab:migrant_summary",
+                       col.names = c("Variable", "International Absentee", "Non-International Absentee"),
+                       escape    = FALSE) %>%
+  kable_styling(latex_options = c("hold_position"), font_size = 10) %>%
+  footnote(general = "Standard deviations in parentheses for continuous variables.",
+           footnote_as_chunk = TRUE)
+
+writeLines(as.character(latex_migrant), file.path(output_path, "4.Covariate_Summary_International_Absentee.tex"))
+
+# --- Export PNG ---
+html_migrant <- kable(table_migrant_formatted,
+                      format    = "html",
+                      col.names = c("Variable", "International Absentee", "Non-International Absentee"),
+                      caption   = "Covariate Summary by International Absentee Status") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(
+    general = c(
+      "- Standard deviations in parentheses for continuous variables.",
+      "- International Absentee includes individuals abroad at time of survey."
+    ),
+    general_title = "Notes:",
+    footnote_as_chunk = FALSE
+  )
+
+html_migrant %>% save_kable(file.path(output_path, "4.Covariate_Summary_International_Absentee.png"),
+                            zoom    = 2,
+                            vwidth  = 700,
+                            vheight = 900)
+
+
+#===============================================================================
+# TABLE 5: SUMMARY BY RESPONDENT MIGRANT/RESPONDENT NON-MIGRANT ONLY STATUS  ----
+#===============================================================================
+
+table_present_ind_migrant_data <- nlss_conflict_data %>%
+  group_by(present_ind_migrant_label) %>%
+  summarise(
+    N = n(),
+    
+    # Age
+    Age_Mean = round(mean(age, na.rm = TRUE), 2),
+    Age_SD   = round(sd(age, na.rm = TRUE), 2),
+    
+    Age_Conflict_Mean = round(mean(age_at_conflict_start, na.rm = TRUE), 2),
+    Age_Conflict_SD   = round(sd(age_at_conflict_start, na.rm = TRUE), 2),
+    
+    # Sex
+    Male_Pct = round(mean(sex == 1, na.rm = TRUE) * 100, 2),
+    
+    # Education
+    No_Edu_Pct    = round(mean(education_category == "No Education",     na.rm = TRUE) * 100, 2),
+    Primary_Pct   = round(mean(education_category == "Primary (1-5)",    na.rm = TRUE) * 100, 2),
+    Secondary_Pct = round(mean(education_category == "Secondary (6-12)", na.rm = TRUE) * 100, 2),
+    Tertiary_Pct  = round(mean(education_category == "Tertiary",         na.rm = TRUE) * 100, 2),
+    
+    # Ethnicity
+    High_Caste_Pct = round(mean(Ethnicity == "Hill High Caste", na.rm = TRUE) * 100, 2),
+    Janajati_Pct   = round(mean(Ethnicity == "Hill Janajati",   na.rm = TRUE) * 100, 2),
+    Terai_Pct      = round(mean(Ethnicity == "Terai/Madhesi",   na.rm = TRUE) * 100, 2),
+    Dalit_Pct      = round(mean(Ethnicity == "Dalit",           na.rm = TRUE) * 100, 2),
+    Muslim_Pct     = round(mean(Ethnicity == "Muslim",          na.rm = TRUE) * 100, 2),
+    
+    # Occupation
+    Agri_Pct       = round(mean(occupation_category == "Agriculture",            na.rm = TRUE) * 100, 2),
+    HighSkill_Pct  = round(mean(occupation_category == "High Skilled",           na.rm = TRUE) * 100, 2),
+    Service_Pct    = round(mean(occupation_category == "Service & Clerical",     na.rm = TRUE) * 100, 2),
+    Craft_Pct      = round(mean(occupation_category == "Craft & Manufacturing",  na.rm = TRUE) * 100, 2),
+    Elementary_Pct = round(mean(occupation_category == "Elementary/Low Skilled", na.rm = TRUE) * 100, 2),
+    Armed_Pct      = round(mean(occupation_category == "Armed Forces",           na.rm = TRUE) * 100, 2),
+    
+    .groups = "drop"
+  )
+
+# Shortcut helpers
+present_ind_migrant_val    <- function(col) table_present_ind_migrant_data[[col]][table_present_ind_migrant_data$present_ind_migrant_label == "Respondent Migrant"]
+present_ind_migrant_nonrespondent_val <- function(col) table_present_ind_migrant_data[[col]][table_present_ind_migrant_data$present_ind_migrant_label == "Respondent Non-Migrant"]
+
+table_migrant_formatted <- data.frame(
+  Variable = c(
+    "Sample Size",
+    "",
+    "Age:",
+    "  Age in 2017",
+    "",
+    "  Age at Conflict Start",
+    "",
+    "  Male (%)",
+    "",
+    "Education Distribution (%):",
+    "  No Education",
+    "  Primary (1-5)",
+    "  Secondary (6-12)",
+    "  Tertiary",
+    "",
+    "Ethnicity Distribution (%):",
+    "  Hill High Caste",
+    "  Hill Janajati",
+    "  Terai/Madhesi",
+    "  Dalit",
+    "  Muslim",
+    "",
+    "Occupation Type (%):",
+    "  Agriculture",
+    "  High Skilled",
+    "  Service & Clerical",
+    "  Craft & Manufacturing",
+    "  Elementary/Low Skilled",
+    "  Armed Forces"
+  ),
+  
+  Migrant = c(
+    as.character(migrant_val("N")),
+    "",
+    "",
+    format_mean_sd(migrant_val("Age_Mean"), migrant_val("Age_SD")),
+    "",
+    format_mean_sd(migrant_val("Age_Conflict_Mean"), migrant_val("Age_Conflict_SD")),
+    "",
+    as.character(migrant_val("Male_Pct")),
+    "",
+    "",
+    as.character(migrant_val("No_Edu_Pct")),
+    as.character(migrant_val("Primary_Pct")),
+    as.character(migrant_val("Secondary_Pct")),
+    as.character(migrant_val("Tertiary_Pct")),
+    "",
+    "",
+    as.character(migrant_val("High_Caste_Pct")),
+    as.character(migrant_val("Janajati_Pct")),
+    as.character(migrant_val("Terai_Pct")),
+    as.character(migrant_val("Dalit_Pct")),
+    as.character(migrant_val("Muslim_Pct")),
+    "",
+    "",
+    as.character(migrant_val("Agri_Pct")),
+    as.character(migrant_val("HighSkill_Pct")),
+    as.character(migrant_val("Service_Pct")),
+    as.character(migrant_val("Craft_Pct")),
+    as.character(migrant_val("Elementary_Pct")),
+    as.character(migrant_val("Armed_Pct"))
+  ),
+  
+  Non_Migrant = c(
+    as.character(nonmigrant_val("N")),
+    "",
+    "",
+    format_mean_sd(nonmigrant_val("Age_Mean"), nonmigrant_val("Age_SD")),
+    "",
+    format_mean_sd(nonmigrant_val("Age_Conflict_Mean"), nonmigrant_val("Age_Conflict_SD")),
+    "",
+    as.character(nonmigrant_val("Male_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("No_Edu_Pct")),
+    as.character(nonmigrant_val("Primary_Pct")),
+    as.character(nonmigrant_val("Secondary_Pct")),
+    as.character(nonmigrant_val("Tertiary_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("High_Caste_Pct")),
+    as.character(nonmigrant_val("Janajati_Pct")),
+    as.character(nonmigrant_val("Terai_Pct")),
+    as.character(nonmigrant_val("Dalit_Pct")),
+    as.character(nonmigrant_val("Muslim_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("Agri_Pct")),
+    as.character(nonmigrant_val("HighSkill_Pct")),
+    as.character(nonmigrant_val("Service_Pct")),
+    as.character(nonmigrant_val("Craft_Pct")),
+    as.character(nonmigrant_val("Elementary_Pct")),
+    as.character(nonmigrant_val("Armed_Pct"))
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+# --- Export LaTeX ---
+latex_migrant <- kable(table_migrant_formatted,
+                       format    = "latex",
+                       booktabs  = TRUE,
+                       caption   = "Covariate Summary by Respondent Migrant Status",
+                       label     = "tab:migrant_summary",
+                       col.names = c("Variable", "Respondent Migrant", "Respondent Non-Migrant"),
+                       escape    = FALSE) %>%
+  kable_styling(latex_options = c("hold_position"), font_size = 10) %>%
+  footnote(general = "Standard deviations in parentheses for continuous variables.",
+           footnote_as_chunk = TRUE)
+
+writeLines(as.character(latex_migrant), file.path(output_path, "5.Covariate_Summary_Respondent_Migrant.tex"))
+
+# --- Export PNG ---
+html_migrant <- kable(table_migrant_formatted,
+                      format    = "html",
+                      col.names = c("Variable", "Respondent Migrant", "Respondent Non-Migrant"),
+                      caption   = "Covariate Summary by Respondent Migrant Status") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(
+    general = c(
+      "- Standard deviations in parentheses for continuous variables.",
+      "- Respondent Migrant includes individuals who travelled abroad previously for at least 3 months."
+    ),
+    general_title = "Notes:",
+    footnote_as_chunk = FALSE
+  )
+
+html_migrant %>% save_kable(file.path(output_path, "5.Covariate_Summary_Respondent_Migrant.png"),
+                            zoom    = 2,
+                            vwidth  = 700,
+                            vheight = 900)
+
+
+#===============================================================================
+# TABLE 6: SUMMARY BY RESPONDENT INTERNAL/NON-INTERNAL MIGRANT  STATUS  --------
+#===============================================================================
+
+table_internal_migrant_data <- nlss_conflict_data %>%
+  group_by(national_migrant_label) %>%
+  summarise(
+    N = n(),
+    
+    # Age
+    Age_Mean = round(mean(age, na.rm = TRUE), 2),
+    Age_SD   = round(sd(age, na.rm = TRUE), 2),
+    
+    Age_Conflict_Mean = round(mean(age_at_conflict_start, na.rm = TRUE), 2),
+    Age_Conflict_SD   = round(sd(age_at_conflict_start, na.rm = TRUE), 2),
+    
+    # Sex
+    Male_Pct = round(mean(sex == 1, na.rm = TRUE) * 100, 2),
+    
+    # Education
+    No_Edu_Pct    = round(mean(education_category == "No Education",     na.rm = TRUE) * 100, 2),
+    Primary_Pct   = round(mean(education_category == "Primary (1-5)",    na.rm = TRUE) * 100, 2),
+    Secondary_Pct = round(mean(education_category == "Secondary (6-12)", na.rm = TRUE) * 100, 2),
+    Tertiary_Pct  = round(mean(education_category == "Tertiary",         na.rm = TRUE) * 100, 2),
+    
+    # Ethnicity
+    High_Caste_Pct = round(mean(Ethnicity == "Hill High Caste", na.rm = TRUE) * 100, 2),
+    Janajati_Pct   = round(mean(Ethnicity == "Hill Janajati",   na.rm = TRUE) * 100, 2),
+    Terai_Pct      = round(mean(Ethnicity == "Terai/Madhesi",   na.rm = TRUE) * 100, 2),
+    Dalit_Pct      = round(mean(Ethnicity == "Dalit",           na.rm = TRUE) * 100, 2),
+    Muslim_Pct     = round(mean(Ethnicity == "Muslim",          na.rm = TRUE) * 100, 2),
+    
+    # Occupation
+    Agri_Pct       = round(mean(occupation_category == "Agriculture",            na.rm = TRUE) * 100, 2),
+    HighSkill_Pct  = round(mean(occupation_category == "High Skilled",           na.rm = TRUE) * 100, 2),
+    Service_Pct    = round(mean(occupation_category == "Service & Clerical",     na.rm = TRUE) * 100, 2),
+    Craft_Pct      = round(mean(occupation_category == "Craft & Manufacturing",  na.rm = TRUE) * 100, 2),
+    Elementary_Pct = round(mean(occupation_category == "Elementary/Low Skilled", na.rm = TRUE) * 100, 2),
+    Armed_Pct      = round(mean(occupation_category == "Armed Forces",           na.rm = TRUE) * 100, 2),
+    
+    .groups = "drop"
+  )
+
+# Shortcut helpers
+internal_migrant_val    <- function(col) table_internal_migrant_data[[col]][table_internal_migrant_data$internal_migrant_label == "Internal Migrant"]
+internal_non_migrant_val <- function(col) table_internal_migrant_data[[col]][table_internal_migrant_data$internal_migrant_label == "Non-Internal Migrant"]
+
+table_migrant_formatted <- data.frame(
+  Variable = c(
+    "Sample Size",
+    "",
+    "Age:",
+    "  Age in 2017",
+    "",
+    "  Age at Conflict Start",
+    "",
+    "  Male (%)",
+    "",
+    "Education Distribution (%):",
+    "  No Education",
+    "  Primary (1-5)",
+    "  Secondary (6-12)",
+    "  Tertiary",
+    "",
+    "Ethnicity Distribution (%):",
+    "  Hill High Caste",
+    "  Hill Janajati",
+    "  Terai/Madhesi",
+    "  Dalit",
+    "  Muslim",
+    "",
+    "Occupation Type (%):",
+    "  Agriculture",
+    "  High Skilled",
+    "  Service & Clerical",
+    "  Craft & Manufacturing",
+    "  Elementary/Low Skilled",
+    "  Armed Forces"
+  ),
+  
+  Migrant = c(
+    as.character(migrant_val("N")),
+    "",
+    "",
+    format_mean_sd(migrant_val("Age_Mean"), migrant_val("Age_SD")),
+    "",
+    format_mean_sd(migrant_val("Age_Conflict_Mean"), migrant_val("Age_Conflict_SD")),
+    "",
+    as.character(migrant_val("Male_Pct")),
+    "",
+    "",
+    as.character(migrant_val("No_Edu_Pct")),
+    as.character(migrant_val("Primary_Pct")),
+    as.character(migrant_val("Secondary_Pct")),
+    as.character(migrant_val("Tertiary_Pct")),
+    "",
+    "",
+    as.character(migrant_val("High_Caste_Pct")),
+    as.character(migrant_val("Janajati_Pct")),
+    as.character(migrant_val("Terai_Pct")),
+    as.character(migrant_val("Dalit_Pct")),
+    as.character(migrant_val("Muslim_Pct")),
+    "",
+    "",
+    as.character(migrant_val("Agri_Pct")),
+    as.character(migrant_val("HighSkill_Pct")),
+    as.character(migrant_val("Service_Pct")),
+    as.character(migrant_val("Craft_Pct")),
+    as.character(migrant_val("Elementary_Pct")),
+    as.character(migrant_val("Armed_Pct"))
+  ),
+  
+  Non_Migrant = c(
+    as.character(nonmigrant_val("N")),
+    "",
+    "",
+    format_mean_sd(nonmigrant_val("Age_Mean"), nonmigrant_val("Age_SD")),
+    "",
+    format_mean_sd(nonmigrant_val("Age_Conflict_Mean"), nonmigrant_val("Age_Conflict_SD")),
+    "",
+    as.character(nonmigrant_val("Male_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("No_Edu_Pct")),
+    as.character(nonmigrant_val("Primary_Pct")),
+    as.character(nonmigrant_val("Secondary_Pct")),
+    as.character(nonmigrant_val("Tertiary_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("High_Caste_Pct")),
+    as.character(nonmigrant_val("Janajati_Pct")),
+    as.character(nonmigrant_val("Terai_Pct")),
+    as.character(nonmigrant_val("Dalit_Pct")),
+    as.character(nonmigrant_val("Muslim_Pct")),
+    "",
+    "",
+    as.character(nonmigrant_val("Agri_Pct")),
+    as.character(nonmigrant_val("HighSkill_Pct")),
+    as.character(nonmigrant_val("Service_Pct")),
+    as.character(nonmigrant_val("Craft_Pct")),
+    as.character(nonmigrant_val("Elementary_Pct")),
+    as.character(nonmigrant_val("Armed_Pct"))
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+# --- Export LaTeX ---
+latex_migrant <- kable(table_migrant_formatted,
+                       format    = "latex",
+                       booktabs  = TRUE,
+                       caption   = "Covariate Summary by Internal Migrant Status",
+                       label     = "tab:migrant_summary",
+                       col.names = c("Variable", "Internal Migrant", "Non-Internal Migrant"),
+                       escape    = FALSE) %>%
+  kable_styling(latex_options = c("hold_position"), font_size = 10) %>%
+  footnote(general = "Standard deviations in parentheses for continuous variables.",
+           footnote_as_chunk = TRUE)
+
+writeLines(as.character(latex_migrant), file.path(output_path, "6.Covariate_Summary_Internal_Migrant.tex"))
+
+# --- Export PNG ---
+html_migrant <- kable(table_migrant_formatted,
+                      format    = "html",
+                      col.names = c("Variable", "Internal Migrant", "Non-Internal Migrant"),
+                      caption   = "Covariate Summary by Internal Migrant Status") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE) %>%
+  footnote(
+    general = c(
+      "- Standard deviations in parentheses for continuous variables.",
+      "- Internal Migrant includes individuals who migrated within the country."
+    ),
+    general_title = "Notes:",
+    footnote_as_chunk = FALSE
+  )
+
+html_migrant %>% save_kable(file.path(output_path, "6.Covariate_Summary_Internal_Migrant.png"),
+                            zoom    = 2,
+                            vwidth  = 700,
+                            vheight = 900)
+
 stop()
 # =============================================================================
 # TABLE 3: SUMMARY BY TREATMENT/CONTROL----------------------------------------
