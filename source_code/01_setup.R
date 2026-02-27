@@ -48,8 +48,8 @@ install.packages(c(
 ))
 
 # For LaTeX packages (run once)
-tinytex::install_tinytex()
-tinytex::tlmgr_install(c("booktabs", "float", "colortbl", "xcolor"))
+# tinytex::install_tinytex()
+# tinytex::tlmgr_install(c("booktabs", "float", "colortbl", "xcolor"))
 
 # -----------------------------------------------------------------------------
 # LOAD PACKAGES
