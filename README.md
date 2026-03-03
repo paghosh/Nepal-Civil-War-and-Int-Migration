@@ -102,7 +102,7 @@ This folder contains R codes and two folders [functions](/source_code/functions/
 
 - [00_Master_File.do](/source_code/STATA_Codes/00_Master_File.do) runs every other .do files.
 
-- [01_Conflict_Data.do](/source_code/STATA_Codes/01_Conflict_Data.do) imports the conflict data and creates various labels, cleans the data and produces a dataset <ins>conflict_data.dta</ins>.  
+- [01_Conflict_Data.do](/source_code/STATA_Codes/01_Conflict_Data.do) imports the conflict data and creates various labels, cleans the data and produces a dataset <u>conflict_data.dta</u>.  
 
 - 
 
