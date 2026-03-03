@@ -104,7 +104,15 @@ This folder contains R codes and two folders [functions](/source_code/functions/
 
 - [01_Conflict_Data.do](/source_code/STATA_Codes/01_Conflict_Data.do) imports the conflict data and creates various labels, cleans the data and produces a dataset *conflict_data.dta*.  
 
-- 
+- [02_Neighbor_District.do](/source_code/STATA_Codes/02_Neighbor_Districts.do) creates a dataset including the neighboring districts and produces a dataset *neighbor_districts.dta*.
+
+- [03_Conflict_Intensity.do](/source_code/STATA_Codes/03_Conflict_Intensity.do) creates the variable conflict intensity and a dataset *conflict_intensity.dta*.
+
+- [04_Personal_NLFS.do](/source_code/STATA_Codes/04_Personal_NLFS.do) imports the raw NLFS dataset, merges all the sections in the raw data and produces a dataset *personal_nlfs_data.dta*.
+
+- [05_NLFS_Conflict_data.R](/source_code/STATA_Codes/05_NLFS_Conflict_data.R) merges the *personal_nlfs_data.dta* and *conflict_intensity.dta* cleans the merged dataset, and produces the dataset *nlfs_conflict_data.dta*.
+
+- [06_Final_Data.do](/source_code/STATA_Codes/06_Final_Data.do) uses NLFS dataset, merges them and create a data for international migrants and combines with the conflict related variables to produce the final dataset *1_conflict_present_absentee_data.dta*.
 
 The folder [Source Code](/source_code/) contains different code files: [Master](/source_code/00_master.R) which runs all the codes in order, [Setup](/source_code/01_setup.R); contains data paths, packages and global settings,  [Data Cleaning](/source_code/02_data_cleaning.R); Import, clean data, create variables, categorises treatment/control cohorts and intensity of conflict,  [Summary](/source_code/03_summary_statistics.R); produces descriptive statistics, balance check and DiD Framework, [Main Regression](/source_code/04_regression_main.R); includes all main DiD regression, [Robustness Check](/source_code/05_robustness.R); contains codes for sensitivity analysis, [Mechanism Analysis](/source_code/06_mechanism_analysis.R); contains codes for analysis of the channels  and [Helper Function](/source_code/Helper_functions.R) contains codes for formatting the tables and coefficient dictionaries.
 
