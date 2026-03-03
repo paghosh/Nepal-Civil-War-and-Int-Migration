@@ -419,7 +419,7 @@ md_absent_full <- c(
 
 writeLines(md_absent_full, file.path(output_path, "2.Covariate_Summary_Absent.md"))
 
-
+stop()
 #===============================================================================
 # TABLE 3: SUMMARY BY INTERNATIONAL MIGRANT STATUS  ---------------------------
 #===============================================================================
