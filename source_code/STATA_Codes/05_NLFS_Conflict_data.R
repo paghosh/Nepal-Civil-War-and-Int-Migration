@@ -140,13 +140,11 @@ print(setdiff(conflict_districts_std, nlfs_districts_std))
 
 # To see two specific columns 
 conflict_data %>%
-  select(incident_district_num, district_name, district_name_std) %>%
-  View()
+  select(incident_district_num, district_name, district_name_std) 
 
 nlfs_data %>%
   select(dist, district_name, district_name_std) %>%
-  distinct() %>%
-  View()
+  distinct() 
 
 
 # Checking the values labels in the conflict and NLFS data
@@ -197,10 +195,6 @@ conflict_data_clean <- conflict_data %>%
 
 nlfs_conflict_data <- left_join(nlfs_data_clean, conflict_data_clean, by = "district_name_std")
 
-# Check the merged dataset
-cat("NLFS observations:", nrow(nlfs_data), "\n")
-cat("Conflict Observations:", nrow(conflict_data), "\n")
-cat("Merged Observations:", nrow(nlfs_conflict_data), "\n")
 
 # Check how many observations matched
 nlfs_conflict_data %>%

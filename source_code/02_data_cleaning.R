@@ -37,7 +37,7 @@ nlss_conflict_data <- nlss_conflict_data %>%
     
     # Migration outcomes
     international_migrant, international_absentee_only, present_ind_migrant, national,
-    occupation_types, absent, travelled5, rsn_travel, abs_rsn, 
+    occupation_types, absent, baseline, travelled5, rsn_travel, abs_rsn, 
     abs_nummonth, abs_living, abs_id,
     
     # Education
@@ -100,7 +100,11 @@ nlss_conflict_data <- nlss_conflict_data %>%
 # Create Value labels for "national" (Internal Migrant) Variable ------
 
   national_migrant_label = factor(ifelse(national == 1, "Internal Migrant", "Non-Internal Migrant"),
-                                  levels = c("Non-Internal Migrant", "Internal Migrant"))
+                                  levels = c("Non-Internal Migrant", "Internal Migrant")),
+
+# Create Value labels for "baseline" (Present Non-Migrant) Variable -----
+  baseline_label = factor(ifelse(baseline == 1, "Present Non-Migrant", "Absent Migrant"),
+                          levels = c("Absent Migrant", "Non-Internal Migrant"))
 )
 
 # -----------------------------------------------------------------------------

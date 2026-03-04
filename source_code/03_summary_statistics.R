@@ -31,7 +31,7 @@ continuous_vars <- c("mwar_own_any", "mwar_own_fatal", "cas_own_any", "cas_own_f
                      "age", "age_at_conflict_start", "grade_comp")
 
 binary_vars <- c("international_migrant", "international_absentee_only", "national", 
-                 "present_ind_migrant", "treatment", "absent", "male")
+                 "present_ind_migrant", "treatment", "absent", "baseline", "male")
 
 # Continuous variables
 table1_continuous <- nlss_conflict_data %>%
@@ -149,6 +149,7 @@ clean_var_names <- function(var) {
     var == "national" ~ "Internal Migrant (%)",
     var == "treatment" ~ "Treatment Cohort (%)",
     var == "absent" ~ "Absent from Household (%)",
+    var == "baseline" ~ "Non-Migrant",
     var == "male" ~ "Male (%)",
     var == "marital" ~ "Marital Status",
     var == "nsco_major" ~ "Occupation Type",
@@ -1097,6 +1098,319 @@ md_migrant_full <- c(
 
 writeLines(md_migrant_full, file.path(output_path, "6.Covariate_Summary_Internal_Migrant.md"))
 
+
+#===============================================================================
+# TABLE 7: SUMMARY BY ALL MIGRANT CATEGORIES  ----------------------------------
+#===============================================================================
+
+compute_group_stats <- function(data_subset) {
+  data_subset %>%
+    summarise(
+      N = n(),
+      
+      # Continuous
+      Age_Mean          = round(mean(age,                  na.rm = TRUE), 2),
+      Age_SD            = round(sd(age,                    na.rm = TRUE), 2),
+      Age_Conflict_Mean = round(mean(age_at_conflict_start, na.rm = TRUE), 2),
+      Age_Conflict_SD   = round(sd(age_at_conflict_start,  na.rm = TRUE), 2),
+      
+      # Sex
+      Male_Pct = round(mean(sex == 1, na.rm = TRUE) * 100, 2),
+      
+      # Education
+      No_Edu_Pct    = round(mean(education_category == "No Education",     na.rm = TRUE) * 100, 2),
+      Primary_Pct   = round(mean(education_category == "Primary (1-5)",    na.rm = TRUE) * 100, 2),
+      Secondary_Pct = round(mean(education_category == "Secondary (6-12)", na.rm = TRUE) * 100, 2),
+      Tertiary_Pct  = round(mean(education_category == "Tertiary",         na.rm = TRUE) * 100, 2),
+      
+      # Ethnicity
+      High_Caste_Pct = round(mean(Ethnicity == "Hill High Caste", na.rm = TRUE) * 100, 2),
+      Janajati_Pct   = round(mean(Ethnicity == "Hill Janajati",   na.rm = TRUE) * 100, 2),
+      Terai_Pct      = round(mean(Ethnicity == "Terai/Madhesi",   na.rm = TRUE) * 100, 2),
+      Dalit_Pct      = round(mean(Ethnicity == "Dalit",           na.rm = TRUE) * 100, 2),
+      Muslim_Pct     = round(mean(Ethnicity == "Muslim",          na.rm = TRUE) * 100, 2),
+      
+      # Occupation
+      Agri_Pct        = round(mean(occupation_category == "Agriculture",            na.rm = TRUE) * 100, 2),
+      HighSkill_Pct   = round(mean(occupation_category == "High Skilled",           na.rm = TRUE) * 100, 2),
+      Service_Pct     = round(mean(occupation_category == "Service & Clerical",     na.rm = TRUE) * 100, 2),
+      Craft_Pct       = round(mean(occupation_category == "Craft & Manufacturing",  na.rm = TRUE) * 100, 2),
+      Elementary_Pct  = round(mean(occupation_category == "Elementary/Low Skilled", na.rm = TRUE) * 100, 2),
+      Armed_Pct       = round(mean(occupation_category == "Armed Forces",           na.rm = TRUE) * 100, 2),
+      
+      .groups = "drop"
+    )
+}
+
+
+# =============================================================================
+# STEP 1: COMPUTE STATS FOR EACH GROUP
+# =============================================================================
+
+stats_baseline  <- nlss_conflict_data %>% filter(baseline == 1)                      %>% compute_group_stats()
+stats_absent    <- nlss_conflict_data %>% filter(absent == 1)                         %>% compute_group_stats()
+stats_intl      <- nlss_conflict_data %>% filter(international_absentee_only == 1)    %>% compute_group_stats()
+stats_national  <- nlss_conflict_data %>% filter(national == 1)                       %>% compute_group_stats()
+stats_returnee  <- nlss_conflict_data %>% filter(present_ind_migrant == 1)            %>% compute_group_stats()
+
+
+# =============================================================================
+# STEP 2: HELPER — pull one stat from a group's results
+# =============================================================================
+
+
+g <- function(stats_df, col) stats_df[[col]]
+
+
+# =============================================================================
+# STEP 3: ASSEMBLE THE FORMATTED TABLE
+# =============================================================================
+
+
+table_multigroup <- data.frame(
+  
+  Variable = c(
+    "Sample Size",
+    "",
+    "Age:",
+    "  Age in 2017",
+    "",
+    "  Age at Conflict Start",
+    "",
+    "Male (%)",
+    "",
+    "Education Distribution (%):",
+    "  No Education",
+    "  Primary (1-5)",
+    "  Secondary (6-12)",
+    "  Tertiary",
+    "",
+    "Ethnicity Distribution (%):",
+    "  Hill High Caste",
+    "  Hill Janajati",
+    "  Terai/Madhesi",
+    "  Dalit",
+    "  Muslim",
+    "",
+    "Occupation Type (%):",
+    "  Agriculture",
+    "  High Skilled",
+    "  Service & Clerical",
+    "  Craft & Manufacturing",
+    "  Elementary/Low Skilled",
+    "  Armed Forces"
+  ),
+  
+  # ---- COLUMN 1: Baseline (Present Non-Migrants) ----
+  Baseline = c(
+    as.character(g(stats_baseline, "N")),
+    "", "",
+    format_mean_sd(g(stats_baseline, "Age_Mean"),          g(stats_baseline, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_baseline, "Age_Conflict_Mean"), g(stats_baseline, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_baseline, "Male_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "No_Edu_Pct")),
+    as.character(g(stats_baseline, "Primary_Pct")),
+    as.character(g(stats_baseline, "Secondary_Pct")),
+    as.character(g(stats_baseline, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "High_Caste_Pct")),
+    as.character(g(stats_baseline, "Janajati_Pct")),
+    as.character(g(stats_baseline, "Terai_Pct")),
+    as.character(g(stats_baseline, "Dalit_Pct")),
+    as.character(g(stats_baseline, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "Agri_Pct")),
+    as.character(g(stats_baseline, "HighSkill_Pct")),
+    as.character(g(stats_baseline, "Service_Pct")),
+    as.character(g(stats_baseline, "Craft_Pct")),
+    as.character(g(stats_baseline, "Elementary_Pct")),
+    as.character(g(stats_baseline, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 2: Total Absent ----
+  Total_Absent = c(
+    as.character(g(stats_absent, "N")),
+    "", "",
+    format_mean_sd(g(stats_absent, "Age_Mean"),          g(stats_absent, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_absent, "Age_Conflict_Mean"), g(stats_absent, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_absent, "Male_Pct")),
+    "", "",
+    as.character(g(stats_absent, "No_Edu_Pct")),
+    as.character(g(stats_absent, "Primary_Pct")),
+    as.character(g(stats_absent, "Secondary_Pct")),
+    as.character(g(stats_absent, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_absent, "High_Caste_Pct")),
+    as.character(g(stats_absent, "Janajati_Pct")),
+    as.character(g(stats_absent, "Terai_Pct")),
+    as.character(g(stats_absent, "Dalit_Pct")),
+    as.character(g(stats_absent, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_absent, "Agri_Pct")),
+    as.character(g(stats_absent, "HighSkill_Pct")),
+    as.character(g(stats_absent, "Service_Pct")),
+    as.character(g(stats_absent, "Craft_Pct")),
+    as.character(g(stats_absent, "Elementary_Pct")),
+    as.character(g(stats_absent, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 3: International Absentee ----
+  Intl_Absentee = c(
+    as.character(g(stats_intl, "N")),
+    "", "",
+    format_mean_sd(g(stats_intl, "Age_Mean"),          g(stats_intl, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_intl, "Age_Conflict_Mean"), g(stats_intl, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_intl, "Male_Pct")),
+    "", "",
+    as.character(g(stats_intl, "No_Edu_Pct")),
+    as.character(g(stats_intl, "Primary_Pct")),
+    as.character(g(stats_intl, "Secondary_Pct")),
+    as.character(g(stats_intl, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_intl, "High_Caste_Pct")),
+    as.character(g(stats_intl, "Janajati_Pct")),
+    as.character(g(stats_intl, "Terai_Pct")),
+    as.character(g(stats_intl, "Dalit_Pct")),
+    as.character(g(stats_intl, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_intl, "Agri_Pct")),
+    as.character(g(stats_intl, "HighSkill_Pct")),
+    as.character(g(stats_intl, "Service_Pct")),
+    as.character(g(stats_intl, "Craft_Pct")),
+    as.character(g(stats_intl, "Elementary_Pct")),
+    as.character(g(stats_intl, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 4: National Absent (Internal) ----
+  National_Absent = c(
+    as.character(g(stats_national, "N")),
+    "", "",
+    format_mean_sd(g(stats_national, "Age_Mean"),          g(stats_national, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_national, "Age_Conflict_Mean"), g(stats_national, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_national, "Male_Pct")),
+    "", "",
+    as.character(g(stats_national, "No_Edu_Pct")),
+    as.character(g(stats_national, "Primary_Pct")),
+    as.character(g(stats_national, "Secondary_Pct")),
+    as.character(g(stats_national, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_national, "High_Caste_Pct")),
+    as.character(g(stats_national, "Janajati_Pct")),
+    as.character(g(stats_national, "Terai_Pct")),
+    as.character(g(stats_national, "Dalit_Pct")),
+    as.character(g(stats_national, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_national, "Agri_Pct")),
+    as.character(g(stats_national, "HighSkill_Pct")),
+    as.character(g(stats_national, "Service_Pct")),
+    as.character(g(stats_national, "Craft_Pct")),
+    as.character(g(stats_national, "Elementary_Pct")),
+    as.character(g(stats_national, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 5: Returnees (Present Individual Migrants) ----
+  Returnees = c(
+    as.character(g(stats_returnee, "N")),
+    "", "",
+    format_mean_sd(g(stats_returnee, "Age_Mean"),          g(stats_returnee, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_returnee, "Age_Conflict_Mean"), g(stats_returnee, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_returnee, "Male_Pct")),
+    "", "",
+    as.character(g(stats_returnee, "No_Edu_Pct")),
+    as.character(g(stats_returnee, "Primary_Pct")),
+    as.character(g(stats_returnee, "Secondary_Pct")),
+    as.character(g(stats_returnee, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_returnee, "High_Caste_Pct")),
+    as.character(g(stats_returnee, "Janajati_Pct")),
+    as.character(g(stats_returnee, "Terai_Pct")),
+    as.character(g(stats_returnee, "Dalit_Pct")),
+    as.character(g(stats_returnee, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_returnee, "Agri_Pct")),
+    as.character(g(stats_returnee, "HighSkill_Pct")),
+    as.character(g(stats_returnee, "Service_Pct")),
+    as.character(g(stats_returnee, "Craft_Pct")),
+    as.character(g(stats_returnee, "Elementary_Pct")),
+    as.character(g(stats_returnee, "Armed_Pct"))
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+
+# =============================================================================
+# STEP 4: EXPORT — LaTeX
+# =============================================================================
+
+latex_multigroup <- kable(
+  table_multigroup,
+  format    = "latex",
+  booktabs  = TRUE,
+  caption   = "Covariate Summary by Migration Group",
+  label     = "tab:multigroup_summary",
+  col.names = c("Variable", "Baseline", "Total Absent",
+                "Intl. Absentee", "National Absent", "Returnees"),
+  escape    = FALSE,
+  align     = c("l", "r", "r", "r", "r", "r")
+) %>%
+  kable_styling(
+    latex_options = c("hold_position", "scale_down"),
+    font_size = 9
+  ) %>%
+  footnote(
+    general = paste(
+      "Standard deviations in parentheses for continuous variables.",
+      "Baseline = present at survey and never migrated internationally.",
+      "Total Absent = all absent individuals (abroad + internal).",
+      "Intl. Absentee = absent and currently abroad.",
+      "National Absent = absent and inside Nepal.",
+      "Returnees = present at survey but was abroad for work ≥3 months."
+    ),
+    footnote_as_chunk = TRUE
+  )
+
+writeLines(
+  as.character(latex_multigroup),
+  file.path(output_path, "7.Multigroup_Summary.tex")
+)
+
+# --- Export Markdown ---
+md_multigroup <- kable(
+  table_multigroup,
+  format    = "markdown",
+  col.names = c("Variable", "Baseline", "Total Absent",
+                "Intl. Absentee", "National Absent", "Returnees"),
+  align     = c("l", "r", "r", "r", "r", "r")
+)
+
+md_multigroup_full <- c(
+  md_multigroup,
+  "",
+  "*Notes:*",
+  "- Standard deviations in parentheses for continuous variables.",
+  "- Baseline: present at survey and never migrated internationally.",
+  "- Total Absent: all absent individuals (abroad + internal).",
+  "- Intl. Absentee: absent and currently abroad.",
+  "- National Absent: absent and inside Nepal.",
+  "- Returnees: present at survey but was abroad for work ≥3 months."
+)
+
+writeLines(
+  md_multigroup_full,
+  file.path(output_path, "7.Multigroup_Summary.md")
+)
 stop()
 # =============================================================================
 # TABLE 3: SUMMARY BY TREATMENT/CONTROL----------------------------------------

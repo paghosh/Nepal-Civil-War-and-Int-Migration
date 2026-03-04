@@ -119,4 +119,12 @@ gen present_ind_migrant = 0
 replace present_ind_migrant = 1 if travelled5 == 1 & inrange(rsn_travel, 1, 6)
 replace present_ind_migrant = . if absent == 1
 label var present_ind_migrant "International Migrant in Non-Absent Dataset only"
+
+// This will create total present non-migrant
+
+gen baseline = 1
+replace baseline = 0 if absent == 1
+replace baseline = 0 if present_ind_migrant == 1
+
+
 save "$results/1_conflict_present_absentee_data.dta", replace
