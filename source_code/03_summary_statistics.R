@@ -1411,9 +1411,666 @@ writeLines(
   md_multigroup_full,
   file.path(output_path, "7.Multigroup_Summary.md")
 )
+
+# =============================================================================
+# TABLE 8: SUMMARY BY BASELINE, TOTAL ABSENT, TREATMENT & CONTROL -------------
+# =============================================================================
+
+# STEP 1: COMPUTE STATS FOR EACH GROUP
+stats_baseline  <- nlss_conflict_data %>% filter(baseline == 1)                        %>% compute_group_stats()
+stats_absent    <- nlss_conflict_data %>% filter(absent == 1)                           %>% compute_group_stats()
+stats_treatment <- nlss_conflict_data %>% filter(treatment_label == "Treatment")        %>% compute_group_stats()
+stats_control   <- nlss_conflict_data %>% filter(treatment_label == "Control")          %>% compute_group_stats()
+
+# Quick check
+cat("=== Group Size Check ===\n")
+cat("Baseline:   ", g(stats_baseline,  "N"), "\n")
+cat("Absent:     ", g(stats_absent,    "N"), "\n")
+cat("Treatment:  ", g(stats_treatment, "N"), "\n")
+cat("Control:    ", g(stats_control,   "N"), "\n")
+
+
+# STEP 2: ASSEMBLE TABLE
+table_baseline_absent_tc <- data.frame(
+  
+  Variable = c(
+    "Sample Size",
+    "",
+    "Age:",
+    "  Age in 2017",
+    "",
+    "  Age at Conflict Start",
+    "",
+    "Male (%)",
+    "",
+    "Education Distribution (%):",
+    "  No Education",
+    "  Primary (1-5)",
+    "  Secondary (6-12)",
+    "  Tertiary",
+    "",
+    "Ethnicity Distribution (%):",
+    "  Hill High Caste",
+    "  Hill Janajati",
+    "  Terai/Madhesi",
+    "  Dalit",
+    "  Muslim",
+    "",
+    "Occupation Type (%):",
+    "  Agriculture",
+    "  High Skilled",
+    "  Service & Clerical",
+    "  Craft & Manufacturing",
+    "  Elementary/Low Skilled",
+    "  Armed Forces"
+  ),
+  
+  # ---- COLUMN 1: Baseline ----
+  Baseline = c(
+    as.character(g(stats_baseline, "N")),
+    "", "",
+    format_mean_sd(g(stats_baseline, "Age_Mean"),          g(stats_baseline, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_baseline, "Age_Conflict_Mean"), g(stats_baseline, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_baseline, "Male_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "No_Edu_Pct")),
+    as.character(g(stats_baseline, "Primary_Pct")),
+    as.character(g(stats_baseline, "Secondary_Pct")),
+    as.character(g(stats_baseline, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "High_Caste_Pct")),
+    as.character(g(stats_baseline, "Janajati_Pct")),
+    as.character(g(stats_baseline, "Terai_Pct")),
+    as.character(g(stats_baseline, "Dalit_Pct")),
+    as.character(g(stats_baseline, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "Agri_Pct")),
+    as.character(g(stats_baseline, "HighSkill_Pct")),
+    as.character(g(stats_baseline, "Service_Pct")),
+    as.character(g(stats_baseline, "Craft_Pct")),
+    as.character(g(stats_baseline, "Elementary_Pct")),
+    as.character(g(stats_baseline, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 2: Total Absent ----
+  Total_Absent = c(
+    as.character(g(stats_absent, "N")),
+    "", "",
+    format_mean_sd(g(stats_absent, "Age_Mean"),          g(stats_absent, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_absent, "Age_Conflict_Mean"), g(stats_absent, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_absent, "Male_Pct")),
+    "", "",
+    as.character(g(stats_absent, "No_Edu_Pct")),
+    as.character(g(stats_absent, "Primary_Pct")),
+    as.character(g(stats_absent, "Secondary_Pct")),
+    as.character(g(stats_absent, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_absent, "High_Caste_Pct")),
+    as.character(g(stats_absent, "Janajati_Pct")),
+    as.character(g(stats_absent, "Terai_Pct")),
+    as.character(g(stats_absent, "Dalit_Pct")),
+    as.character(g(stats_absent, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_absent, "Agri_Pct")),
+    as.character(g(stats_absent, "HighSkill_Pct")),
+    as.character(g(stats_absent, "Service_Pct")),
+    as.character(g(stats_absent, "Craft_Pct")),
+    as.character(g(stats_absent, "Elementary_Pct")),
+    as.character(g(stats_absent, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 3: Treatment (Exposed) ----
+  Treatment = c(
+    as.character(g(stats_treatment, "N")),
+    "", "",
+    format_mean_sd(g(stats_treatment, "Age_Mean"),          g(stats_treatment, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_treatment, "Age_Conflict_Mean"), g(stats_treatment, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_treatment, "Male_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "No_Edu_Pct")),
+    as.character(g(stats_treatment, "Primary_Pct")),
+    as.character(g(stats_treatment, "Secondary_Pct")),
+    as.character(g(stats_treatment, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "High_Caste_Pct")),
+    as.character(g(stats_treatment, "Janajati_Pct")),
+    as.character(g(stats_treatment, "Terai_Pct")),
+    as.character(g(stats_treatment, "Dalit_Pct")),
+    as.character(g(stats_treatment, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "Agri_Pct")),
+    as.character(g(stats_treatment, "HighSkill_Pct")),
+    as.character(g(stats_treatment, "Service_Pct")),
+    as.character(g(stats_treatment, "Craft_Pct")),
+    as.character(g(stats_treatment, "Elementary_Pct")),
+    as.character(g(stats_treatment, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 4: Control (Non-Exposed) ----
+  Control = c(
+    as.character(g(stats_control, "N")),
+    "", "",
+    format_mean_sd(g(stats_control, "Age_Mean"),          g(stats_control, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_control, "Age_Conflict_Mean"), g(stats_control, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_control, "Male_Pct")),
+    "", "",
+    as.character(g(stats_control, "No_Edu_Pct")),
+    as.character(g(stats_control, "Primary_Pct")),
+    as.character(g(stats_control, "Secondary_Pct")),
+    as.character(g(stats_control, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_control, "High_Caste_Pct")),
+    as.character(g(stats_control, "Janajati_Pct")),
+    as.character(g(stats_control, "Terai_Pct")),
+    as.character(g(stats_control, "Dalit_Pct")),
+    as.character(g(stats_control, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_control, "Agri_Pct")),
+    as.character(g(stats_control, "HighSkill_Pct")),
+    as.character(g(stats_control, "Service_Pct")),
+    as.character(g(stats_control, "Craft_Pct")),
+    as.character(g(stats_control, "Elementary_Pct")),
+    as.character(g(stats_control, "Armed_Pct"))
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+
+# STEP 3: EXPORT LaTeX
+latex_baseline_absent_tc <- kable(
+  table_baseline_absent_tc,
+  format    = "latex",
+  booktabs  = TRUE,
+  caption   = "Covariate Summary: Baseline, Total Absent, Treatment and Control",
+  label     = "tab:baseline_absent_tc",
+  col.names = c("Variable", "Baseline", "Total Absent", "Treatment", "Control"),
+  escape    = FALSE,
+  align     = c("l", "r", "r", "r", "r")
+) %>%
+  kable_styling(
+    latex_options = c("hold_position", "scale_down"),
+    font_size = 9
+  ) %>%
+  footnote(
+    general = paste(
+      "Standard deviations in parentheses for continuous variables.",
+      "Baseline = present at survey and never migrated internationally.",
+      "Total Absent = all absent individuals (abroad + internal).",
+      "Treatment = individuals aged 0-17 at conflict start (1996).",
+      "Control = individuals aged 18-40 at conflict start (1996)."
+    ),
+    footnote_as_chunk = TRUE
+  )
+
+writeLines(
+  as.character(latex_baseline_absent_tc),
+  file.path(output_path, "8.Baseline_Absent_Treatment_Control.tex")
+)
+
+# STEP 4: EXPORT Markdown
+md_baseline_absent_tc <- kable(
+  table_baseline_absent_tc,
+  format    = "markdown",
+  col.names = c("Variable", "Baseline", "Total Absent", "Treatment", "Control"),
+  align     = c("l", "r", "r", "r", "r")
+)
+
+md_baseline_absent_tc_full <- c(
+  md_baseline_absent_tc,
+  "",
+  "*Notes:*",
+  "- Standard deviations in parentheses for continuous variables.",
+  "- Baseline: present at survey and never migrated internationally.",
+  "- Total Absent: all absent individuals (abroad + internal).",
+  "- Treatment: individuals aged 0-17 at conflict start (1996).",
+  "- Control: individuals aged 18-40 at conflict start (1996)."
+)
+
+writeLines(
+  md_baseline_absent_tc_full,
+  file.path(output_path, "8.Baseline_Absent_Treatment_Control.md")
+)
+
+# =============================================================================
+# TABLE 9: SUMMARY BY BASELINE, NATIONAL ABSENT, TREATMENT & CONTROL -------------
+# =============================================================================
+
+# STEP 1: ASSEMBLE TABLE
+table_baseline_intl_tc <- data.frame(
+  
+  Variable = c(
+    "Sample Size",
+    "",
+    "Age:",
+    "  Age in 2017",
+    "",
+    "  Age at Conflict Start",
+    "",
+    "Male (%)",
+    "",
+    "Education Distribution (%):",
+    "  No Education",
+    "  Primary (1-5)",
+    "  Secondary (6-12)",
+    "  Tertiary",
+    "",
+    "Ethnicity Distribution (%):",
+    "  Hill High Caste",
+    "  Hill Janajati",
+    "  Terai/Madhesi",
+    "  Dalit",
+    "  Muslim",
+    "",
+    "Occupation Type (%):",
+    "  Agriculture",
+    "  High Skilled",
+    "  Service & Clerical",
+    "  Craft & Manufacturing",
+    "  Elementary/Low Skilled",
+    "  Armed Forces"
+  ),
+  
+  # ---- COLUMN 1: Baseline ----
+  Baseline = c(
+    as.character(g(stats_baseline, "N")),
+    "", "",
+    format_mean_sd(g(stats_baseline, "Age_Mean"),          g(stats_baseline, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_baseline, "Age_Conflict_Mean"), g(stats_baseline, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_baseline, "Male_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "No_Edu_Pct")),
+    as.character(g(stats_baseline, "Primary_Pct")),
+    as.character(g(stats_baseline, "Secondary_Pct")),
+    as.character(g(stats_baseline, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "High_Caste_Pct")),
+    as.character(g(stats_baseline, "Janajati_Pct")),
+    as.character(g(stats_baseline, "Terai_Pct")),
+    as.character(g(stats_baseline, "Dalit_Pct")),
+    as.character(g(stats_baseline, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "Agri_Pct")),
+    as.character(g(stats_baseline, "HighSkill_Pct")),
+    as.character(g(stats_baseline, "Service_Pct")),
+    as.character(g(stats_baseline, "Craft_Pct")),
+    as.character(g(stats_baseline, "Elementary_Pct")),
+    as.character(g(stats_baseline, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 2: International Absentee ----
+  Intl_Absentee = c(
+    as.character(g(stats_intl, "N")),
+    "", "",
+    format_mean_sd(g(stats_intl, "Age_Mean"),          g(stats_intl, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_intl, "Age_Conflict_Mean"), g(stats_intl, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_intl, "Male_Pct")),
+    "", "",
+    as.character(g(stats_intl, "No_Edu_Pct")),
+    as.character(g(stats_intl, "Primary_Pct")),
+    as.character(g(stats_intl, "Secondary_Pct")),
+    as.character(g(stats_intl, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_intl, "High_Caste_Pct")),
+    as.character(g(stats_intl, "Janajati_Pct")),
+    as.character(g(stats_intl, "Terai_Pct")),
+    as.character(g(stats_intl, "Dalit_Pct")),
+    as.character(g(stats_intl, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_intl, "Agri_Pct")),
+    as.character(g(stats_intl, "HighSkill_Pct")),
+    as.character(g(stats_intl, "Service_Pct")),
+    as.character(g(stats_intl, "Craft_Pct")),
+    as.character(g(stats_intl, "Elementary_Pct")),
+    as.character(g(stats_intl, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 3: Treatment (Exposed) ----
+  Treatment = c(
+    as.character(g(stats_treatment, "N")),
+    "", "",
+    format_mean_sd(g(stats_treatment, "Age_Mean"),          g(stats_treatment, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_treatment, "Age_Conflict_Mean"), g(stats_treatment, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_treatment, "Male_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "No_Edu_Pct")),
+    as.character(g(stats_treatment, "Primary_Pct")),
+    as.character(g(stats_treatment, "Secondary_Pct")),
+    as.character(g(stats_treatment, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "High_Caste_Pct")),
+    as.character(g(stats_treatment, "Janajati_Pct")),
+    as.character(g(stats_treatment, "Terai_Pct")),
+    as.character(g(stats_treatment, "Dalit_Pct")),
+    as.character(g(stats_treatment, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "Agri_Pct")),
+    as.character(g(stats_treatment, "HighSkill_Pct")),
+    as.character(g(stats_treatment, "Service_Pct")),
+    as.character(g(stats_treatment, "Craft_Pct")),
+    as.character(g(stats_treatment, "Elementary_Pct")),
+    as.character(g(stats_treatment, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 4: Control (Non-Exposed) ----
+  Control = c(
+    as.character(g(stats_control, "N")),
+    "", "",
+    format_mean_sd(g(stats_control, "Age_Mean"),          g(stats_control, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_control, "Age_Conflict_Mean"), g(stats_control, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_control, "Male_Pct")),
+    "", "",
+    as.character(g(stats_control, "No_Edu_Pct")),
+    as.character(g(stats_control, "Primary_Pct")),
+    as.character(g(stats_control, "Secondary_Pct")),
+    as.character(g(stats_control, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_control, "High_Caste_Pct")),
+    as.character(g(stats_control, "Janajati_Pct")),
+    as.character(g(stats_control, "Terai_Pct")),
+    as.character(g(stats_control, "Dalit_Pct")),
+    as.character(g(stats_control, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_control, "Agri_Pct")),
+    as.character(g(stats_control, "HighSkill_Pct")),
+    as.character(g(stats_control, "Service_Pct")),
+    as.character(g(stats_control, "Craft_Pct")),
+    as.character(g(stats_control, "Elementary_Pct")),
+    as.character(g(stats_control, "Armed_Pct"))
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+
+# STEP 2: EXPORT LaTeX
+latex_baseline_intl_tc <- kable(
+  table_baseline_intl_tc,
+  format    = "latex",
+  booktabs  = TRUE,
+  caption   = "Covariate Summary: Baseline, International Absentee, Treatment and Control",
+  label     = "tab:baseline_intl_tc",
+  col.names = c("Variable", "Baseline", "Intl. Absentee", "Treatment", "Control"),
+  escape    = FALSE,
+  align     = c("l", "r", "r", "r", "r")
+) %>%
+  kable_styling(
+    latex_options = c("hold_position", "scale_down"),
+    font_size = 9
+  ) %>%
+  footnote(
+    general = paste(
+      "Standard deviations in parentheses for continuous variables.",
+      "Baseline = present at survey and never migrated internationally.",
+      "Intl. Absentee = absent and currently abroad.",
+      "Treatment = individuals aged 0-17 at conflict start (1996).",
+      "Control = individuals aged 18-40 at conflict start (1996)."
+    ),
+    footnote_as_chunk = TRUE
+  )
+
+writeLines(
+  as.character(latex_baseline_intl_tc),
+  file.path(output_path, "9.Baseline_Intl_Absentee_Treatment_Control.tex")
+)
+
+
+# STEP 3: EXPORT Markdown
+md_baseline_intl_tc <- kable(
+  table_baseline_intl_tc,
+  format    = "markdown",
+  col.names = c("Variable", "Baseline", "Intl. Absentee", "Treatment", "Control"),
+  align     = c("l", "r", "r", "r", "r")
+)
+
+md_baseline_intl_tc_full <- c(
+  md_baseline_intl_tc,
+  "",
+  "*Notes:*",
+  "- Standard deviations in parentheses for continuous variables.",
+  "- Baseline: present at survey and never migrated internationally.",
+  "- Intl. Absentee: absent and currently abroad.",
+  "- Treatment: individuals aged 0-17 at conflict start (1996).",
+  "- Control: individuals aged 18-40 at conflict start (1996)."
+)
+
+writeLines(
+  md_baseline_intl_tc_full,
+  file.path(output_path, "9.Baseline_Intl_Absentee_Treatment_Control.md")
+)
+
+
+
+# =============================================================================
+# TABLE 10: SUMMARY BY BASELINE, NATIONAL ABSENT, TREATMENT & CONTROL -------------
+# =============================================================================
+
+# STEP 1: ASSEMBLE TABLE
+table_baseline_national_tc <- data.frame(
+  
+  Variable = c(
+    "Sample Size",
+    "",
+    "Age:",
+    "  Age in 2017",
+    "",
+    "  Age at Conflict Start",
+    "",
+    "Male (%)",
+    "",
+    "Education Distribution (%):",
+    "  No Education",
+    "  Primary (1-5)",
+    "  Secondary (6-12)",
+    "  Tertiary",
+    "",
+    "Ethnicity Distribution (%):",
+    "  Hill High Caste",
+    "  Hill Janajati",
+    "  Terai/Madhesi",
+    "  Dalit",
+    "  Muslim",
+    "",
+    "Occupation Type (%):",
+    "  Agriculture",
+    "  High Skilled",
+    "  Service & Clerical",
+    "  Craft & Manufacturing",
+    "  Elementary/Low Skilled",
+    "  Armed Forces"
+  ),
+  
+  # ---- COLUMN 1: Baseline ----
+  Baseline = c(
+    as.character(g(stats_baseline, "N")),
+    "", "",
+    format_mean_sd(g(stats_baseline, "Age_Mean"),          g(stats_baseline, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_baseline, "Age_Conflict_Mean"), g(stats_baseline, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_baseline, "Male_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "No_Edu_Pct")),
+    as.character(g(stats_baseline, "Primary_Pct")),
+    as.character(g(stats_baseline, "Secondary_Pct")),
+    as.character(g(stats_baseline, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "High_Caste_Pct")),
+    as.character(g(stats_baseline, "Janajati_Pct")),
+    as.character(g(stats_baseline, "Terai_Pct")),
+    as.character(g(stats_baseline, "Dalit_Pct")),
+    as.character(g(stats_baseline, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_baseline, "Agri_Pct")),
+    as.character(g(stats_baseline, "HighSkill_Pct")),
+    as.character(g(stats_baseline, "Service_Pct")),
+    as.character(g(stats_baseline, "Craft_Pct")),
+    as.character(g(stats_baseline, "Elementary_Pct")),
+    as.character(g(stats_baseline, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 2: National Absent (Internal) ----
+  National_Absent = c(
+    as.character(g(stats_national, "N")),
+    "", "",
+    format_mean_sd(g(stats_national, "Age_Mean"),          g(stats_national, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_national, "Age_Conflict_Mean"), g(stats_national, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_national, "Male_Pct")),
+    "", "",
+    as.character(g(stats_national, "No_Edu_Pct")),
+    as.character(g(stats_national, "Primary_Pct")),
+    as.character(g(stats_national, "Secondary_Pct")),
+    as.character(g(stats_national, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_national, "High_Caste_Pct")),
+    as.character(g(stats_national, "Janajati_Pct")),
+    as.character(g(stats_national, "Terai_Pct")),
+    as.character(g(stats_national, "Dalit_Pct")),
+    as.character(g(stats_national, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_national, "Agri_Pct")),
+    as.character(g(stats_national, "HighSkill_Pct")),
+    as.character(g(stats_national, "Service_Pct")),
+    as.character(g(stats_national, "Craft_Pct")),
+    as.character(g(stats_national, "Elementary_Pct")),
+    as.character(g(stats_national, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 3: Treatment (Exposed) ----
+  Treatment = c(
+    as.character(g(stats_treatment, "N")),
+    "", "",
+    format_mean_sd(g(stats_treatment, "Age_Mean"),          g(stats_treatment, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_treatment, "Age_Conflict_Mean"), g(stats_treatment, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_treatment, "Male_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "No_Edu_Pct")),
+    as.character(g(stats_treatment, "Primary_Pct")),
+    as.character(g(stats_treatment, "Secondary_Pct")),
+    as.character(g(stats_treatment, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "High_Caste_Pct")),
+    as.character(g(stats_treatment, "Janajati_Pct")),
+    as.character(g(stats_treatment, "Terai_Pct")),
+    as.character(g(stats_treatment, "Dalit_Pct")),
+    as.character(g(stats_treatment, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_treatment, "Agri_Pct")),
+    as.character(g(stats_treatment, "HighSkill_Pct")),
+    as.character(g(stats_treatment, "Service_Pct")),
+    as.character(g(stats_treatment, "Craft_Pct")),
+    as.character(g(stats_treatment, "Elementary_Pct")),
+    as.character(g(stats_treatment, "Armed_Pct"))
+  ),
+  
+  # ---- COLUMN 4: Control (Non-Exposed) ----
+  Control = c(
+    as.character(g(stats_control, "N")),
+    "", "",
+    format_mean_sd(g(stats_control, "Age_Mean"),          g(stats_control, "Age_SD")),
+    "",
+    format_mean_sd(g(stats_control, "Age_Conflict_Mean"), g(stats_control, "Age_Conflict_SD")),
+    "",
+    as.character(g(stats_control, "Male_Pct")),
+    "", "",
+    as.character(g(stats_control, "No_Edu_Pct")),
+    as.character(g(stats_control, "Primary_Pct")),
+    as.character(g(stats_control, "Secondary_Pct")),
+    as.character(g(stats_control, "Tertiary_Pct")),
+    "", "",
+    as.character(g(stats_control, "High_Caste_Pct")),
+    as.character(g(stats_control, "Janajati_Pct")),
+    as.character(g(stats_control, "Terai_Pct")),
+    as.character(g(stats_control, "Dalit_Pct")),
+    as.character(g(stats_control, "Muslim_Pct")),
+    "", "",
+    as.character(g(stats_control, "Agri_Pct")),
+    as.character(g(stats_control, "HighSkill_Pct")),
+    as.character(g(stats_control, "Service_Pct")),
+    as.character(g(stats_control, "Craft_Pct")),
+    as.character(g(stats_control, "Elementary_Pct")),
+    as.character(g(stats_control, "Armed_Pct"))
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+
+# STEP 2: EXPORT LaTeX
+latex_baseline_national_tc <- kable(
+  table_baseline_national_tc,
+  format    = "latex",
+  booktabs  = TRUE,
+  caption   = "Covariate Summary: Baseline, National Absent, Treatment and Control",
+  label     = "tab:baseline_national_tc",
+  col.names = c("Variable", "Baseline", "National Absent", "Treatment", "Control"),
+  escape    = FALSE,
+  align     = c("l", "r", "r", "r", "r")
+) %>%
+  kable_styling(
+    latex_options = c("hold_position", "scale_down"),
+    font_size = 9
+  ) %>%
+  footnote(
+    general = paste(
+      "Standard deviations in parentheses for continuous variables.",
+      "Baseline = present at survey and never migrated internationally.",
+      "National Absent = absent and inside Nepal.",
+      "Treatment = individuals aged 0-17 at conflict start (1996).",
+      "Control = individuals aged 18-40 at conflict start (1996)."
+    ),
+    footnote_as_chunk = TRUE
+  )
+
+writeLines(
+  as.character(latex_baseline_national_tc),
+  file.path(output_path, "10.Baseline_National_Absent_Treatment_Control.tex")
+)
+
+
+# STEP 3: EXPORT Markdown
+md_baseline_national_tc <- kable(
+  table_baseline_national_tc,
+  format    = "markdown",
+  col.names = c("Variable", "Baseline", "National Absent", "Treatment", "Control"),
+  align     = c("l", "r", "r", "r", "r")
+)
+
+md_baseline_national_tc_full <- c(
+  md_baseline_national_tc,
+  "",
+  "*Notes:*"
+)
+
+writeLines(
+  md_baseline_national_tc_full,
+  file.path(output_path, "10.Baseline_National_Absent_Treatment_Control.md")
+)
+
+
 stop()
 # =============================================================================
-# TABLE 3: SUMMARY BY TREATMENT/CONTROL----------------------------------------
+# TABLE 11: SUMMARY BY TREATMENT/CONTROL----------------------------------------
 # =============================================================================
 
 table2_data <- nlss_conflict_data %>%
