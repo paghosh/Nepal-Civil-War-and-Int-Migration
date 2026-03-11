@@ -1,0 +1,204 @@
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Summary Statistics of Individuals (Age 0--40 at Conflict Start)}
+\label{tab:summary_stats}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+ & All & [SD] & Treatment & [SD] & Control & [SD] & Diff & (SE) \\
+\midrule
+\textit{Panel A: Outcomes} & & & & & & & & \\
+\quad International Migration (=1) & 0.13 & [0.34] & 0.17 & [0.38] & 0.06 & [0.24] & 0.11*** & (0.00) \\
+\quad Domestic Migration (=1) & 0.05 & [0.22] & 0.07 & [0.26] & 0.02 & [0.15] & 0.05*** & (0.00) \\
+\textit{Panel B: Exposure to Conflict} & & & & & & & & \\
+\quad Months of War (own village) & 53.26 & [16.70] & 53.48 & [16.74] & 52.91 & [16.63] & 0.57*** & (0.16) \\
+\quad Number of Casualties (own village) & 242.35 & [174.52] & 245.14 & [176.12] & 238.00 & [171.92] & 7.13*** & (1.68) \\
+\quad Months of War (incl. neighbors) & 92.79 & [17.46] & 92.96 & [17.50] & 92.54 & [17.40] & 0.42** & (0.17) \\
+\quad Casualties (incl. neighbors) & 1272.99 & [698.03] & 1284.61 & [702.96] & 1254.90 & [689.92] & 29.71*** & (6.71) \\
+\textit{Panel C: Controls} & & & & & & & & \\
+\quad Current Age & 36.32 & [11.34] & 28.49 & [5.19] & 48.53 & [6.52] & -20.04*** & (0.06) \\
+\quad Male (=1) & 0.51 & [0.50] & 0.51 & [0.50] & 0.50 & [0.50] & 0.01** & (0.00) \\
+\quad High Caste (=1) & 0.37 & [0.48] & 0.37 & [0.48] & 0.38 & [0.48] & -0.01* & (0.00) \\
+\quad Years of Education & 8.16 & [3.71] & 8.66 & [3.48] & 6.83 & [3.99] & 1.82*** & (0.05) \\
+\quad Number of Individuals & 45,063 &  & 27,444 &  & 17,619 &  &  &  \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Treatment = aged 0--17 at conflict start. Control = aged 18--40. $^{***}$ p$<$0.01, $^{**}$ p$<$0.05, $^{*}$ p$<$0.10
+\end{tablenotes}
+\end{table}
+
+\clearpage
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Summary Statistics: Male Children In Utero During Conflict (Born 1996--2006)}
+\label{tab:males_in_utero}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+ & All & [SD] & High Confl. & [SD] & Low Confl. & [SD] & Diff & (SE) \\
+\midrule
+\textit{Panel A: Outcomes} & & & & & & & & \\
+\quad International Migration (=1) & 0.13 & [0.34] & 0.13 & [0.34] & 0.13 & [0.34] & -0.00 & (0.01) \\
+\quad Domestic Migration (=1) & 0.12 & [0.33] & 0.12 & [0.33] & 0.13 & [0.33] & -0.01 & (0.01) \\
+\textit{Panel B: Exposure to Conflict} & & & & & & & & \\
+\quad Months of War & 53.67 & [16.99] & 65.98 & [15.49] & 42.51 & [8.42] & 23.47*** & (0.24) \\
+\quad Number of Casualties & 244.28 & [174.54] & 369.72 & [178.39] & 130.43 & [44.56] & 239.29*** & (2.47) \\
+\textit{Panel C: Demographics} & & & & & & & & \\
+\quad Current Age & 16.08 & [3.12] & 16.00 & [3.14] & 16.15 & [3.10] & -0.14** & (0.06) \\
+\quad High Caste (=1) & 0.37 & [0.48] & 0.39 & [0.49] & 0.36 & [0.48] & 0.03*** & (0.01) \\
+\quad Years of Education & 7.75 & [2.94] & 7.61 & [2.92] & 7.89 & [2.95] & -0.28*** & (0.06) \\
+\quad Number of Males & 11,570 &  & 5,505 &  & 6,065 &  &  &  \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Males born 1996--2006. Treatment = above-median casualties. $^{***}$ p$<$0.01, $^{**}$ p$<$0.05, $^{*}$ p$<$0.10
+\end{tablenotes}
+\end{table}
+
+\clearpage
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Impact on Migration by Age at Start of the Civil War (Equation 7)}
+\label{tab:did_phadera}
+\begin{tabular}{l cccc}
+\toprule
+ & \multicolumn{2}{c}{International Migration} & \multicolumn{2}{c}{Domestic Migration} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+ & (1) Months & (2) Casualties & (3) Months & (4) Casualties \\
+\midrule
+\quad Age 22-29 × Conflict & 0.000229 & 0.000041$^{*}$ & -0.000016 & 0.000001 \\
+ & (0.000229) & (0.000025) & (0.000165) & (0.000016) \\
+\quad Age 9-15 × Conflict & -0.000537$^{**}$ & -0.000052$^{**}$ & -0.000315 & -0.000016 \\
+ & (0.000253) & (0.000026) & (0.000202) & (0.000021) \\
+\quad Age 4-8 × Conflict & -0.000613$^{**}$ & -0.000051 & -0.000346 & -0.000025 \\
+ & (0.000306) & (0.000031) & (0.000246) & (0.000023) \\
+\quad Age 0-3 × Conflict & -0.001423$^{***}$ & -0.000127$^{***}$ & 0.000010 & 0.000011 \\
+ & (0.000330) & (0.000033) & (0.000295) & (0.000028) \\
+\midrule
+Observations & 45039 & 45039 & 45015 & 45015 \\
+Adj. R-squared & 0.0474 & 0.0474 & 0.0326 & 0.0325 \\
+Control Mean (Age 16--21) & 0.1076 & 0.1076 & 0.0388 & 0.0388 \\
+District FE & Yes & Yes & Yes & Yes \\
+Cohort dummies & Yes & Yes & Yes & Yes \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Standard errors clustered at PSU level in parentheses. $^{***}$ p$<$0.01, $^{**}$ p$<$0.05, $^{*}$ p$<$0.10
+\end{tablenotes}
+\end{table}
+
+\clearpage
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Impact on Migration by Age Group at Start of the Civil War}
+\label{tab:did_agegroups}
+\begin{tabular}{l cccc}
+\toprule
+ & \multicolumn{2}{c}{International Migration} & \multicolumn{2}{c}{Domestic Migration} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+ & (1) Months & (2) Casualties & (3) Months & (4) Casualties \\
+\midrule
+\quad Age 26-40 × Conflict (Placebo) & 0.000451$^{**}$ & 0.000033 & -0.000168 & -0.000016 \\
+ & (0.000227) & (0.000025) & (0.000153) & (0.000016) \\
+\quad Age 11-18 × Conflict & -0.000373 & -0.000047 & -0.000300 & -0.000017 \\
+ & (0.000299) & (0.000029) & (0.000200) & (0.000020) \\
+\quad Age 6-10 × Conflict & -0.000248 & -0.000043 & -0.000171 & -0.000004 \\
+ & (0.000349) & (0.000035) & (0.000257) & (0.000024) \\
+\quad Age 0-5 × Conflict & -0.000932$^{***}$ & -0.000100$^{***}$ & -0.000197 & -0.000005 \\
+ & (0.000317) & (0.000031) & (0.000256) & (0.000026) \\
+\midrule
+Observations & 45039 & 45039 & 45015 & 45015 \\
+Adj. R-squared & 0.0510 & 0.0510 & 0.0336 & 0.0336 \\
+Control Mean (Age 19--25) & 0.0894 & 0.0894 & 0.0294 & 0.0294 \\
+District FE & Yes & Yes & Yes & Yes \\
+Cohort dummies & Yes & Yes & Yes & Yes \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Control group: Age 19--25 at conflict start. Standard errors clustered at PSU level. $^{***}$ p$<$0.01, $^{**}$ p$<$0.05, $^{*}$ p$<$0.10
+\end{tablenotes}
+\end{table}
+
+\clearpage
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Intergenerational Impact on Children's Migration (Equation 8, Phadera Cohorts)}
+\label{tab:eq8_phadera}
+\begin{tabular}{l cccc}
+\toprule
+ & \multicolumn{2}{c}{International Migration} & \multicolumn{2}{c}{Domestic Migration} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+ & (1) Months & (2) Casualties & (3) Months & (4) Casualties \\
+\midrule
+\quad Mother Age 22-29 x Conflict (Placebo) & 0.000132 & 0.000016 & 0.000231$^{*}$ & 0.000024$^{*}$ \\
+ & (0.000085) & (0.000011) & (0.000130) & (0.000012) \\
+\quad Mother Age 9-15 x Conflict & 0.000028 & -0.000006 & 0.000162$^{*}$ & 0.000010 \\
+ & (0.000054) & (0.000007) & (0.000087) & (0.000008) \\
+\quad Mother Age 4-8 x Conflict & 0.000021 & -0.000005 & 0.000166$^{**}$ & 0.000012 \\
+ & (0.000053) & (0.000007) & (0.000081) & (0.000008) \\
+\quad Mother Age 0-3 x Conflict & 0.000021 & -0.000000 & 0.000057 & 0.000007 \\
+ & (0.000087) & (0.000012) & (0.000097) & (0.000009) \\
+\midrule
+Observations & 30551 & 30551 & 30551 & 30551 \\
+Adj. R-squared & 0.0059 & 0.0062 & 0.0204 & 0.0204 \\
+Control Mean (Mother Age 16--21) & 0.0025 & 0.0025 & 0.0041 & 0.0041 \\
+District FE & Yes & Yes & Yes & Yes \\
+Mother's cohort FE & Yes & Yes & Yes & Yes \\
+Child controls & Yes & Yes & Yes & Yes \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Intergenerational specification (Equation 8). Child controls: girl indicator, birth order FE.
+\item Standard errors clustered at PSU level. $^{***}$ p$<$0.01, $^{**}$ p$<$0.05, $^{*}$ p$<$0.10
+\end{tablenotes}
+\end{table}
+
+\clearpage
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Intergenerational Impact on Children's Migration (Equation 8, Our Age Groups)}
+\label{tab:eq8_agegroups}
+\begin{tabular}{l cccc}
+\toprule
+ & \multicolumn{2}{c}{International Migration} & \multicolumn{2}{c}{Domestic Migration} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+ & (1) Months & (2) Casualties & (3) Months & (4) Casualties \\
+\midrule
+\quad Mother Age 26-40 x Conflict (Placebo) & 0.000032 & 0.000018 & -0.000267$^{*}$ & -0.000021 \\
+ & (0.000107) & (0.000013) & (0.000146) & (0.000013) \\
+\quad Mother Age 11-18 x Conflict & 0.000012 & -0.000001 & -0.000147 & -0.000019$^{**}$ \\
+ & (0.000061) & (0.000006) & (0.000097) & (0.000009) \\
+\quad Mother Age 6-10 x Conflict & 0.000006 & -0.000002 & -0.000103 & -0.000013 \\
+ & (0.000056) & (0.000005) & (0.000083) & (0.000008) \\
+\quad Mother Age 0-5 x Conflict & -0.000025 & -0.000002 & -0.000123 & -0.000013 \\
+ & (0.000067) & (0.000007) & (0.000089) & (0.000009) \\
+\midrule
+Observations & 30551 & 30551 & 30551 & 30551 \\
+Adj. R-squared & 0.0073 & 0.0078 & 0.0237 & 0.0237 \\
+Control Mean (Mother Age 19--25) & 0.0031 & 0.0031 & 0.0048 & 0.0048 \\
+District FE & Yes & Yes & Yes & Yes \\
+Mother's cohort FE & Yes & Yes & Yes & Yes \\
+Child controls & Yes & Yes & Yes & Yes \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\footnotesize
+\item Intergenerational specification (Equation 8). Child controls: girl indicator, birth order FE.
+\item Standard errors clustered at PSU level. $^{***}$ p$<$0.01, $^{**}$ p$<$0.05, $^{*}$ p$<$0.10
+\end{tablenotes}
+\end{table}
