@@ -26,9 +26,9 @@
 # ── Paths ────────────────────────────────────────────────────────────────────
 
 # USER: Pallab
-dropbox_path <- "/Users/pallab.ghosh/Library/CloudStorage/Dropbox/Papers_with_Coauthors/PhD_Students/Ramesh/Nepal Civil Conflict"
-output_path  <- "/Users/pallab.ghosh/Documents/GitHub/Nepal-Civil-War-and-Int-Migration/tables/pallab/march_2026/summary_stats"
-code_path    <- "/Users/pallab.ghosh/Documents/GitHub/Nepal-Civil-War-and-Int-Migration/source_code"
+dropbox_path <- "/Users/rameshdulal/Library/CloudStorage/Dropbox/Nepal Civil Conflict/Data/Modified_Data"
+output_path  <- "/Users/rameshdulal/Library/CloudStorage/OneDrive-UniversityofOklahoma/Nepal Civil War and International Migration/Test Tables"
+code_path    <- "/Users/rameshdulal/Documents/Web Portfolio/Nepal-Civil-War-and-Int-Migration/tables/Pallab/march_2026/summary/R_codes"
 
 setwd(dropbox_path)
 
@@ -44,7 +44,7 @@ library(openxlsx)
 # ── Load data ────────────────────────────────────────────────────────────────
 
 # If not already loaded from 02_data_cleaning.R:
-# nlss_conflict_data <- read_dta("nlfs_conflict_data.dta")
+ nlss_conflict_data <- read_dta("nlfs_conflict_data.dta")
 
 # ── Helper: compute group summary ───────────────────────────────────────────
 

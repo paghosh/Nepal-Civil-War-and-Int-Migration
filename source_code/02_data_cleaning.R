@@ -1,23 +1,24 @@
-# =============================================================================
-# 02_data_cleaning.R - Data Import, Cleaning, and Variable Creation
-# =============================================================================
-# Project: Nepal Civil Conflict and International Migration
-# Author: Ramesh Dulal
-#
+# ==============================================================================
+# Project Title : Nepal Civil Conflict and International Migration
+# Author        : Ramesh Dulal
+# Description   : Data Import, Cleaning, and Variable Creation
+# Last Updated  : April 2026
+# ==============================================================================
+
 # CREATES:
 # - nlss_conflict_data: Main analysis dataset with all variables
-# =============================================================================
 
 
-# -----------------------------------------------------------------------------
-# 1. IMPORT DATA
-# -----------------------------------------------------------------------------
+# ==============================================================================
+# SECTION 1: IMPORT DATA
+# ==============================================================================
 
-nlss_conflict_data <- read_dta("1_conflict_present_absentee_data.dta")
+nlss_conflict_data <- read_dta(file.path(modified_data, "1_conflict_present_absentee_data.dta"))
 
-# -----------------------------------------------------------------------------
-# 2. REORDER VARIABLES FOR CLARITY
-# -----------------------------------------------------------------------------
+
+# ==============================================================================
+# SECTION 2: REORDER VARIABLES FOR CLARITY
+# ==============================================================================
 
 nlss_conflict_data <- nlss_conflict_data %>%
   select(
@@ -37,7 +38,7 @@ nlss_conflict_data <- nlss_conflict_data %>%
     
     # Migration outcomes
     international_migrant, international_absentee_only, present_ind_migrant, national,
-    occupation_types, absent, baseline, travelled5, rsn_travel, abs_rsn, 
+    occupation_types, absent, baseline, travelled5, rsn_travel, abs_rsn,
     abs_nummonth, abs_living, abs_id,
     
     # Education
@@ -47,9 +48,10 @@ nlss_conflict_data <- nlss_conflict_data %>%
     everything()
   )
 
-# -----------------------------------------------------------------------------
-# 3. HANDLE MISSING VALUES
-# -----------------------------------------------------------------------------
+
+# ==============================================================================
+# SECTION 3: HANDLE MISSING VALUES
+# ==============================================================================
 
 # Drop observations with missing district
 nlss_conflict_data <- nlss_conflict_data %>%
@@ -59,14 +61,14 @@ nlss_conflict_data <- nlss_conflict_data %>%
 nlss_conflict_data <- nlss_conflict_data %>%
   group_by(dist) %>%
   mutate(
-    mwar_own_any = first(na.omit(mwar_own_any)),
+    mwar_own_any   = first(na.omit(mwar_own_any)),
     mwar_own_fatal = first(na.omit(mwar_own_fatal)),
-    cas_own_any = first(na.omit(cas_own_any)),
-    cas_own_fatal = first(na.omit(cas_own_fatal)),
-    mwar_nbr_any = first(na.omit(mwar_nbr_any)),
+    cas_own_any    = first(na.omit(cas_own_any)),
+    cas_own_fatal  = first(na.omit(cas_own_fatal)),
+    mwar_nbr_any   = first(na.omit(mwar_nbr_any)),
     mwar_nbr_fatal = first(na.omit(mwar_nbr_fatal)),
-    cas_nbr_any = first(na.omit(cas_nbr_any)),
-    cas_nbr_fatal = first(na.omit(cas_nbr_fatal))
+    cas_nbr_any    = first(na.omit(cas_nbr_any)),
+    cas_nbr_fatal  = first(na.omit(cas_nbr_fatal))
   ) %>%
   ungroup()
 
@@ -76,51 +78,53 @@ nlss_conflict_data <- nlss_conflict_data %>%
   mutate(caste = first(na.omit(caste))) %>%
   ungroup()
 
-# Create value labels for "absent" variable ----
-
+# Create value labels
 nlss_conflict_data <- nlss_conflict_data %>%
-  mutate(absent_label = factor(ifelse(absent == 1, "Absent", "Non-Absent"),
-                               levels = c("Non-Absent", "Absent")),
+  mutate(
+    
+    # Absent
+    absent_label = factor(ifelse(absent == 1, "Absent", "Non-Absent"),
+                          levels = c("Non-Absent", "Absent")),
+    
+    # International migrant
+    migrant_label = factor(ifelse(international_migrant == 1, "Migrant", "Non-Migrant"),
+                           levels = c("Non-Migrant", "Migrant")),
+    
+    # International absentee only
+    international_absentee_only_label = factor(
+      ifelse(international_absentee_only == 1, "International Absentee", "Non-International Absentee"),
+      levels = c("Non-International Absentee", "International Absentee")),
+    
+    # Present individual migrant
+    present_ind_migrant_label = factor(
+      ifelse(present_ind_migrant == 1, "Respondent Migrant", "Respondent Non-Migrant"),
+      levels = c("Respondent Non-Migrant", "Respondent Migrant")),
+    
+    # Internal migrant
+    national_migrant_label = factor(ifelse(national == 1, "Internal Migrant", "Non-Internal Migrant"),
+                                    levels = c("Non-Internal Migrant", "Internal Migrant")),
+    
+    # Present non-migrant (baseline)
+    baseline_label = factor(ifelse(baseline == 1, "Present Non-Migrant", "Absent Migrant"),
+                            levels = c("Absent Migrant", "Non-Internal Migrant"))
+  )
 
-# Create Value labels for "International_migrant" variable ----
 
-  migrant_label = factor(ifelse(international_migrant == 1, "Migrant", "Non-Migrant"),
-                               levels = c("Non-Migrant", "Migrant")),
-
-# Create Value labels for "International_absentee_only" variable -----
-  
-  international_absentee_only_label = factor(ifelse(international_absentee_only == 1, "International Absentee", "Non-International Absentee"),
-                                             levels = c("Non-International Absentee", "International Absentee")),
-
-# Create Value labels for "present_ind_migrant" (from present sample) variable ------
-
-  present_ind_migrant_label = factor(ifelse(present_ind_migrant == 1, "Respondent Migrant", "Respondent Non-Migrant"),
-                                     levels = c("Respondent Non-Migrant", "Respondent Migrant")),  
-
-# Create Value labels for "national" (Internal Migrant) Variable ------
-
-  national_migrant_label = factor(ifelse(national == 1, "Internal Migrant", "Non-Internal Migrant"),
-                                  levels = c("Non-Internal Migrant", "Internal Migrant")),
-
-# Create Value labels for "baseline" (Present Non-Migrant) Variable -----
-  baseline_label = factor(ifelse(baseline == 1, "Present Non-Migrant", "Absent Migrant"),
-                          levels = c("Absent Migrant", "Non-Internal Migrant"))
-)
-
-# -----------------------------------------------------------------------------
-# 4. CREATE SEX CATEGORIES
-# -----------------------------------------------------------------------------
+# ==============================================================================
+# SECTION 4: CREATE SEX CATEGORIES
+# ==============================================================================
 
 nlss_conflict_data <- nlss_conflict_data %>%
   mutate(male = case_when(
     sex == 1 ~ 1,
     sex == 2 ~ 0,
-    TRUE ~ NA_real_
+    TRUE     ~ NA_real_
   ))
 
-# -----------------------------------------------------------------------------
-# 5. CREATE ETHNICITY CATEGORIES
-# -----------------------------------------------------------------------------
+
+# ==============================================================================
+# SECTION 5: CREATE ETHNICITY CATEGORIES
+# ==============================================================================
 
 nlss_conflict_data <- nlss_conflict_data %>%
   mutate(
@@ -129,19 +133,19 @@ nlss_conflict_data <- nlss_conflict_data %>%
       caste %in% c(1, 2, 14, 20, 27, 48, 49) ~ "Hill High Caste",
       
       # Hill Janajati (Indigenous)
-      caste %in% c(3, 5, 6, 10, 11, 13, 24, 29, 32, 36, 45, 46, 60, 61, 62, 
-                   66, 67, 69, 74, 77, 78, 79, 80, 81, 89, 90, 91, 92, 94, 
+      caste %in% c(3, 5, 6, 10, 11, 13, 24, 29, 32, 36, 45, 46, 60, 61, 62,
+                   66, 67, 69, 74, 77, 78, 79, 80, 81, 89, 90, 91, 92, 94,
                    97, 98, 100, 110, 119, 120, 121, 124, 125, 126, 127, 130,
                    131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 992) ~ "Hill Janajati",
       
       # Terai/Madhesi Caste
-      caste %in% c(4, 9, 16, 18, 19, 21, 26, 28, 30, 31, 33, 34, 35, 37, 
-                   42, 43, 44, 47, 51, 52, 53, 54, 55, 56, 57, 58, 59, 
+      caste %in% c(4, 9, 16, 18, 19, 21, 26, 28, 30, 31, 33, 34, 35, 37,
+                   42, 43, 44, 47, 51, 52, 53, 54, 55, 56, 57, 58, 59,
                    63, 64, 65, 68, 71, 72, 73, 84, 85, 86, 88, 96, 99,
                    115, 116, 117, 118, 122, 123, 128, 129, 993) ~ "Terai/Madhesi",
       
       # Dalit
-      caste %in% c(8, 12, 15, 17, 22, 23, 25, 38, 39, 40, 41, 50, 70, 
+      caste %in% c(8, 12, 15, 17, 22, 23, 25, 38, 39, 40, 41, 50, 70,
                    75, 76, 83, 93, 991) ~ "Dalit",
       
       # Muslim
@@ -152,9 +156,9 @@ nlss_conflict_data <- nlss_conflict_data %>%
   )
 
 
-# -----------------------------------------------------------------------------
-# 6. CREATE MARITAL STATUS CATEGORIES
-# -----------------------------------------------------------------------------
+# ==============================================================================
+# SECTION 6: CREATE MARITAL STATUS CATEGORIES
+# ==============================================================================
 
 nlss_conflict_data <- nlss_conflict_data %>%
   mutate(
@@ -164,30 +168,30 @@ nlss_conflict_data <- nlss_conflict_data %>%
       marital == 3 ~ "Single",
       marital == 4 ~ "Separated",
       marital == 5 ~ "Divorced",
-      TRUE ~ NA_character_
+      TRUE         ~ NA_character_
     )
   )
 
 
-# -----------------------------------------------------------------------------
-# 7. CREATE EDUCATION CATEGORIES
-# -----------------------------------------------------------------------------
+# ==============================================================================
+# SECTION 7: CREATE EDUCATION CATEGORIES
+# ==============================================================================
 
 nlss_conflict_data <- nlss_conflict_data %>%
   mutate(
     education_category = case_when(
-      grade_comp %in% c(16, 17) ~ "No Education",
-      grade_comp >= 0 & grade_comp <= 5 ~ "Primary (1-5)",
-      grade_comp >= 6 & grade_comp <= 12 ~ "Secondary (6-12)",
-      grade_comp >= 13 ~ "Tertiary",
-      TRUE ~ NA_character_
+      grade_comp %in% c(16, 17)            ~ "No Education",
+      grade_comp >= 0 & grade_comp <= 5    ~ "Primary (1-5)",
+      grade_comp >= 6 & grade_comp <= 12   ~ "Secondary (6-12)",
+      grade_comp >= 13                     ~ "Tertiary",
+      TRUE                                 ~ NA_character_
     )
   )
 
 
-# -----------------------------------------------------------------------------
-# 8. CREATE OCCUPATION CATEGORIES
-# -----------------------------------------------------------------------------
+# ==============================================================================
+# SECTION 8: CREATE OCCUPATION CATEGORIES
+# ==============================================================================
 
 nlss_conflict_data <- nlss_conflict_data %>%
   mutate(occupation_types = as.numeric(occupation_types))
@@ -195,86 +199,78 @@ nlss_conflict_data <- nlss_conflict_data %>%
 nlss_conflict_data <- nlss_conflict_data %>%
   mutate(
     nsco_major = case_when(
-      occupation_types < 1000 ~ floor(occupation_types / 100),
+      occupation_types < 1000  ~ floor(occupation_types / 100),
       occupation_types >= 1000 ~ floor(occupation_types / 1000),
-      TRUE ~ NA_real_
+      TRUE                     ~ NA_real_
     ),
     occupation_category = case_when(
       occupation_types %in% c(110, 210, 310) ~ "Armed Forces",
       nsco_major %in% c(1, 2, 3)             ~ "High Skilled",
       nsco_major %in% c(4, 5)                ~ "Service & Clerical",
-      nsco_major == 6                        ~ "Agriculture",
+      nsco_major == 6                         ~ "Agriculture",
       nsco_major %in% c(7, 8)                ~ "Craft & Manufacturing",
-      nsco_major == 9                        ~ "Elementary/Low Skilled",
-      occupation_types == 9999               ~ NA_character_,
-      TRUE ~ NA_character_
+      nsco_major == 9                         ~ "Elementary/Low Skilled",
+      occupation_types == 9999                ~ NA_character_,
+      TRUE                                    ~ NA_character_
     )
   )
-# -----------------------------------------------------------------------------
-# 8. CREATE TREATMENT/CONTROL COHORTS
-# -----------------------------------------------------------------------------
+
+
+# ==============================================================================
+# SECTION 9: CREATE TREATMENT/CONTROL COHORTS
+# ==============================================================================
 
 nlss_conflict_data <- nlss_conflict_data %>%
   mutate(
     # Calculate ages
-    birth_year = SURVEY_YEAR - age,
-    age_at_conflict_start = CONFLICT_START - birth_year,
-    age_at_conflict_end = CONFLICT_END - birth_year,
+    birth_year             = SURVEY_YEAR - age,
+    age_at_conflict_start  = CONFLICT_START - birth_year,
+    age_at_conflict_end    = CONFLICT_END - birth_year,
     
-# Detailed cohort labels
+    # Detailed cohort labels
     cohort_group = case_when(
       # TREATMENT: Childhood during conflict
-      age_at_conflict_start >= 0 & age_at_conflict_start <= 5 & 
-        age >= 18 & age <= 45 ~ "Treatment: Age 0-5 in 1996",
-      
-      age_at_conflict_start >= 6 & age_at_conflict_start <= 12 & 
-        age >= 18 & age <= 45 ~ "Treatment: Age 6-12 in 1996",
-      
-      age_at_conflict_start >= 13 & age_at_conflict_start <= 17 & 
-        age >= 18 & age <= 45 ~ "Treatment: Age 13-17 in 1996",
+      age_at_conflict_start >= 0  & age_at_conflict_start <= 5  & age >= 18 & age <= 45 ~ "Treatment: Age 0-5 in 1996",
+      age_at_conflict_start >= 6  & age_at_conflict_start <= 12 & age >= 18 & age <= 45 ~ "Treatment: Age 6-12 in 1996",
+      age_at_conflict_start >= 13 & age_at_conflict_start <= 17 & age >= 18 & age <= 45 ~ "Treatment: Age 13-17 in 1996",
       
       # CONTROL: Adult during conflict
-      age_at_conflict_start >= 18 & age_at_conflict_start <= 25 & 
-        age >= 47 & age <= 65 ~ "Control: Age 18-25 in 1996",
-      
-      age_at_conflict_start >= 26 & age_at_conflict_start <= 35 & 
-        age >= 47 & age <= 65 ~ "Control: Age 26-35 in 1996",
-      
-      age_at_conflict_start >= 36 & age_at_conflict_start <= 40 & 
-        age >= 47 & age <= 65 ~ "Control: Age 36-40 in 1996",
+      age_at_conflict_start >= 18 & age_at_conflict_start <= 25 & age >= 47 & age <= 65 ~ "Control: Age 18-25 in 1996",
+      age_at_conflict_start >= 26 & age_at_conflict_start <= 35 & age >= 47 & age <= 65 ~ "Control: Age 26-35 in 1996",
+      age_at_conflict_start >= 36 & age_at_conflict_start <= 40 & age >= 47 & age <= 65 ~ "Control: Age 36-40 in 1996",
       
       # EXCLUDED
-      age < 18 ~ "Excluded: Too Young in 2017",
-      age > 65 ~ "Excluded: Too Old in 2017",
-      age_at_conflict_end < 6 ~ "Excluded: Too Young During Conflict",
-      age_at_conflict_start >= 41 ~ "Excluded: Age 41+ in 1996",
-      age_at_conflict_start >= 18 & age >= 18 & age <= 46 ~ "Excluded: Overlap Age",
-      TRUE ~ "Excluded: Other"
+      age < 18                                              ~ "Excluded: Too Young in 2017",
+      age > 65                                              ~ "Excluded: Too Old in 2017",
+      age_at_conflict_end < 6                               ~ "Excluded: Too Young During Conflict",
+      age_at_conflict_start >= 41                           ~ "Excluded: Age 41+ in 1996",
+      age_at_conflict_start >= 18 & age >= 18 & age <= 46  ~ "Excluded: Overlap Age",
+      TRUE                                                  ~ "Excluded: Other"
     ),
     
     # Binary treatment indicator
     childhood_exposed = case_when(
       grepl("^Treatment", cohort_group) ~ 1,
-      grepl("^Control", cohort_group) ~ 0,
-      TRUE ~ NA_real_
+      grepl("^Control",   cohort_group) ~ 0,
+      TRUE                              ~ NA_real_
     ),
     
     # Simple label
     treatment_label = case_when(
       grepl("^Treatment", cohort_group) ~ "Treatment",
-      grepl("^Control", cohort_group) ~ "Control",
-      TRUE ~ "Excluded"
+      grepl("^Control",   cohort_group) ~ "Control",
+      TRUE                              ~ "Excluded"
     ),
     
     # Short label for graphs
     cohort_short = case_when(
-      cohort_group == "Treatment: Age 0-5 in 1996" ~ "T: 0-5",
+      cohort_group == "Treatment: Age 0-5 in 1996"  ~ "T: 0-5",
       cohort_group == "Treatment: Age 6-12 in 1996" ~ "T: 6-12",
-      cohort_group == "Treatment: Age 13-17 in 1996" ~ "T: 13-17",
-      cohort_group == "Control: Age 18-25 in 1996" ~ "C: 18-25",
-      cohort_group == "Control: Age 26-35 in 1996" ~ "C: 26-35",
-      cohort_group == "Control: Age 36-40 in 1996" ~ "C: 36-40",
-      TRUE ~ "Excluded"
+      cohort_group == "Treatment: Age 13-17 in 1996"~ "T: 13-17",
+      cohort_group == "Control: Age 18-25 in 1996"  ~ "C: 18-25",
+      cohort_group == "Control: Age 26-35 in 1996"  ~ "C: 26-35",
+      cohort_group == "Control: Age 36-40 in 1996"  ~ "C: 36-40",
+      TRUE                                           ~ "Excluded"
     ),
     
     # Treatment variable for regressions
@@ -282,13 +278,13 @@ nlss_conflict_data <- nlss_conflict_data %>%
   )
 
 
-# -----------------------------------------------------------------------------
-# 9. CREATE CONFLICT INTENSITY MEASURES
-# -----------------------------------------------------------------------------
+# ==============================================================================
+# SECTION 10: CREATE CONFLICT INTENSITY MEASURES----
+# ==============================================================================
 
 # Q3 cutoff for months of war
-q3_war <- quantile(nlss_conflict_data$mwar_own_any[nlss_conflict_data$mwar_own_any > 0],
-                   probs = 0.75, na.rm = TRUE)
+q3_war      <- quantile(nlss_conflict_data$mwar_own_any[nlss_conflict_data$mwar_own_any > 0],
+                        probs = 0.75, na.rm = TRUE)
 
 # Q3 cutoff for casualties
 q3_casualty <- quantile(nlss_conflict_data$cas_own_any[nlss_conflict_data$cas_own_any > 0],
@@ -298,32 +294,63 @@ nlss_conflict_data <- nlss_conflict_data %>%
   mutate(
     # War-based binary
     high_conflict_q3_binary = case_when(
-      mwar_own_any > q3_war ~ 1,
+      mwar_own_any >  q3_war ~ 1,
       mwar_own_any <= q3_war ~ 0,
-      TRUE ~ NA_real_
+      TRUE                   ~ NA_real_
     ),
     high_conflict_q3_label = factor(
       case_when(
-        mwar_own_any > q3_war ~ "High Conflict",
+        mwar_own_any >  q3_war ~ "High Conflict",
         mwar_own_any <= q3_war ~ "Low Conflict",
-        TRUE ~ NA_character_
+        TRUE                   ~ NA_character_
       ),
       levels = c("Low Conflict", "High Conflict")
     ),
     
     # Casualty-based binary
     high_conflict_casualty_binary = case_when(
-      cas_own_any > q3_casualty ~ 1,
+      cas_own_any >  q3_casualty ~ 1,
       cas_own_any <= q3_casualty ~ 0,
-      TRUE ~ NA_real_
+      TRUE                       ~ NA_real_
     ),
     high_conflict_casualty_label = factor(
       case_when(
-        cas_own_any > q3_casualty ~ "High Conflict",
+        cas_own_any >  q3_casualty ~ "High Conflict",
         cas_own_any <= q3_casualty ~ "Low Conflict",
-        TRUE ~ NA_character_
+        TRUE                       ~ NA_character_
       ),
       levels = c("Low Conflict", "High Conflict")
     )
   )
 
+
+# ==============================================================================
+# SECTION 11: CREATE BINARY DUMMIES FOR T-TESTS----
+# ==============================================================================
+
+nlss_conflict_data <- nlss_conflict_data %>%
+  mutate(
+    # Sex
+    male             = ifelse(sex == 1, 1, 0),
+    
+    # Education dummies
+    edu_no_education = ifelse(education_category == "No Education",     1, 0),
+    edu_primary      = ifelse(education_category == "Primary (1-5)",    1, 0),
+    edu_secondary    = ifelse(education_category == "Secondary (6-12)", 1, 0),
+    edu_tertiary     = ifelse(education_category == "Tertiary",         1, 0),
+    
+    # Ethnicity dummies
+    eth_hill_high    = ifelse(Ethnicity == "Hill High Caste", 1, 0),
+    eth_janajati     = ifelse(Ethnicity == "Hill Janajati",   1, 0),
+    eth_terai        = ifelse(Ethnicity == "Terai/Madhesi",   1, 0),
+    eth_dalit        = ifelse(Ethnicity == "Dalit",           1, 0),
+    eth_muslim       = ifelse(Ethnicity == "Muslim",          1, 0),
+    
+    # Occupation dummies
+    occ_agriculture  = ifelse(occupation_category == "Agriculture",            1, 0),
+    occ_high_skilled = ifelse(occupation_category == "High Skilled",           1, 0),
+    occ_service      = ifelse(occupation_category == "Service & Clerical",     1, 0),
+    occ_craft        = ifelse(occupation_category == "Craft & Manufacturing",  1, 0),
+    occ_elementary   = ifelse(occupation_category == "Elementary/Low Skilled", 1, 0),
+    occ_armed        = ifelse(occupation_category == "Armed Forces",           1, 0)
+  )

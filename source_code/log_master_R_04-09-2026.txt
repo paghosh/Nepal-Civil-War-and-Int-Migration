@@ -1,0 +1,40 @@
+
+> cat("00_master.R started:", format(Sys.time()), "\n\n")
+00_master.R started: 2026-04-09 11:59:59 
+
+
+> # ==============================================================================
+> # SECTION 3: RUN EACH R SCRIPT IN SEQUENCE
+> # ================== .... [TRUNCATED] 
+========================================================
+
+> cat(" STEP 1: Setup (Packages)\n")
+ STEP 1: Setup (Packages)
+
+> cat("========================================================\n")
+========================================================
+
+> source(file.path(r_scripts, "01_setup.R"))
+
+> cat("========================================================\n")
+========================================================
+
+> cat(" STEP 2: Data Cleaning & Variable Creation\n")
+ STEP 2: Data Cleaning & Variable Creation
+
+> cat("========================================================\n")
+========================================================
+
+> source(file.path(r_scripts, "02_data_cleaning.R"))
+
+> # 
+> # cat("========================================================\n")
+> # cat(" STEP 3: Summary Statistics & Descriptive Tables\n")
+> # cat("==== ..." ... [TRUNCATED] 
+
+✓ All R steps completed successfully.
+
+> cat("Session ended:", format(Sys.time()), "\n")
+Session ended: 2026-04-09 12:00:06 
+
+> sink()
